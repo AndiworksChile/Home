@@ -197,6 +197,15 @@
             margin-top: 0;
         }
 
+        /* Clase especial para móviles - información siempre visible */
+        .model-card.mobile-expanded .floating-description {
+            max-height: none !important;
+            opacity: 1 !important;
+            margin-top: 8px !important;
+            pointer-events: auto !important;
+            overflow: visible !important;
+        }
+
         /* DIMENSIONES BLOQUE */
         .dimensions-block {
             background: #e2e2e2;
@@ -288,6 +297,14 @@
             text-align: center;
         }
 
+        /* Clases para mostrar/ocultar contenido según dispositivo */
+        .mobile-only {
+            display: none;
+        }
+        .desktop-only {
+            display: inline;
+        }
+
         /* RESPONSIVE */
         /* Tablets y pantallas medianas */
         @media (max-width: 1023px) {
@@ -367,10 +384,11 @@
                 width: 100%;
             }
             .model-card {
-                min-height: 320px;
+                min-height: auto;
                 padding: 12px;
                 margin: 0 auto;
-                max-width: 400px;
+                max-width: 100%;
+                width: 100%;
             }
             .model-card model-viewer {
                 height: 230px;
@@ -382,6 +400,13 @@
             .model-subtitle {
                 font-size: 11px;
                 margin: 2px 0 8px;
+            }
+            .floating-description {
+                max-height: none !important;
+                opacity: 1 !important;
+                margin-top: 8px !important;
+                pointer-events: auto !important;
+                overflow: visible !important;
             }
             .dimensions-block {
                 padding: 5px;
@@ -414,6 +439,12 @@
                 font-size: 9px;
                 margin: 25px auto 10px;
                 padding: 0 10px;
+            }
+            .mobile-only {
+                display: inline;
+            }
+            .desktop-only {
+                display: none;
             }
         }
 
@@ -454,10 +485,11 @@
                 width: 100%;
             }
             .model-card {
-                min-height: 300px;
+                min-height: auto;
                 padding: 10px;
                 margin: 0;
                 max-width: 100%;
+                width: 100%;
             }
             .model-card model-viewer {
                 height: 200px;
@@ -470,6 +502,13 @@
             .model-subtitle {
                 font-size: 10px;
                 margin: 2px 0 6px;
+            }
+            .floating-description {
+                max-height: none !important;
+                opacity: 1 !important;
+                margin-top: 8px !important;
+                pointer-events: auto !important;
+                overflow: visible !important;
             }
             .dimensions-block {
                 padding: 4px;
@@ -512,15 +551,31 @@
                 padding: 0 8px;
                 line-height: 1.3;
             }
+            .mobile-only {
+                display: inline;
+            }
+            .desktop-only {
+                display: none;
+            }
         }
 
         /* Dispositivos muy pequeños */
         @media (max-width: 320px) {
+            .model-card {
+                width: 100%;
+            }
             .model-card model-viewer {
                 height: 180px;
             }
             .model-title {
                 font-size: 14px;
+            }
+            .floating-description {
+                max-height: none !important;
+                opacity: 1 !important;
+                margin-top: 8px !important;
+                pointer-events: auto !important;
+                overflow: visible !important;
             }
             .ar-button {
                 font-size: 7px !important;
@@ -530,6 +585,12 @@
                 font-size: 11px;
                 padding: 6px 8px;
                 min-width: 80px;
+            }
+            .mobile-only {
+                display: inline;
+            }
+            .desktop-only {
+                display: none;
             }
         }
     </style>
@@ -547,9 +608,11 @@
     <div class="description">
         <i class="fas fa-cube"></i>Explora nuestro <strong>Catálogo 3D</strong> interactivo.<br>
         <i class="fas fa-eye"></i>Descubre trabajos realizados para nuestros clientes.<br>
-        <i class="fas fa-mouse-pointer"></i>Pasa el mouse sobre cada modelo para más información.<br><br>
+        <span class="desktop-only"><i class="fas fa-mouse-pointer"></i>Pasa el mouse sobre cada modelo para más información.<br></span>
+        <span class="mobile-only"><i class="fas fa-hand-pointer"></i>Toca cada modelo 3D para verlo rotar.<br></span><br>
         <i class="fas fa-cogs icon-highlight"></i>Productos <strong>PERSONALIZADOS</strong> y <strong>A LA MEDIDA</strong>.<br>
         <i class="fas fa-shopping-cart icon-success"></i>Disponibles al detalle y por mayor. Contamos con <strong>boleta y factura</strong>.<br>
+        <i class="fas fa-mobile-alt"></i><strong>Realidad Aumentada</strong> desde dispositivos móviles. 
     </div>
     
     <!-- Botones de redes sociales - Mezcla de enlaces y botones -->
@@ -876,7 +939,8 @@
         // Repartir los modelos en columnas (por orden)
         catalogConfig.models.forEach((model, idx) => {
             const card = document.createElement('div');
-            card.className = 'model-card';
+            // Agregar clase especial para móviles que muestre info por defecto
+            card.className = window.innerWidth <= 767 ? 'model-card mobile-expanded' : 'model-card';
 
             // Dimensiones HTML
             const dimensionsHtml = model.dimensions ? `
@@ -933,8 +997,8 @@
             // Mejorar para dispositivos táctiles
             const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
             
-            if (isTouchDevice) {
-                // En dispositivos táctiles, usar tap para expandir/contraer
+            if (isTouchDevice && window.innerWidth > 767) {
+                // En tablets táctiles, usar tap para expandir/contraer
                 card.addEventListener('touchstart', (e) => {
                     e.preventDefault();
                     if (card.classList.contains('expanded')) {
@@ -948,7 +1012,7 @@
                         setTimeout(() => scrollCardIntoViewIfLast(card), 300);
                     }
                 });
-            } else {
+            } else if (!isTouchDevice) {
                 // Comportamiento original para desktop
                 card.addEventListener('mouseenter', () => {
                     card.classList.add('expanded');
@@ -956,31 +1020,37 @@
                 });
                 card.addEventListener('mouseleave', () => card.classList.remove('expanded'));
             }
+            // En móviles (<=767px), no agregar eventos de expansión porque la info está siempre visible
             
             card.addEventListener('focusin', () => {
-                card.classList.add('expanded');
-                setTimeout(() => scrollCardIntoViewIfLast(card), 200);
+                if (window.innerWidth > 767) {
+                    card.classList.add('expanded');
+                    setTimeout(() => scrollCardIntoViewIfLast(card), 200);
+                }
             });
-            card.addEventListener('focusout', () => card.classList.remove('expanded'));
+            card.addEventListener('focusout', () => {
+                if (window.innerWidth > 767) {
+                    card.classList.remove('expanded');
+                }
+            });
 
             // Autorrotación mejorada para móviles
             const viewer = card.querySelector('model-viewer');
             
             if (isTouchDevice) {
-                // En móviles, rotar al tocar el modelo
-                viewer.addEventListener('touchstart', () => {
+                // En móviles, rotar al tocar el modelo directamente
+                viewer.addEventListener('touchstart', (e) => {
+                    // No prevenir el evento para permitir interacción con el modelo
                     if (viewer.loaded && !viewer.hasAttribute('auto-rotate')) {
                         viewer.setAttribute('auto-rotate', '');
                         viewer.setAttribute('rotation-per-second', '60deg');
+                        
+                        // Parar rotación después de 3 segundos
+                        setTimeout(() => {
+                            viewer.removeAttribute('auto-rotate');
+                            viewer.removeAttribute('rotation-per-second');
+                        }, 3000);
                     }
-                });
-                
-                // Parar rotación después de 3 segundos
-                viewer.addEventListener('touchstart', () => {
-                    setTimeout(() => {
-                        viewer.removeAttribute('auto-rotate');
-                        viewer.removeAttribute('rotation-per-second');
-                    }, 3000);
                 });
             } else {
                 // Comportamiento original para desktop
