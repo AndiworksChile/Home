@@ -2,19 +2,24 @@
 <html>
 <head>
     <title>Catálogo 3D | Testa Chile</title>
-    <!-- Web App Manifest -->
-    <link rel="manifest" href="manifest.json">
-    <!-- Iconos para Android/Chrome -->
-    <link rel="icon" type="image/png" sizes="192x192" href="logoapp/Logo_App-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="logoapp/Logo_App-512x512.png">
-    <!-- Icono para iOS (pantalla de inicio) -->
-    <link rel="apple-touch-icon" sizes="180x180" href="logoapp/Logo_App-180x180.png">
+    <!-- Configuración para iOS Web App y acceso directo con icono -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Testa 3D">
+    <!-- Íconos para diferentes tamaños iOS y Android -->
+    <link rel="apple-touch-icon" sizes="180x180" href="logoapp/Logo_App.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="logoapp/Logo_App.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="logoapp/Logo_App.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="logoapp/Logo_App.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="logoapp/Logo_App.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="logoapp/Logo_App.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="logoapp/Logo_App.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="logoapp/Logo_App.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="logoapp/Logo_App.png">
+    <!-- Ícono genérico para otros dispositivos -->
+    <link rel="icon" type="image/png" href="logoapp/Logo_App.png">
     <!-- Color de la barra de estado en móviles -->
     <meta name="theme-color" content="#4A90E2">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Catálogo 3D Testa Chile">
-    <meta name="mobile-web-app-capable" content="yes">
     <!-- Polyfill para navegadores antiguos -->
     <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.8.0/webcomponents-loader.js"></script>
     <!-- Versión fija de model-viewer -->
