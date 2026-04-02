@@ -1,0 +1,674 @@
+/* Estilo Neo-Brutalista: Fondo blanco, tipografía negra, bordes rectos */
+body {
+    font-family: 'Inter', sans-serif; /* Fuente gratuita similar a Neue; importa desde Google Fonts si es necesario */
+    background-color: #ffffff;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Logo 3D fijo en esquina superior izquierda */
+.logo-3d-container {
+  position: fixed;
+  top: 15px;
+  left: 30px;
+  z-index: 1001;
+  pointer-events: auto;
+  width: 80px;
+  height: 80px;
+}
+
+.logo-3d-container model-viewer {
+  width: 100%;
+  height: 100%;
+  display: block;
+  
+  /* Optimización GPU */
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Ocultar barra de carga */
+.logo-3d-container model-viewer::part(default-progress-bar) {
+  display: none;
+}
+
+/* Hover sutil - scale pequeño en el contenedor */
+.logo-3d-container:hover {
+  transform: scale(1.05);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.logo-3d-container:active {
+  transform: scale(0.98);
+}
+
+/* 🎯 BOTONES SOCIALES - Esquina Superior Derecha */
+.social-buttons {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px; /* 📏 SEPARACIÓN ENTRE BOTONES - Ajusta aquí (antes 10px) */
+    z-index: 1000;
+}
+
+.social-btn {
+    display: block;
+    width: 100px; /* 📏 LARGO (ANCHO) DEL BOTÓN - Ajusta aquí */
+    padding: 3px 0px; /* 📏 ALTURA DEL BOTÓN - Ajusta el primer valor (6px = más bajo) */
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem; /* 📏 TAMAÑO DE FUENTE - Ajusta aquí (antes 0.9rem) */
+    font-weight: 250;
+    text-align: center;
+    border-radius: 0px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+/* WhatsApp social */
+.social-btn.whatsapp-btn {
+    background: #000;
+    color: #fff;
+}
+
+.social-btn.whatsapp-btn:hover {
+    background: linear-gradient(45deg, #25D366, #128C7E);
+    color: #fff;
+    transform: scale(1.05);
+}
+
+/* Instagram social */
+.social-btn.instagram-btn {
+    background: #000;
+    color: #fff;
+}
+
+.social-btn.instagram-btn:hover {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: #fff;
+    transform: scale(1.05);
+}
+
+/* Ubicación */
+.social-btn.location-btn {
+    background: #000;
+    color: #fff;
+}
+
+.social-btn.location-btn:hover {
+    background: linear-gradient(45deg, #FF6B35, #F7931E, #FF8C42);
+    color: #fff;
+    transform: scale(1.05);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   🎯 TOOLTIPS LATERALES - Botones Header
+   ═══════════════════════════════════════════════════════════════ */
+
+.social-btn-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.social-tooltip {
+    position: absolute;
+    right: 100%;                           /* 📍 Posiciona a la izquierda del botón */
+    top: 50%;
+    transform: translateY(-50%) translateX(10px);  /* 🎯 POSICIÓN INICIAL - Oculto */
+    
+    /* Apariencia */
+    background: none;
+    color: #000000;                        /* 🎨 COLOR DEL TEXTO - ROJO para prueba */
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;                     /* 📏 TAMAÑO DE FUENTE */
+    font-weight: 600;
+    white-space: nowrap;                   /* Una sola línea */
+    
+    /* Espaciado */
+    padding-right: 10px;                   /* 📏 SEPARACIÓN del botón */
+    
+    /* Animación */
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s ease-out;        /* ⏱️ VELOCIDAD DE ANIMACIÓN */
+}
+
+/* Aparecer al hover */
+.social-btn-container:hover .social-tooltip {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);  /* 🎯 POSICIÓN FINAL - Visible */
+}
+
+/* 🎨 COLORES DE TOOLTIP SEGÚN BOTÓN */
+.social-btn-container:has(.whatsapp-btn) .social-tooltip {
+    color: #25D366;                        /* Verde WhatsApp */
+}
+
+.social-btn-container:has(.instagram-btn) .social-tooltip {
+    color: #E1306C;                        /* Rosa Instagram */
+}
+
+.social-btn-container:has(.location-btn) .social-tooltip {
+    color: #FF6B35;                        /* Naranja Ubicación */
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Mosaico de cards con CSS Grid para responsividad */
+.mosaic {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Ajusta dinámicamente, ideal para ~8 en fila grande */
+    gap: 0; /* Sin separación */
+    padding: 20px;
+    max-width: 100%;
+}
+
+/* Cards base: 4:3 vertical, sin borde */
+.card {
+    aspect-ratio: 3 / 4; /* 4:3 vertical */
+    background-color: #f0f0f0; /* Placeholder */
+    border: none; /* Sin borde para ocupar todo el espacio */
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* Hover: Elevar y z-index para estar sobre adyacentes */
+.card:hover {
+    z-index: 10;
+}
+
+/* Placeholder para imagen principal */
+.card > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   🛒 ÍCONO DE COTIZACIÓN RÁPIDA EN THUMBNAILS
+   ═══════════════════════════════════════════════════════════════ */
+
+.quick-quote-btn {
+    position: absolute;
+    bottom: 12px;                          /* 📍 DISTANCIA DESDE ABAJO */
+    right: 12px;                           /* 📍 DISTANCIA DESDE LA DERECHA */
+    width: 40px;                           /* 📏 TAMAÑO DEL BOTÓN */
+    height: 40px;
+    
+    /* Animación inicial: oculto y pequeño */
+    opacity: 0;
+    transform: scale(0) rotate(-180deg);   /* 🎬 ESTADO INICIAL - Oculto con rotación */
+    
+    /* Transición suave */
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);  /* ⏱️ VELOCIDAD Y CURVA */
+    
+    /* Interacción */
+    cursor: pointer;
+    z-index: 15;
+}
+
+.quick-quote-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));  /* Sombra sutil */
+    transition: filter 0.2s ease;
+}
+
+/* 🎬 APARECER AL HOVER DE LA CARD */
+.card:hover .quick-quote-btn {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);      /* 🎯 ESTADO FINAL - Visible con rotación completa */
+}
+
+/* 🖱️ EFECTO HOVER EN EL ÍCONO MISMO */
+.quick-quote-btn:hover {
+    transform: scale(1.2) rotate(10deg);   /* 📏 ESCALA + ROTACIÓN SUTIL */
+}
+
+.quick-quote-btn:hover img {
+    filter: drop-shadow(0 4px 8px rgba(37, 211, 102, 0.5));  /* ✨ BRILLO VERDE al hover */
+}
+
+/* 🖱️ EFECTO CLICK (ACTIVE) */
+.quick-quote-btn:active {
+    transform: scale(0.85) rotate(0deg);   /* Encoge al hacer click */
+    transition: transform 0.1s ease;       /* Más rápido al presionar */
+}
+
+.quick-quote-btn:active img {
+    filter: drop-shadow(0 2px 4px rgba(37, 211, 102, 0.8)) brightness(1.1);  /* Flash de brillo */
+}
+
+/* 💬 TOOLTIP "COTIZA AQUÍ" */
+.quote-tooltip {
+    position: absolute;
+    bottom: 100%;                          /* 📍 Posiciona arriba del botón */
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);  /* 🎯 POSICIÓN INICIAL - Oculto */
+    
+    /* Apariencia */
+    background: #ffffff;                   /* ⬜ FONDO BLANCO SÓLIDO */
+    color: #000000;                        /* ⬛ TEXTO NEGRO */
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6rem;                     /* 📏 TAMAÑO DE FUENTE */
+    font-weight: 500;
+    white-space: nowrap;                   /* Una sola línea */
+    
+    /* Espaciado y forma */
+    padding: 3px 6px;                      /* 📏 PADDING COMPACTO */
+    margin-bottom: 6px;                    /* 📏 SEPARACIÓN del botón */
+    border-radius: 3px;
+    
+    /* Animación */
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s ease-out;        /* ⏱️ VELOCIDAD DE ANIMACIÓN */
+    transition-delay: 0s;                  /* Sin delay al desaparecer */
+}
+
+/* Aparecer al hover de la CARD (después de que el botón termine su animación) */
+.card:hover .quote-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);  /* 🎯 POSICIÓN FINAL - Sube */
+    transition-delay: 0.7s;                /* ⏱️ DELAY: espera 0.5s después del hover */
+}
+
+/* Responsive: Ajustar en móviles */
+@media (max-width: 768px) {
+    .mosaic {
+        grid-template-columns: 1fr; /* Una columna en móvil */
+        gap: 10px; /* Ligera separación para scroll */
+    }
+    h1 {
+        font-size: 2rem;
+    }
+}
+
+/* Overlay para vista ampliada */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.overlay-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay-content h2 {
+    position: absolute;
+    top: -35px;
+    left: 0;
+    color: #fff; /* Blanco */
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.overlay-content img {
+    max-width: 90vw;              /* 📐 ANCHO MÁXIMO - 90% del viewport */
+    max-height: 75vh;             /* 📐 ALTO MÁXIMO - 75% del viewport */
+    width: auto;
+    height: auto;
+    object-fit: contain;          /* Mantiene proporción sin recortar */
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   🎯 FLECHAS DE NAVEGACIÓN EN LIGHTBOX
+   ═══════════════════════════════════════════════════════════════ */
+
+.nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    
+    /* Apariencia */
+    background: rgba(255, 255, 255, 0.1);   /* 🎨 FONDO - Semi-transparente */
+    border: 2px solid rgba(255, 255, 255, 0.5); /* 🖼️ BORDE */
+    color: #fff;
+    font-size: 1.5rem;                       /* 📏 TAMAÑO DEL SÍMBOLO */
+    cursor: pointer;
+    
+    /* Tamaño del botón */
+    width: 48px;                             /* 📏 ANCHO DEL BOTÓN */
+    height: 48px;                            /* 📏 ALTO DEL BOTÓN */
+    border-radius: 0;                        /* Esquinas rectas (neo-brutalista) */
+    
+    /* Centrar contenido */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Efectos */
+    opacity: 0.6;                            /* 👁️ OPACIDAD INICIAL */
+    transition: all 0.2s ease;
+    z-index: 30;
+}
+
+.nav-arrow:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #fff;
+    transform: translateY(-50%) scale(1.1);  /* 📏 ESCALA EN HOVER */
+}
+
+.nav-arrow:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* Posición de cada flecha */
+.nav-prev {
+    left: -59px;                             /* 📍 DISTANCIA DESDE LA IMAGEN (izquierda) */
+}
+
+.nav-next {
+    right: -59px;                            /* 📍 DISTANCIA DESDE LA IMAGEN (derecha) */
+}
+
+/* Responsive: Flechas más cerca en pantallas pequeñas */
+@media (max-width: 900px) {
+    .nav-prev {
+        left: -55px;
+    }
+    .nav-next {
+        right: -55px;
+    }
+    .nav-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .nav-prev {
+        left: 5px;                           /* Sobre la imagen en móvil */
+    }
+    .nav-next {
+        right: 5px;
+    }
+    .nav-arrow {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+        opacity: 0.7;
+        background: rgba(0, 0, 0, 0.5);
+    }
+}
+
+.indicators {
+    position: absolute;
+    bottom: -25px; /* 10px de la foto */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.contact-buttons {
+    position: absolute;
+    bottom: -44px; /* 20px de los indicadores */
+    left: 0; /* Alinear con borde izquierdo de la foto */
+    right: 0; /* Alinear con borde derecho de la foto */
+    display: flex;
+    justify-content: space-between; /* Instagram a la izquierda, WhatsApp a la derecha */
+    gap: 20px; /* Espacio entre botones si es necesario */
+}
+
+.contact-btn {
+    border: 2px solid transparent;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+}
+
+/* WhatsApp: Inicial negro, hover degradé verde */
+.whatsapp-container {
+    position: relative;
+    display: inline-block;
+    align-self: center; /* 🔧 CORRECCIÓN: Alinear con Instagram */
+    z-index: 1; /* 🔧 Z-INDEX BAJO para que tooltip quede debajo */
+}
+
+#whatsapp-btn {
+    background: #000;
+    color: #fff;
+    position: relative; /* 🔧 Necesario para z-index */
+    z-index: 100; /* 🔥 Z-INDEX MUY ALTO - Por encima de todo */
+}
+
+#whatsapp-btn:hover {
+    background: linear-gradient(45deg, #25D366, #128C7E);
+    color: #fff;
+    transform: scale(1.05);
+}
+
+/* 🎬 TEXTO EMERGENTE WHATSAPP */
+.whatsapp-tooltip {
+    position: absolute;
+    top: 100%; /* Justo debajo del botón */
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px); /* 📎 DISTANCIA INICIAL - Más cerca del botón */
+    background: none; /* Sin fondo, solo texto */
+    color: #25D366; /* 🎨 COLOR VERDE WHATSAPP */
+    font-size: 0.75rem; /* 📎 Tamaño más pequeño para texto largo */
+    font-family: 'Inter', sans-serif;
+    white-space: normal; /* 🔧 PERMITIR WRAP - Texto multilinea */
+    word-wrap: break-word; /* 🔧 ROMPER PALABRAS si es necesario */
+    opacity: 0; /* Invisible inicialmente */
+    pointer-events: none; /* No interfiere con clicks */
+    transition: all 0.25s ease-out; /* 👈 VELOCIDAD DE ANIMACIÓN - Ajusta aquí */
+    z-index: -1; /* 🔥 Z-INDEX NEGATIVO - Por debajo de todo */
+    width: 120px; /* 📎 ANCHO FIJO igual al botón */
+    text-align: center; /* Centrar texto */
+    line-height: 1.2; /* 📎 Espaciado entre líneas */
+}
+
+/* Animación de aparición al hover */
+.whatsapp-container:hover .whatsapp-tooltip {
+    opacity: 1; /* Visible */
+    transform: translateX(-50%) translateY(18px); /* 🎯 POSICIÓN FINAL - Más cerca del botón */
+}
+
+/* Instagram: Inicial negro, hover degradé rosa-naranja */
+.instagram-container {
+    position: relative;
+    display: inline-block;
+    align-self: center; /* 🔧 CORRECCIÓN: Alinear con WhatsApp */
+    z-index: 1; /* 🔧 Z-INDEX BAJO para que tooltip quede debajo */
+}
+
+#instagram-btn {
+    background: #000;
+    color: #fff;
+    position: relative; /* 🔧 Necesario para z-index */
+    z-index: 100; /* 🔥 Z-INDEX MUY ALTO - Por encima de todo */
+}
+
+#instagram-btn:hover {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: #fff;
+    transform: scale(1.05);
+}
+
+/* 🎬 TEXTO EMERGENTE INSTAGRAM */
+.instagram-tooltip {
+    position: absolute;
+    top: 100%; /* Justo debajo del botón */
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px); /* 📎 DISTANCIA INICIAL - Más cerca del botón */
+    background: none; /* Sin fondo, solo texto */
+    color: #E1306C; /* 🎨 COLOR ROSA INSTAGRAM */
+    font-size: 0.75rem; /* 📎 Tamaño más pequeño para texto largo */
+    font-family: 'Inter', sans-serif;
+    white-space: normal; /* 🔧 PERMITIR WRAP - Texto multilinea */
+    word-wrap: break-word; /* 🔧 ROMPER PALABRAS si es necesario */
+    opacity: 0; /* Invisible inicialmente */
+    pointer-events: none; /* No interfiere con clicks */
+    transition: all 0.25s ease-out; /* 👈 VELOCIDAD DE ANIMACIÓN - Ajusta aquí */
+    z-index: -1; /* 🔥 Z-INDEX NEGATIVO - Por debajo de todo */
+    width: 120px; /* 📎 ANCHO FIJO igual al botón */
+    text-align: center; /* Centrar texto */
+    line-height: 1.2; /* 📎 Espaciado entre líneas */
+}
+
+/* Animación de aparición al hover */
+.instagram-container:hover .instagram-tooltip {
+    opacity: 1; /* Visible */
+    transform: translateX(-50%) translateY(18px); /* 🎯 POSICIÓN FINAL - Más cerca del botón */
+}
+
+.indicator {
+    width: 10px;
+    height: 10px;
+    background: rgba(109, 109, 109, 0.431); /* Gris con opacidad */
+    border-radius: 0; /* Cuadrado */
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.indicator.active {
+    background: #ffffff; /* Blanco */
+}
+
+.indicator:hover {
+    background: rgba(255, 255, 255, 0.8); /* Hover sutil */
+}
+
+.close-btn {
+    position: absolute;
+    top: -42.5px;
+    right: 0;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.close-btn:hover {
+    transform: scale(1.2);
+    color: #ff0000; /* Rojo */
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   🎬 PANEL DE ESPECIFICACIONES DESLIZANTE
+   ═══════════════════════════════════════════════════════════════ */
+
+.specs-panel {
+    position: absolute;
+    top: 0px;                          /* 📍 DISTANCIA DESDE ARRIBA de la imagen */
+    left: 0;                            /* Alineado con borde izquierdo de imagen */
+    transform: translateX(100%);        /* 🎯 POSICIÓN INICIAL - Oculto dentro de la imagen */
+    opacity: 0;                         /* Invisible inicialmente */
+    z-index: 20;
+    pointer-events: none;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 0.3s ease-out;  /* ⏱️ VELOCIDAD DE ANIMACIÓN */
+}
+
+/* Estado activo: deslizado hacia la izquierda */
+.specs-panel.visible {
+    transform: translateX(-105%);       /* 🎯 POSICIÓN FINAL - Sale por la izquierda */
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.specs-content {
+    background: transparent;            /* 🎨 FONDO - Transparente (sin relleno) */
+    border: 1px solid #fff;             /* 🖼️ BORDE - Línea blanca | ESPESOR: 2px */
+    color: #fff;
+    padding: 15px 18px;                 /* 📏 ESPACIADO INTERNO */
+    font-family: 'Inter', sans-serif;
+    max-width: 180px;                   /* 📏 ANCHO MÁXIMO del panel */
+    min-width: 140px;                   /* 📏 ANCHO MÍNIMO */
+    border-radius: 0px;                 /* Sin bordes redondeados (neo-brutalista) */
+    text-align: left;
+    line-height: 1.5;
+}
+
+/* Estilos del texto de dimensiones */
+#specs-dimensions {
+    margin: 0 0 10px 0;
+    font-size: 0.85rem;                 /* 📝 TAMAÑO FUENTE dimensiones */
+    font-weight: 450;
+    white-space: pre-line;              /* Permite saltos de línea con \n */
+    letter-spacing: 0.3px;
+}
+
+#specs-dimensions strong {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 3px;
+    font-size: 0.95rem;                  /* 📝 TAMAÑO FUENTE título "Dimensiones" */
+    color: #FFD700;                      /* 🎨 COLOR AMARILLO */
+}
+
+/* Estilos del texto de descripción */
+#specs-description {
+    margin: 0;
+    font-size: 0.85rem;                  /* 📝 TAMAÑO FUENTE descripción */
+    font-weight: 450;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.9);    /* Ligeramente más tenue */
+}
+
+#specs-description strong {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 3px;
+    font-size: 0.95rem;                 /* 📝 TAMAÑO FUENTE título "Descripción" */
+    color: #FFD700;                     /* 🎨 COLOR AMARILLO */
+}
+
+/* Responsive: Ajustar en móviles */
+@media (max-width: 768px) {
+    .specs-panel {
+        top: 10px;
+    }
+    
+    .specs-panel.visible {
+        transform: translateX(-102%);   /* Menos separación en móvil */
+    }
+    
+    .specs-content {
+        max-width: 150px;
+        padding: 12px 14px;
+        font-size: 0.7rem;
+    }
+}
