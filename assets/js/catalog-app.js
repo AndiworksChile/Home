@@ -55,6 +55,7 @@ const I18N = {
     dock: { info: 'Descripción', media: 'Fotos y videos', '3d': 'Ver en 3D', whatsapp: 'Consultar por WhatsApp', instagram: 'Ver en Instagram' },
     measures: 'Medidas',
     modeLabel: { media: 'Imágenes del producto', '3d': 'Modelo 3D' },
+    empty: 'Catálogo en desarrollo…',
   },
   en: {
     catSwitch: { productos: 'Product Catalogue', laser: 'Laser Catalogue' },
@@ -62,6 +63,7 @@ const I18N = {
     dock: { info: 'Description', media: 'Photos & videos', '3d': 'View in 3D', whatsapp: 'Ask on WhatsApp', instagram: 'View on Instagram' },
     measures: 'Dimensions',
     modeLabel: { media: 'Product images', '3d': '3D model' },
+    empty: 'Catalogue in progress…',
   },
   zh: {
     catSwitch: { productos: '产品目录', laser: '激光产品目录' },
@@ -69,6 +71,7 @@ const I18N = {
     dock: { info: '产品说明', media: '照片和视频', '3d': '查看 3D', whatsapp: '通过 WhatsApp 咨询', instagram: '在 Instagram 查看' },
     measures: '尺寸',
     modeLabel: { media: '产品图片', '3d': '3D 模型' },
+    empty: '目录建设中…',
   },
 };
 /* Cada página de catálogo puede pisar textos puntuales (hoy: "sub" y
@@ -246,12 +249,41 @@ function syncPageMedia() {
   });
 }
 
+/* Placeholder mostrado cuando window.PRODUCTS todavía no tiene productos
+   reales — evita que el catálogo se vea "roto" (mosaico vacío) mientras se
+   completa la ficha del primero. Usa la clase .card (mismo tamaño de celda,
+   misma animación de entrada/salida que una card real) más el modificador
+   .mosaic-empty para el texto centrado — pero sin `_product`, así el marco
+   naranja que sigue al cursor y el click delegado que abre el overlay lo
+   ignoran (ver los `if (!card._product) return` más abajo). */
+function buildEmptyStateCard(animate) {
+  const el = document.createElement('div');
+  el.className = 'card mosaic-empty';
+  el.textContent = (I18N[currentLang] || I18N.es).empty;
+  if (animate) el.style.animationDelay = `${CARD_ENTER_BASE}ms`;
+  else el.style.animation = 'none';
+  return el;
+}
+
 function renderMosaic() {
   const animatedEntrance = firstRender && canAnimate;
   applyGrid();
   page = Math.min(page, pageCount() - 1);
 
   track.innerHTML = '';
+
+  if (PRODUCTS.length === 0) {
+    const pageEl = document.createElement('div');
+    pageEl.className = 'mosaic-page';
+    pageEl.appendChild(buildEmptyStateCard(animatedEntrance));
+    track.appendChild(pageEl);
+    firstRender = false;
+    updateNav();
+    syncScrollToPage();
+    if (frame) frame.style.opacity = '0';
+    return;
+  }
+
   for (let p = 0; p < pageCount(); p += 1) {
     const pageEl = document.createElement('div');
     pageEl.className = 'mosaic-page';
@@ -465,7 +497,7 @@ function revealFrame() {
 let framedCard = null;
 viewport.addEventListener(IS_TOUCH ? 'touchstart' : 'pointermove', (e) => {
   const card = e.target.closest && e.target.closest('.card');
-  if (!card) return;
+  if (!card || !card._product) return;   /* el placeholder "Catálogo en desarrollo" comparte .card pero no es clickeable */
   preloadGallery(card._product);   /* así ya está en caché si hace click/tap */
   if (!IS_TOUCH && card !== framedCard) { framedCard = card; placeFrame(card); }
 }, { passive: true });
@@ -734,6 +766,16 @@ function leaveToHome(href, eventName) {
     setTimeout(() => { window.location.href = href; }, wait);
   };
 }
+
+/* `.leaving` nunca se saca por su cuenta (se agrega justo antes de navegar
+   al Home). Si el usuario vuelve con "atrás" del navegador y este entra
+   desde bfcache (sin re-ejecutar el script), la página quedaría con todo en
+   opacity:0 — mismo fix que en assets/js/main.js. */
+window.addEventListener('pageshow', (event) => {
+  if (!event.persisted) return;
+  document.body.classList.remove('leaving');
+  if (frame && frameReady) frame.style.opacity = '1';
+});
 backHome.addEventListener('click', leaveToHome(backHome.getAttribute('href'), 'catalog_back_home'));
 const brandHome = document.querySelector('#brand-home');
 if (brandHome) brandHome.addEventListener('click', leaveToHome(brandHome.getAttribute('href'), 'catalog_brand_click'));
@@ -785,6 +827,9 @@ function applyLang(lang, animate) {
     if (label) { btn.setAttribute('aria-label', label); btn.title = label; }
   });
   if (ovProduct && !overlay.hidden) { renderInfoText(); updateModeLabel(); }
+
+  const emptyEl = track.querySelector('.mosaic-empty');
+  if (emptyEl) emptyEl.textContent = t.empty;
 
   if (animate) {
     if (catSwitchProductos) fadeSwap(catSwitchProductos, () => { catSwitchProductos.textContent = t.catSwitch.productos; });

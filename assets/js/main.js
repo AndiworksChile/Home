@@ -66,6 +66,17 @@ const I18N = {
       { default: 'Corte y grabado láser', hover: 'Catálogo Láser' },
       { default: 'Quién soy / Cómo trabajo', hover: 'Conoce mi historia' },
     ],
+    bio: {
+      title: 'Historia',
+      back: 'Volver al menú',
+      text: [
+        'Somos una gran empresa... compuesta por una persona. Soy Andrés Baeza Jordán, tengo 31 años. Arquitecto de profesión, y apasionado por la mueblería y el diseño.',
+        'Hace 8 años dejé mi trabajo tradicional para emprender por mi cuenta. Empecé fabricando letreros, stands y exhibidores para marcas y otros emprendimientos.',
+        'Hoy quiero llevar AndiWorks al siguiente nivel: fabricar Muebles Paramétricos Asistidos por WebApp. Una interfaz sencilla para crear, diseñar y enviar a fabricar tu mueble a medida, todo desde el navegador, sin instalar nada y con despacho a tu domicilio.',
+        'Justo ahora cuento con un nuevo espacio para trabajar, ubicado en el sector Sur de Barrio Matta en Santiago de Chile. Lo estoy ordenando y preparando para recibir nuevos pedidos.',
+        'Me encantaría que formes parte de esta historia. Sígueme en Instagram para ver el día a día, o escríbeme si tienes algo en mente. ¡Sería genial trabajar juntos!',
+      ],
+    },
   },
   en: {
     eyebrow: 'Hi, welcome!',
@@ -80,6 +91,17 @@ const I18N = {
       { default: 'Laser cutting & engraving', hover: 'Laser Catalogue' },
       { default: 'Who I am / How I work', hover: 'Get to know my story' },
     ],
+    bio: {
+      title: 'Story',
+      back: 'Back to menu',
+      text: [
+        "We're a big company... made up of one person. I'm Andrés Baeza Jordán, 31 years old. An architect by training, passionate about furniture-making and design.",
+        '8 years ago I left my traditional job to start my own venture. I began by making signs, stands and displays for brands and other businesses.',
+        'Today I want to take AndiWorks to the next level: manufacturing Parametric Furniture Assisted by a WebApp. A simple interface to create, design and send your custom furniture to be made — all from the browser, no installs, with delivery to your door.',
+        "Right now I have a new workspace, located in the South sector of Barrio Matta in Santiago, Chile. I'm setting it up and getting it ready to take on new orders.",
+        "I'd love for you to be part of this story. Follow me on Instagram to see the day-to-day, or write to me if you have something in mind. It'd be great to work together!",
+      ],
+    },
   },
   zh: {
     eyebrow: '你好，欢迎！',
@@ -94,6 +116,17 @@ const I18N = {
       { default: '激光切割与雕刻', hover: '激光产品目录' },
       { default: '关于我 / 我的工作方式', hover: '了解我的故事' },
     ],
+    bio: {
+      title: '故事',
+      back: '返回菜单',
+      text: [
+        '我们是一家"大公司"……其实只有我一个人。我是安德烈斯·巴埃萨·霍尔丹（Andrés Baeza Jordán），31岁。建筑师出身，热爱家具制造与设计。',
+        '8年前，我辞去了传统工作，开始自己创业。最初是为品牌和其他企业制作招牌、展台和展示架。',
+        '如今，我想让 AndiWorks 迈上新台阶：通过网页应用（WebApp）辅助制造参数化家具。一个简单的界面，让你可以直接在浏览器里创建、设计并下单定制家具，无需安装任何软件，还能送货上门。',
+        '目前我有一个新的工作空间，位于智利圣地亚哥 Barrio Matta 南区。我正在整理和准备，以便接收新的订单。',
+        '我很希望你能成为这个故事的一部分。欢迎在 Instagram 上关注我，了解日常动态，或者写信告诉我你的想法。一起合作会很棒！',
+      ],
+    },
   },
 };
 let currentLang = 'es';
@@ -209,6 +242,8 @@ function applyLang(lang, animate) {
   const title = document.querySelector('#home-title');
   const subtitle = document.querySelector('#home-subtitle');
   const statusText = document.querySelector('#status-text-home');
+  const bioTitleEl = document.querySelector('.bio-title');
+  const bioTextEls = [...document.querySelectorAll('.bio-text')];
   const textEls = [eyebrow, title, subtitle, statusText, ...buttons.map((b) => b.querySelector('.choice-label'))].filter(Boolean);
 
   const applyAll = () => {
@@ -222,6 +257,11 @@ function applyLang(lang, animate) {
       button.dataset.labelHover = bt.hover;
       if (!button.matches(':hover, :focus')) setLabel(button, bt.default);
     });
+    /* Sección "Historia": no entra en la coreografía de fade/FLIP de arriba
+       (solo se ve si esa sección está abierta) — basta con cambiar el texto. */
+    if (bioTitleEl) bioTitleEl.textContent = t.bio.title;
+    bioTextEls.forEach((el, i) => { if (t.bio.text[i] != null) el.textContent = t.bio.text[i]; });
+    if (bioBackBtn) bioBackBtn.textContent = t.bio.back;
     updateOpenStatus();
   };
 
@@ -313,6 +353,16 @@ function leaveHome(href) {
   if (!canAnimate) { window.location.href = href; return; }
   setTimeout(() => { window.location.href = href; }, 260);
 }
+
+/* `.leaving` nunca se saca por su cuenta (se agrega justo antes de navegar).
+   Si el usuario vuelve con el botón "atrás" del navegador, algunos
+   navegadores restauran la página desde caché (bfcache) sin volver a
+   ejecutar este script — y la dejarían con todo en opacity:0 (pantalla
+   negra) para siempre. `pageshow` con `persisted` detecta ese caso y
+   deshace la clase. */
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) document.body.classList.remove('leaving');
+});
 
 /* Sección "Historia": el texto/botones del menú se desvanecen (igual que al
    ir al catálogo) pero el color y el video de fondo del botón se MANTIENEN

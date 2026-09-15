@@ -33,25 +33,31 @@
  * backend/servidor, migrar a `data/productos.json` + fetch().
  */
 
+/* Catálogo vacío a propósito por ahora: sin fichas reales listas para
+   mostrar, window.PRODUCTS queda en [] y el mosaico cae solo en su estado
+   "Catálogo en desarrollo…" (ver assets/js/catalog-app.js, renderMosaic()).
+   El producto de referencia queda comentado abajo — descomentarlo (y
+   quitarle el "// " a cada línea) apenas haya fotos reales para reemplazar
+   las de relleno (Lorem Picsum). */
 window.PRODUCTS = [
-  {
-    id: '01-mesa-de-trabajo-de-titulo',
-    name: 'Mesa de trabajo de título',
-    category: 'Mobiliario',
-    year: '2026',
-    description: 'Descripción pendiente — completar con el detalle real del producto.',
-    dimensions: [],
-    media: [
-      { type: 'image', src: 'https://picsum.photos/seed/mesa-trabajo-1/600/800' },
-      { type: 'image', src: 'https://picsum.photos/seed/mesa-trabajo-2/600/800' },
-      { type: 'image', src: 'https://picsum.photos/seed/mesa-trabajo-3/600/800' },
-      { type: 'image', src: 'https://picsum.photos/seed/mesa-trabajo-4/600/800' },
-    ],
-    model3d: {
-      src: 'assets/models/mesa-trabajo-completa.glb',
-      poster: 'https://picsum.photos/seed/mesa-trabajo-m/600/800',
-    },
-    coverType: '3d',
-    links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
-  },
+  // {
+  //   id: '01-mesa-de-trabajo-de-titulo',
+  //   name: 'Mesa de trabajo de título',
+  //   category: 'Mobiliario',
+  //   year: '2026',
+  //   description: 'Descripción pendiente — completar con el detalle real del producto.',
+  //   dimensions: [],
+  //   media: [
+  //     { type: 'image', src: 'https://picsum.photos/seed/mesa-trabajo-1/600/800' },
+  //     { type: 'image', src: 'https://picsum.photos/seed/mesa-trabajo-2/600/800' },
+  //     { type: 'image', src: 'https://picsum.photos/seed/mesa-trabajo-3/600/800' },
+  //     { type: 'image', src: 'https://picsum.photos/seed/mesa-trabajo-4/600/800' },
+  //   ],
+  //   model3d: {
+  //     src: 'assets/models/mesa-trabajo-completa.glb',
+  //     poster: 'https://picsum.photos/seed/mesa-trabajo-m/600/800',
+  //   },
+  //   coverType: '3d',
+  //   links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
+  // },
 ];

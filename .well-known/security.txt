@@ -1,0 +1,4 @@
+Contact: https://wa.me/56953706307
+Expires: 2027-09-07T22:31:16Z
+Preferred-Languages: es, en
+Canonical: https://andiworks.cl/.well-known/security.txt

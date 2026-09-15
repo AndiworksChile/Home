@@ -1,7 +1,15 @@
-/* AndiWorks · Analítica (GA4 + Cloudflare Web Analytics + Microsoft Clarity)
- * Un solo lugar con los 3 IDs y con los eventos de negocio que se registran,
+/* AndiWorks · Analítica (GA4 + Microsoft Clarity)
+ * Un solo lugar con los IDs y con los eventos de negocio que se registran,
  * para no duplicar credenciales entre el Home y el catálogo. No se carga en
  * catalogo/admin/ (herramienta interna: no hay que medirla).
+ *
+ * Cloudflare Web Analytics NO se inyecta acá a propósito: el dominio está
+ * proxiado por Cloudflare (nube naranja), así que su inyección automática
+ * ya se encarga de mandar el beacon a andiworks.cl/cdn-cgi/rum — agregar
+ * también el snippet manual (a cloudflareinsights.com/cdn-cgi/rum) duplicaba
+ * el conteo y, al no estar el sitio dado de alta para setup manual, tiraba
+ * 404 + error de CORS en consola. Ver Cloudflare → Web Analytics para
+ * confirmar que la inyección automática esté activada.
  *
  * Ver ANALITICAS.md en la raíz del proyecto para qué mide cada herramienta
  * y qué revisar en cada dashboard. */
@@ -9,7 +17,6 @@
 (function () {
   var GA_ID = 'G-T3MKR9SY4T';
   var CLARITY_ID = 'wu67pyn8co';
-  var CF_BEACON_TOKEN = '4230414b7e8c4d5199f5c71b5dead0c0';
 
   /* Google Analytics 4 */
   var gaScript = document.createElement('script');
@@ -21,14 +28,6 @@
   window.gtag = gtag;
   gtag('js', new Date());
   gtag('config', GA_ID);
-
-  /* Cloudflare Web Analytics — solo métricas automáticas (páginas vistas,
-     rendimiento, países); no tiene API de eventos personalizados. */
-  var cfScript = document.createElement('script');
-  cfScript.type = 'module';
-  cfScript.src = 'https://static.cloudflareinsights.com/beacon.min.js';
-  cfScript.setAttribute('data-cf-beacon', JSON.stringify({ token: CF_BEACON_TOKEN }));
-  document.head.appendChild(cfScript);
 
   /* Microsoft Clarity (grabación de sesiones + mapas de calor) */
   (function (c, l, a, r, i, t, y) {
