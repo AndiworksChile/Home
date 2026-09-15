@@ -1,0 +1,14 @@
+{
+  "name": "AndiWorks",
+  "short_name": "AndiWorks",
+  "description": "Mueblería y diseño personalizado — mobiliario paramétrico, corte y grabado láser.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#090a0b",
+  "theme_color": "#090a0b",
+  "icons": [
+    { "src": "assets/logo-android192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/logo-android512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

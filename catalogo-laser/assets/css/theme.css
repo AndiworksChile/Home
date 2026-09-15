@@ -1,0 +1,7 @@
+/* Único override real de este catálogo respecto al de productos: el acento.
+ * Todo lo demás vive en assets/css/catalog-app.css (compartido) — cargar
+ * este archivo DESPUÉS de ese, para que gane. */
+:root {
+  --accent: #2dc5bc;   /* mismo teal del botón "Corte y grabado láser" del Home */
+  --accent-rgb: 45, 197, 188;
+}

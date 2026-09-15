@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /catalogo/admin/
+Allow: /
+
+Sitemap: https://andiworks.cl/sitemap.xml

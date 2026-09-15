@@ -1,0 +1,603 @@
+:root {
+  --paper: #ffffff;
+  --ink: #0b0b0c;
+  --muted: rgba(0, 0, 0, .5);
+  --line: rgba(0, 0, 0, .18);
+  --accent: #f27024;               /* color del botón "Ver tus productos fabricados" del Home */
+  --accent-rgb: 242, 112, 36;
+  --font-title: 'Bebas Neue', sans-serif;
+  --font-ui: 'Barlow Condensed', sans-serif;
+  --cols: 6;
+  --rows: 2;
+  --card-gap: clamp(4px, .7vw, 9px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── FRANJA SUPERIOR ─────────────────────────────────────────── */
+.top-bar {
+  flex: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: clamp(.7rem, 1.9vw, 1.15rem) clamp(1rem, 3vw, 2rem);
+  border-bottom: 1px solid var(--line);
+}
+
+.brand-title {
+  display: inline-block;
+  font-family: var(--font-title);
+  font-size: clamp(1.5rem, 3.1vw, 2.4rem);
+  line-height: .86;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color .2s ease;
+}
+.brand-title:hover, .brand-title:focus-visible { color: var(--accent); outline: none; }
+
+.cat-switch {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  margin-top: .3rem;
+  font-size: clamp(.68rem, 1.5vw, .88rem);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.cat-switch-item {
+  font-weight: 700;
+  color: rgba(0, 0, 0, .28);      /* catálogo inactivo: gris claro, bien apagado */
+  text-decoration: none;
+  cursor: default;
+  transition: color .18s ease, transform .18s ease;
+}
+.cat-switch-item.is-active { color: var(--ink); cursor: default; }   /* catálogo activo: negrita/negro, no clickeable */
+a.cat-switch-item:hover, a.cat-switch-item:focus-visible, a.cat-switch-item:active { color: var(--accent); transform: translateY(-1px); outline: none; cursor: pointer; }
+.cat-switch-sep { font-size: .8em; color: var(--line); user-select: none; }
+
+.top-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .55rem;
+}
+
+.lang-switch { display: flex; align-items: center; gap: .4rem; }
+
+.lang-btn {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: 700 .72rem/1 var(--font-ui);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);                 /* por defecto: gris */
+  cursor: pointer;
+  transition: color .18s ease, transform .18s ease;
+}
+.lang-btn.is-active { color: var(--ink); }   /* seleccionado: negro */
+.lang-btn:hover, .lang-btn:active { color: var(--accent); transform: translateY(-1px); }   /* hover / tap */
+.lang-sep { font-size: .6rem; color: var(--line); user-select: none; }
+
+.socials { display: flex; align-items: center; gap: .55rem; }
+
+.social-link {
+  display: inline-flex;
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform .2s ease, color .2s ease, filter .2s ease;
+}
+.social-link svg { width: 27px; height: 27px; fill: currentColor; }   /* algo mayores que los botones de idioma */
+.social-link:hover, .social-link:focus-visible, .social-link:active { transform: translateY(-2px); outline: none; }
+.social-link[data-brand="whatsapp"]:hover, .social-link[data-brand="whatsapp"]:active { color: #25d366; filter: drop-shadow(0 0 10px rgba(37, 211, 102, .28)); }
+.social-link[data-brand="instagram"]:hover, .social-link[data-brand="instagram"]:active { color: #ff4fa3; filter: drop-shadow(0 0 10px rgba(255, 79, 163, .28)); }
+.social-link[data-brand="facebook"]:hover, .social-link[data-brand="facebook"]:active { color: #1877f2; filter: drop-shadow(0 0 10px rgba(24, 119, 242, .28)); }
+
+/* ── FRANJA CENTRAL · MOSAICO ────────────────────────────────── */
+.mosaic-section {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(.6rem, 1.6vw, 1.2rem) clamp(1rem, 3vw, 2rem) 0;
+}
+
+.mosaic-viewport {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.mosaic-track {
+  display: flex;
+  height: 100%;
+  transition: transform .55s cubic-bezier(.2, .9, .2, 1);
+}
+
+.mosaic-page {
+  flex: 0 0 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  grid-template-rows: repeat(var(--rows), 1fr);
+  gap: var(--card-gap);
+}
+
+/* En táctil el paginado no es por transform: el viewport scrollea nativo,
+   con "snap" a cada página — momentum e inercia del sistema, gratis. */
+body.is-touch .mosaic-viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+body.is-touch .mosaic-viewport::-webkit-scrollbar { display: none; }
+body.is-touch .mosaic-page { scroll-snap-align: start; scroll-snap-stop: always; }
+body.is-touch .mosaic-track { transition: none; }
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  background: #ececec;
+  cursor: pointer;
+  animation: cardIn .55s cubic-bezier(.2, .9, .2, 1) backwards;
+}
+.card:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+@keyframes cardIn { from { opacity: 0; transform: translateY(16px) scale(.985); } to { opacity: 1; transform: none; } }
+
+.card-media, .card-media > * {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.card-media model-viewer { --poster-color: #ececec; }
+/* La foto se revela con un fundido en cuanto termina de cargar, en vez de
+   aparecer de golpe (o dejar ver el fondo oscuro/gris mientras carga). */
+.card-media img, .ov-media img { opacity: 0; transition: opacity .22s ease; }
+.card-media img.is-loaded, .ov-media img.is-loaded { opacity: 1; }
+
+.card-tag {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: .5rem .55rem;
+  font-size: clamp(.6rem, 1.3vw, .74rem);
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #fff;
+  text-align: left;
+  background: linear-gradient(to top, rgba(0, 0, 0, .62), transparent);
+  /* Sombra propia además del degradé: algunas portadas (ej. el poster claro
+     de un modelo 3D, #ececec) no dejan que el degradé oscurezca lo
+     suficiente si el nombre ocupa 2 líneas — la sombra asegura contraste
+     pase lo que pase detrás. */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, .85), 0 0 8px rgba(0, 0, 0, .5);
+  opacity: 0;
+  transition: opacity .18s ease;
+  pointer-events: none;
+}
+.card:hover .card-tag, .card:focus-visible .card-tag { opacity: 1; }
+/* Sin hover, el nombre queda siempre visible pero discreto. */
+body.is-touch .card-tag {
+  opacity: 1;
+  padding: .35rem .4rem;
+  font-size: clamp(.52rem, 2.6vw, .62rem);
+  background: linear-gradient(to top, rgba(0, 0, 0, .72) 0%, rgba(0, 0, 0, .38) 60%, transparent 100%);
+}
+
+/* Marco naranja que viaja entre las cards siguiendo el cursor */
+.mosaic-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  border: 3px solid var(--accent);
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  will-change: transform, width, height;
+  transition:
+    transform .34s cubic-bezier(.34, 1.26, .64, 1),
+    width .34s cubic-bezier(.34, 1.26, .64, 1),
+    height .34s cubic-bezier(.34, 1.26, .64, 1),
+    opacity .4s ease;
+}
+
+/* Flechas de avance horizontal del mosaico */
+.mosaic-nav {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: clamp(.45rem, 1.3vw, .95rem) 0;
+}
+
+.mnav-arrow {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--line);
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color .18s ease, color .18s ease, opacity .18s ease;
+}
+.mnav-arrow svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.mnav-arrow:hover:not(:disabled), .mnav-arrow:active:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.mnav-arrow:disabled { opacity: .28; cursor: default; }
+
+.mosaic-count {
+  min-width: 5ch;
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: .22em;
+  font-size: .78rem;
+  color: var(--muted);
+}
+
+/* ── FRANJA INFERIOR ─────────────────────────────────────────── */
+.bottom-bar {
+  flex: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .5rem clamp(1rem, 3vw, 2rem);
+  border-top: 1px solid var(--line);
+}
+
+.foot-credit {
+  font-size: .62rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.foot-location {
+  font-size: .62rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+}
+
+.back-home {
+  font-weight: 700;
+  font-size: .74rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  padding: .35rem .6rem;
+  margin: -.35rem -.6rem;
+  border: 1.5px solid transparent;
+  transition: border-color .2s ease, color .2s ease;
+}
+.back-home:hover, .back-home:focus-visible, .back-home:active { border-color: var(--accent); color: var(--accent); outline: none; }
+
+/* ── ENTRADA ─────────────────────────────────────────────────── */
+@keyframes riseIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+.brand-title { animation: riseIn .5s cubic-bezier(.2, .9, .2, 1) 40ms backwards; }
+.cat-switch   { animation: riseIn .5s cubic-bezier(.2, .9, .2, 1) 130ms backwards; }
+.lang-switch { animation: riseIn .5s cubic-bezier(.2, .9, .2, 1) 210ms backwards; }
+.socials     { animation: riseIn .5s cubic-bezier(.2, .9, .2, 1) 300ms backwards; }
+.mosaic-nav  { animation: riseIn .5s cubic-bezier(.2, .9, .2, 1) 380ms backwards; }
+.bottom-bar  { animation: riseIn .5s cubic-bezier(.2, .9, .2, 1) 380ms backwards; }
+/* Las cards entran después de los textos: el retraso base se fija en el JS. */
+
+/* ── SALIDA (clic en "Volver al Home") ───────────────────────── */
+.leaving .brand-title,
+.leaving .cat-switch,
+.leaving .lang-switch,
+.leaving .socials,
+.leaving .mosaic-nav,
+.leaving .bottom-bar,
+.leaving .mosaic-frame {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .22s ease, transform .22s ease;
+}
+.leaving .card {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .3s ease, transform .3s ease;   /* transition-delay escalonado desde el JS */
+}
+
+/* ── OVERLAY ─────────────────────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 3rem);
+}
+.overlay[hidden] { display: none; }
+
+.overlay-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 11, .82);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.overlay-panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .9rem;
+  width: min(92vw, 540px);
+}
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ovRise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes ovFall { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(8px); } }
+
+/* Entrada escalonada: primero la foto, luego los navdots, luego los botones (izq→der).
+   El índice del botón va en --i (fijado por :nth-child) para no depender de
+   reglas con :nth-child en el delay, y que la salida pueda anularlo. */
+.dock-btn { --i: 0; }
+#ov-dock .dock-btn:nth-child(2) { --i: 1; }
+#ov-dock .dock-btn:nth-child(3) { --i: 2; }
+#ov-dock .dock-btn:nth-child(4) { --i: 3; }
+#ov-dock .dock-btn:nth-child(5) { --i: 4; }
+
+.overlay:not([hidden]) .overlay-backdrop { animation: fade .18s ease; }
+.overlay:not([hidden]) .ov-stage { animation: ovRise .32s cubic-bezier(.2, .9, .2, 1) backwards; }
+.overlay:not([hidden]) .ov-dots  { animation: ovRise .3s cubic-bezier(.2, .9, .2, 1) .42s backwards; }
+.overlay:not([hidden]) .dock-btn { animation: ovRise .3s cubic-bezier(.2, .9, .2, 1) backwards; animation-delay: calc(.18s + var(--i) * .055s); }
+
+/* Salida rápida y a la vez (más rápida que la entrada). */
+.overlay.is-closing .overlay-backdrop { animation: fade .13s ease reverse forwards; }
+.overlay.is-closing .ov-stage,
+.overlay.is-closing .ov-dots,
+.overlay.is-closing .dock-btn { animation: ovFall .12s ease forwards; animation-delay: 0s; }
+
+.ov-stage {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  max-height: 66vh;
+  background: #111214;
+  border: 3px solid transparent;
+  overflow: hidden;
+  transition: background .2s ease, border-color .2s ease;
+}
+/* Modo 3D: fondo transparente y un marco naranja, como el del mosaico — el
+   modelo "flota" sobre el backdrop en vez de ir sobre un panel oscuro sólido. */
+.ov-stage.is-3d {
+  background: transparent;
+  border-color: var(--accent);
+}
+.ov-media, .ov-media > * {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.ov-media img, .ov-media video { object-fit: contain; background: #111214; }
+.ov-media model-viewer { --poster-color: #111214; background: #111214; }
+.ov-media model-viewer.is-floating { --poster-color: transparent; background: transparent; }
+
+/* Rótulo que indica qué se está mostrando ("Fotos y videos" / "Modelo 3D"),
+   para que el modo activo no dependa solo del ícono resaltado en el dock. */
+.ov-mode-label {
+  position: absolute;
+  top: .7rem;
+  left: .8rem;
+  z-index: 3;
+  padding: .3rem .65rem;
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(10, 10, 11, .55);
+  border-radius: 5px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity .18s ease, transform .18s ease;
+}
+.ov-mode-label.is-visible { opacity: 1; transform: none; }
+body.is-touch .ov-mode-label { font-size: .58rem; padding: .25rem .5rem; top: .55rem; left: .55rem; }
+
+/* Panel de descripción: título / medidas / descripción, sobre la imagen. */
+.ov-info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  padding: 1.15rem 1.2rem 1.2rem;
+  background: linear-gradient(to top, rgba(10, 10, 11, .9) 50%, rgba(10, 10, 11, 0));
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.ov-info.is-visible { opacity: 1; transform: none; pointer-events: auto; }
+.ov-info-title {
+  font-family: var(--font-title);
+  font-size: clamp(1.3rem, 5vw, 1.85rem);
+  line-height: .92;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: .5rem;
+}
+.ov-info-measures {
+  font-size: clamp(.85rem, 2.4vw, .98rem);
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .88);
+  margin-bottom: .45rem;
+}
+.ov-info-text {
+  font-size: clamp(.92rem, 2.6vw, 1.05rem);
+  line-height: 1.46;
+  letter-spacing: .01em;
+  color: rgba(255, 255, 255, .95);
+}
+/* En táctil el panel arranca cerrado (se prioriza ver la foto); si se abre,
+   un tamaño más compacto y proporcional a la pantalla chica. */
+body.is-touch .ov-info { padding: .85rem .9rem .9rem; }
+body.is-touch .ov-info-title { font-size: clamp(1.05rem, 5.5vw, 1.4rem); margin-bottom: .35rem; }
+body.is-touch .ov-info-measures { font-size: clamp(.72rem, 3.2vw, .84rem); margin-bottom: .3rem; }
+body.is-touch .ov-info-text { font-size: clamp(.8rem, 3.4vw, .92rem); line-height: 1.4; }
+
+/* Altura siempre reservada (min-height) aunque quede sin puntos en modo 3D,
+   para que el panel nunca cambie de alto y el dock/la X no se reposicionen. */
+.ov-dots { display: flex; gap: 6px; align-items: center; min-height: 6px; }
+.ov-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 0;
+  padding: 0;
+  background: rgba(255, 255, 255, .3);
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+.ov-dot.is-active { background: var(--accent); transform: scale(1.4); }
+
+/* Dock estilo macOS (sin recuadro agrupador) */
+.ov-dock {
+  display: flex;
+  align-items: flex-end;
+  gap: .55rem;
+}
+
+.dock-btn {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .06);
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform .16s cubic-bezier(.2, .9, .2, 1), background .16s ease;
+}
+.dock-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.dock-btn[data-act="whatsapp"] svg,
+.dock-btn[data-act="instagram"] svg { width: 23px; height: 23px; fill: currentColor; stroke: none; }
+.dock-btn:focus-visible, .dock-btn:active {
+  transform: translateY(-6px) scale(1.12);
+  background: var(--accent);
+  outline: none;
+}
+.dock-btn[data-act="whatsapp"]:focus-visible, .dock-btn[data-act="whatsapp"]:active { background: #25d366; }
+.dock-btn[data-act="instagram"]:focus-visible, .dock-btn[data-act="instagram"]:active { background: #ff4fa3; }
+.dock-btn.is-on { background: var(--accent); }
+.dock-btn[hidden] { display: none; }
+
+.overlay-close {
+  position: absolute;
+  top: -2.7rem;
+  right: 0;
+  z-index: 5;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, .3);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .06);
+  color: #fff;
+  cursor: pointer;
+  transition: background .18s ease;
+}
+.overlay-close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+.overlay-close:active { background: rgba(255, 255, 255, .16); }
+/* Se enfoca por JS al abrir el overlay (para que Escape funcione y lectores
+   de pantalla lo anuncien) — sin esto, el navegador dibuja su anillo de foco
+   por defecto (celeste) como si estuviera "preseleccionada". Se mantiene el
+   anillo solo para navegación real por teclado. */
+.overlay-close:focus { outline: none; }
+.overlay-close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+/* En táctil, arriba del panel puede quedar bajo la barra de estado: se mete
+   adentro, sobre la esquina de la foto, con más contraste para que resalte. */
+body.is-touch .overlay-close {
+  top: .6rem;
+  right: .6rem;
+  background: rgba(0, 0, 0, .45);
+  border-color: rgba(255, 255, 255, .4);
+}
+
+/* :hover real (mouse con precisión fina) separado de :active/:focus-visible:
+   en táctil el navegador simula :hover al tocar y no lo "suelta" hasta el
+   próximo toque en otro lado — eso dejaba los botones del dock y la (X) del
+   overlay con pinta de seguir apretados después de soltar el dedo. Al
+   sacar :hover de estos botones en táctil, el único estado que queda tras
+   soltar es el normal — :active ya cubre el feedback instantáneo del tap. */
+@media (hover: hover) and (pointer: fine) {
+  .dock-btn:hover { transform: translateY(-6px) scale(1.12); background: var(--accent); outline: none; }
+  .dock-btn[data-act="whatsapp"]:hover { background: #25d366; }
+  .dock-btn[data-act="instagram"]:hover { background: #ff4fa3; }
+  .overlay-close:hover { background: rgba(255, 255, 255, .16); }
+}
+
+/* ── MOVIMIENTO REDUCIDO ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .brand-title, .cat-switch, .lang-switch, .socials, .mosaic-nav, .bottom-bar, .card,
+  .overlay-backdrop, .overlay-panel, .ov-stage, .ov-dots, .dock-btn {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .mosaic-track, .mosaic-frame, .dock-btn, .ov-info, .card-media img, .ov-media img { transition: none !important; }
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+/* --cols y --rows los calcula main.js para que el mosaico llene siempre
+   el espacio disponible, sea cual sea la forma de la ventana. */
+@media (max-width: 480px) {
+  /* La franja superior nunca cambia de alto: marca a la izquierda, idiomas
+     + RRSS SIEMPRE en la esquina superior derecha (nada de apilarse debajo). */
+  .top-bar { gap: .5rem; }
+  .social-link svg { width: 23px; height: 23px; }
+  .foot-location { display: none; }   /* barra inferior angosta: prioridad a créditos + volver al home */
+}
