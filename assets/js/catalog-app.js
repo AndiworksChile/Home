@@ -274,7 +274,7 @@ function renderMosaic() {
 
   if (PRODUCTS.length === 0) {
     const pageEl = document.createElement('div');
-    pageEl.className = 'mosaic-page';
+    pageEl.className = 'mosaic-page mosaic-page--empty';
     pageEl.appendChild(buildEmptyStateCard(animatedEntrance));
     track.appendChild(pageEl);
     firstRender = false;

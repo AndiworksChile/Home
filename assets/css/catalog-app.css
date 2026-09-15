@@ -169,19 +169,32 @@ body.is-touch .mosaic-track { transition: none; }
 
 @keyframes cardIn { from { opacity: 0; transform: translateY(16px) scale(.985); } to { opacity: 1; transform: none; } }
 
-/* Reemplaza el mosaico cuando window.PRODUCTS está vacío — comparte .card
-   (mismo tamaño de celda, misma animación de entrada cardIn y de salida
-   ".leaving .card" que una card real) pero sin cursor de mano: no es
-   clickeable (ver el `if (!card._product) return` del marco naranja). */
+/* Reemplaza el mosaico cuando window.PRODUCTS está vacío. .mosaic-page--empty
+   ignora la grilla de --cols/--rows (pensada para muchas cards) y centra una
+   sola — si no, la card quedaba pegada en la primera celda de esa grilla,
+   chica y en la esquina. La card en sí comparte .card (misma animación de
+   entrada cardIn y de salida ".leaving .card" que una card real) pero con
+   tamaño fijo propio en vez del 100%/100% que hereda de .card, y sin cursor
+   de mano: no es clickeable (ver el `if (!card._product) return` del marco
+   naranja). */
+.mosaic-page--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .mosaic-empty {
+  width: min(60vw, 320px);
+  height: auto;
+  aspect-ratio: 3 / 4;
+  flex: none;
   cursor: default;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 1.5rem;
   color: var(--muted);
   font-family: var(--font-title);
-  font-size: clamp(.95rem, 5vw, 1.3rem);
+  font-size: clamp(1rem, 4vw, 1.5rem);
   letter-spacing: .04em;
   text-transform: uppercase;
   text-align: center;
