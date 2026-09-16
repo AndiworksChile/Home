@@ -376,7 +376,7 @@ function openBio(button) {
   bioActive = true;
   trackEvent('bio_open');
   /* El fondo temático (video + oscurecido) es cosa del hover de escritorio;
-     en táctil el fondo va por su cuenta (ver startTouchBackdrop), así que acá
+     en táctil el fondo va por su cuenta (ver initBackdropVideo), así que acá
      no se toca. */
   if (button && !IS_TOUCH) { setTheme(button.dataset.theme); positionArrowsAt(button); }
   if (IS_TOUCH) setVideoBlur(true);   /* en táctil no hay hover: el tap en "Historia" es el disparador del blur */
@@ -524,7 +524,7 @@ buttons.forEach((button, index) => {
 
     /* En escritorio el hover ya sincronizó el fondo con este botón. En
        táctil no existe ese paso — el fondo va por su cuenta (ver
-       startTouchBackdrop) y el tap solo dispara la animación de
+       initBackdropVideo) y el tap solo dispara la animación de
        salida/entrada correspondiente, sin espera artificial de por medio. */
     if (isBio) { event.preventDefault(); openBio(button); return; }
     if (isLaser) { event.preventDefault(); openLaser(button); return; }
@@ -553,14 +553,20 @@ if (!IS_TOUCH) {
 
 /* ── FONDO EN TÁCTIL ──
    En escritorio se usa la capa por defecto (Video01_H.mp4). En táctil se
-   cambia a la capa marcada con [data-mobile] (Video02_V.mp4, pensada para
+   usa la capa marcada con [data-mobile] (Video02_V.mp4, pensada para
    pantalla vertical). No se activa con "reducir movimiento" (deja el fondo
-   estático por defecto). */
+   estático por defecto).
+   La capa activa se decide UNA sola vez, antes de intentar reproducir nada:
+   si primero se reproduce el video de escritorio y al toque siguiente se lo
+   pausa para activar el móvil (como se hacía antes), el pause() interrumpe
+   la promesa de play() en pleno vuelo y en varios navegadores móviles eso
+   basta para que el `play()` del video correcto también quede bloqueado,
+   mostrando el ícono nativo de Play en vez de arrancar en loop. */
 /* Algunos navegadores móviles (Bajo consumo en iOS, ahorro de datos en
-   Chrome/Android) ignoran `autoplay` incluso con el video silenciado, y lo
-   dejan pausado mostrando el ícono de Play nativo. `muted`/`defaultMuted`
-   se fuerzan como propiedad (no solo atributo HTML) porque en iOS es lo que
-   de verdad habilita la reproducción automática. */
+   Chrome/Android) igual pueden ignorar `autoplay` aun con el video
+   silenciado. `muted`/`defaultMuted` se fuerzan como propiedad (no solo
+   atributo HTML) porque en iOS es lo que de verdad habilita la reproducción
+   automática. */
 function tryPlay(video) {
   if (!video) return;
   video.defaultMuted = true;
@@ -568,20 +574,19 @@ function tryPlay(video) {
   video.play().catch(() => {});
 }
 
-function startTouchBackdrop() {
-  if (!IS_TOUCH || prefersReduce || !mobileVideoLayer) {
-    mobileVideoLayer?.querySelector('video')?.pause();
-    return;
-  }
-  desktopVideoLayer?.classList.remove('active');
-  desktopVideoLayer?.querySelector('video')?.pause();
-  mobileVideoLayer.classList.add('active');
-  tryPlay(mobileVideoLayer.querySelector('video'));
+function initBackdropVideo() {
+  const useMobile = IS_TOUCH && !prefersReduce && !!mobileVideoLayer;
+  const activeLayer = useMobile ? mobileVideoLayer : desktopVideoLayer;
+  const inactiveLayer = useMobile ? desktopVideoLayer : mobileVideoLayer;
+  inactiveLayer?.classList.remove('active');
+  inactiveLayer?.querySelector('video')?.pause();
+  activeLayer?.classList.add('active');
+  tryPlay(activeLayer?.querySelector('video'));
 }
 
-/* Red de seguridad: si el autoplay quedó bloqueado (ícono de Play visible,
-   video pausado en el primer frame), el primer toque/click en la página
-   reintenta la reproducción — un gesto del usuario siempre lo desbloquea. */
+/* Red de seguridad: si el autoplay quedó bloqueado igual (ícono de Play
+   visible, video pausado en el primer frame), el primer gesto del usuario
+   en la página lo desbloquea. */
 document.addEventListener('pointerdown', () => {
   const activeVideo = document.querySelector('.video-layer.active video');
   if (activeVideo && activeVideo.paused) tryPlay(activeVideo);
@@ -597,5 +602,4 @@ setTheme('gray');
 applyLang(detectLang());
 requestAnimationFrame(() => document.body.classList.add('page-ready'));
 document.fonts?.ready.then(() => moveArrows(lastIndex));
-tryPlay(desktopVideoLayer?.querySelector('video'));
-startTouchBackdrop();
+initBackdropVideo();
