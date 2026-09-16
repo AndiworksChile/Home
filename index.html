@@ -22,20 +22,47 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css?v=20260916b">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260916d">
   <script src="assets/js/analytics.js" defer></script>
-  <script src="assets/js/main.js?v=20260916c" defer></script>
+  <script src="assets/js/main.js?v=20260916d" defer></script>
 </head>
 <body>
-    <!-- La fuente se elige por relación de aspecto y main.js refuerza el
-      autoplay silencioso en Safari iOS. Orden importante: la vertical
-      primero (solo aplica si matchea su media), la horizontal como fallback. -->
+  <!-- `src` directo y un solo archivo: Safari en iOS no resuelve de forma
+       confiable el atributo `media` de <source>, y cuando falla se queda sin
+       ninguna fuente cargada (el video no arranca ni tocando la pantalla).
+       El script de abajo es inline y sin defer a propósito: fija el src
+       durante el parseo, antes de que el navegador evalúe el autoplay. -->
   <div class="video-stage" aria-hidden="true">
-    <video autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture disableremoteplayback>
-      <source src="assets/video/Video02_V.mp4" type="video/mp4" media="(max-aspect-ratio: 1/1)">
-      <source src="assets/video/Video01_H.mp4" type="video/mp4">
-    </video>
+    <video id="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture disableremoteplayback></video>
   </div>
+  <script>
+    (function () {
+      var video = document.getElementById('bg-video');
+      if (!video) return;
+      /* muted como propiedad (no solo atributo) es lo que iOS exige para
+         autorizar el autoplay silencioso. */
+      video.defaultMuted = true;
+      video.muted = true;
+      video.src = window.matchMedia('(max-aspect-ratio: 1/1)').matches
+        ? 'assets/video/Video02_V.mp4'
+        : 'assets/video/Video01_H.mp4';
+
+      function play() {
+        var attempt = video.play();
+        if (attempt && attempt.catch) attempt.catch(function () {});
+      }
+      play();
+      video.addEventListener('loadeddata', play);
+      video.addEventListener('canplay', play);
+      /* Último recurso: si el navegador bloqueó igual el autoplay, cualquier
+         gesto lo destraba. Se sigue escuchando hasta que arranque de verdad. */
+      ['touchstart', 'pointerdown', 'click'].forEach(function (type) {
+        document.addEventListener(type, function () {
+          if (video.paused) play();
+        }, { passive: true });
+      });
+    })();
+  </script>
   <main>
     <section class="home-card" aria-label="Navegación principal">
       <p class="eyebrow" id="home-eyebrow">¡Hola, bienvenido!</p>
