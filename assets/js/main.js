@@ -550,11 +550,23 @@ if (!IS_TOUCH) {
 }
 
 /* ── FONDO DE VIDEO ──
-   No hay JS de reproducción a propósito. El <video> del index se reproduce
-   solo (autoplay + muted + loop + playsinline) y el navegador elige entre la
-   fuente vertical y la horizontal con el `media` de cada <source>. Cualquier
-   play()/pause() desde acá solo podría interrumpir ese autoplay nativo, que
-   es exactamente lo que rompía la reproducción en móvil. */
+   El autoplay declarativo cubre la mayoría de navegadores. Safari iOS puede
+   necesitar que muted quede fijado como propiedad antes de aceptar play(). */
+const backgroundVideo = document.querySelector('.video-stage video');
+function startBackgroundVideo() {
+  if (!backgroundVideo) return;
+  backgroundVideo.muted = true;
+  backgroundVideo.defaultMuted = true;
+  const playAttempt = backgroundVideo.play();
+  if (playAttempt && typeof playAttempt.catch === 'function') playAttempt.catch(() => {});
+}
+if (backgroundVideo) {
+  backgroundVideo.addEventListener('canplay', startBackgroundVideo, { once: true });
+  startBackgroundVideo();
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && backgroundVideo.paused) startBackgroundVideo();
+  });
+}
 
 window.addEventListener('resize', () => {
   moveArrows(lastIndex);

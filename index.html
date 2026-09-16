@@ -24,13 +24,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css?v=20260916b">
   <script src="assets/js/analytics.js" defer></script>
-  <script src="assets/js/main.js?v=20260916b" defer></script>
+  <script src="assets/js/main.js?v=20260916c" defer></script>
 </head>
 <body>
-  <!-- El navegador elige la fuente por relación de aspecto y arranca el video
-       por su cuenta: sin JS de por medio no hay nada que pueda interrumpir el
-       autoplay. Orden importante: la vertical primero (solo aplica si matchea
-       su media), la horizontal como fallback universal. -->
+    <!-- La fuente se elige por relación de aspecto y main.js refuerza el
+      autoplay silencioso en Safari iOS. Orden importante: la vertical
+      primero (solo aplica si matchea su media), la horizontal como fallback. -->
   <div class="video-stage" aria-hidden="true">
     <video autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture disableremoteplayback>
       <source src="assets/video/Video02_V.mp4" type="video/mp4" media="(max-aspect-ratio: 1/1)">
