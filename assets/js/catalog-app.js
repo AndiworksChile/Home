@@ -595,17 +595,50 @@ function stepMedia(dir) {
   renderStageAnimated();
 }
 
-/* Tap sobre la foto para avanzar a la siguiente (solo en modo "Fotos y
-   videos" — en 3D el gesto lo usa el propio <model-viewer>). El swipe por
-   distancia resultaba impreciso en el teléfono; con un tap simple no
-   importa el lado que se toque, y al ser un solo listener con stepMedia()
-   no toca el dock (el ícono de fotos/3D no debería cambiar por esto). Se
-   ignora sobre <video>: ahí manda el control nativo (play/pausa). */
+/* Swipe (izq/der) o tap sobre la foto para cambiar de imagen (solo en modo
+   "Fotos y videos" — en 3D el gesto lo usa el propio <model-viewer>). Se
+   ignora sobre <video>: ahí manda el control nativo (play/pausa).
+   Usa Pointer Events con umbrales propios en vez de 'click': un 'click'
+   sintetizado desde touch se cancela en Chrome/Android apenas hay un
+   pequeño desplazamiento del dedo entre touchstart y touchend (a diferencia
+   de Safari/iOS, más tolerante), lo que hacía que el tap pareciera no
+   funcionar en Android. Calculando nosotros mismos distancia y tiempo entre
+   pointerdown/pointerup no dependemos de esa heurística del navegador. */
 if (IS_TOUCH) {
-  ovMedia.addEventListener('click', (e) => {
+  const SWIPE_MIN_DIST = 40;   // px horizontales mínimos para contar como swipe
+  const TAP_MAX_DIST = 10;     // px de tolerancia para que cuente como tap
+  const TAP_MAX_TIME = 500;    // ms
+  let dragId = null;
+  let startX = 0;
+  let startY = 0;
+  let startT = 0;
+
+  ovMedia.addEventListener('pointerdown', (e) => {
     if (ovMode !== 'media' || !ovProduct || ovProduct.media.length < 2) return;
     if (e.target.tagName === 'VIDEO') return;
-    stepMedia(1);
+    dragId = e.pointerId;
+    startX = e.clientX;
+    startY = e.clientY;
+    startT = Date.now();
+  });
+
+  ovMedia.addEventListener('pointerup', (e) => {
+    if (dragId === null || e.pointerId !== dragId) return;
+    dragId = null;
+    if (ovMode !== 'media' || !ovProduct || ovProduct.media.length < 2) return;
+    if (e.target.tagName === 'VIDEO') return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    if (Math.abs(dx) >= SWIPE_MIN_DIST && Math.abs(dx) > Math.abs(dy)) {
+      stepMedia(dx < 0 ? 1 : -1);   // desliza a la izquierda -> siguiente
+    } else if (Math.abs(dx) <= TAP_MAX_DIST && Math.abs(dy) <= TAP_MAX_DIST
+      && Date.now() - startT <= TAP_MAX_TIME) {
+      stepMedia(1);
+    }
+  });
+
+  ovMedia.addEventListener('pointercancel', (e) => {
+    if (e.pointerId === dragId) dragId = null;
   });
 }
 

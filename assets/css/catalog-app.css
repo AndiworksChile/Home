@@ -443,6 +443,10 @@ body.is-touch .card-tag {
   height: 100%;
   display: block;
 }
+/* Evita que el navegador interprete el swipe horizontal (cambio de foto)
+   como scroll/gesto propio: sin esto Android puede cancelar el gesto a
+   mitad de camino antes de que llegue el pointerup. */
+body.is-touch .ov-media { touch-action: pan-y; }
 .ov-media img, .ov-media video { object-fit: contain; background: #111214; }
 .ov-media model-viewer { --poster-color: #111214; background: #111214; }
 .ov-media model-viewer.is-floating { --poster-color: transparent; background: transparent; }
