@@ -68,11 +68,16 @@ const I18N = {
       title: 'Historia',
       back: 'Volver al menú',
       text: [
-        'Somos una gran empresa... compuesta por una persona. Soy Andrés Baeza Jordán, tengo 31 años. Arquitecto de profesión, y apasionado por la mueblería y el diseño.',
-        'Hace 8 años dejé mi trabajo tradicional para emprender por mi cuenta. Empecé fabricando letreros, stands y exhibidores para marcas y otros emprendimientos.',
-        'Hoy quiero llevar AndiWorks al siguiente nivel: fabricar Muebles Paramétricos Asistidos por WebApp. Una interfaz sencilla para crear, diseñar y enviar a fabricar tu mueble a medida, todo desde el navegador, sin instalar nada y con despacho a tu domicilio.',
-        'Justo ahora cuento con un nuevo espacio para trabajar, ubicado en el sector Sur de Barrio Matta en Santiago de Chile. Lo estoy ordenando y preparando para recibir nuevos pedidos.',
-        'Me encantaría que formes parte de esta historia. Sígueme en Instagram para ver el día a día, o escríbeme si tienes algo en mente. ¡Sería genial trabajar juntos!',
+        '<strong>Somos una gran empresa... compuesta por una persona.</strong>',
+        'Soy Andrés Baeza Jordán, tengo 31 años, soy arquitecto de profesión y desde siempre me ha apasionado diseñar y fabricar cosas.',
+        'Hace 8 años decidí dejar mi trabajo tradicional para emprender por mi cuenta. Comencé fabricando letreros, stands, exhibidores y otros productos personalizados para marcas y emprendimientos. Esa etapa me permitió mucho más que aprender a fabricar: aprendí a trabajar con clientes, materiales, proveedores, tiempos, entregas y todos esos detalles que aparecen cuando una idea deja de estar en el computador y se convierte en algo real. Poco a poco, fui construyendo AndiWorks mientras seguía aprendiendo y experimentando por mi cuenta.',
+        'Hoy quiero volver a juntar dos cosas que han estado presentes durante toda mi vida: <strong>el diseño y la fabricación</strong>.',
+        'Quiero diseñar y fabricar muebles que formen parte de nuestros espacios y de nuestra vida cotidiana: muebles bien diseñados, que puedas adaptar a tus necesidades y gustos sin tener que diseñarlos desde cero.',
+        '<em>La idea es sencilla:</em> eliges un mueble, lo personalizas según como lo quieras —sus medidas, distribución, puertas, cajones, materiales o terminaciones—, ves en <em>tiempo real</em> cómo va quedando y, cuando estás conforme con el resultado, <em>lo mandas a fabricar.</em>',
+        'Para hacer esto posible estoy desarrollando una experiencia de diseño desde el navegador, apoyada en diseño paramétrico, fabricación digital y automatización. La tecnología permite que muchas de las decisiones que normalmente requieren planos, programas especializados y varias conversaciones puedan convertirse en una experiencia mucho más simple y directa.',
+        '<strong>No se trata solamente de elegir un mueble que ya existe. La idea es que puedas tomar un diseño, adaptarlo a tu espacio y terminar con un mueble que realmente sientas tuyo.</strong>',
+        'Este es el comienzo de una nueva etapa para AndiWorks. Actualmente cuento con un nuevo espacio de trabajo en el sector sur de Barrio Matta, en Santiago de Chile, equipado con las herramientas y máquinas necesarias para desarrollar proyectos de distintas escalas, desde productos personalizados hasta mobiliario de mayor tamaño. Desde aquí estoy llevando toda la experiencia acumulada durante estos años hacia una nueva forma de diseñar y fabricar.',
+        '<strong>Me encantaría que formes parte de esta historia.</strong> Puedes seguirme en Instagram para ver cómo va tomando forma AndiWorks, o escribirme si tienes una idea, un proyecto o simplemente algo que te gustaría fabricar. Quizás podamos diseñarlo y construirlo juntos.',
       ],
     },
   },
@@ -93,11 +98,16 @@ const I18N = {
       title: 'Story',
       back: 'Back to menu',
       text: [
-        "We're a big company... made up of one person. I'm Andrés Baeza Jordán, 31 years old. An architect by training, passionate about furniture-making and design.",
-        '8 years ago I left my traditional job to start my own venture. I began by making signs, stands and displays for brands and other businesses.',
-        'Today I want to take AndiWorks to the next level: manufacturing Parametric Furniture Assisted by a WebApp. A simple interface to create, design and send your custom furniture to be made — all from the browser, no installs, with delivery to your door.',
-        "Right now I have a new workspace, located in the South sector of Barrio Matta in Santiago, Chile. I'm setting it up and getting it ready to take on new orders.",
-        "I'd love for you to be part of this story. Follow me on Instagram to see the day-to-day, or write to me if you have something in mind. It'd be great to work together!",
+        "<strong>We're a big company... made up of one person.</strong>",
+        "I'm Andrés Baeza Jordán, I'm 31, an architect by training, and I've always been passionate about designing and making things.",
+        '8 years ago I decided to leave my traditional job to start my own business. I began by making signs, stands, displays and other custom products for brands and small businesses. That stage taught me much more than how to build things: I learned to work with clients, materials, suppliers, timelines, deliveries and all those details that show up when an idea leaves the computer and becomes something real. Little by little, I built AndiWorks while I kept learning and experimenting on my own.',
+        'Today I want to bring together two things that have been part of my whole life: <strong>design and fabrication</strong>.',
+        'I want to design and make furniture that becomes part of our spaces and our everyday lives: well-designed furniture that you can adapt to your needs and taste without having to design it from scratch.',
+        "<em>The idea is simple:</em> you choose a piece, customise it the way you want it —its dimensions, layout, doors, drawers, materials or finishes—, see how it's coming together in <em>real time</em> and, once you're happy with the result, <em>you send it off to be made.</em>",
+        "To make this possible I'm building a design experience that runs in the browser, powered by parametric design, digital fabrication and automation. Technology lets many of the decisions that usually require drawings, specialised software and several conversations become a much simpler and more direct experience.",
+        "<strong>It's not just about choosing a piece of furniture that already exists. The idea is that you can take a design, adapt it to your space and end up with furniture that truly feels like yours.</strong>",
+        "This is the beginning of a new chapter for AndiWorks. I now have a new workshop in the south of Barrio Matta, in Santiago, Chile, equipped with the tools and machines needed to take on projects of different scales, from custom products to larger furniture. This is where I'm taking all the experience gathered over these years towards a new way of designing and making.",
+        "<strong>I'd love for you to be part of this story.</strong> You can follow me on Instagram to see how AndiWorks is taking shape, or write to me if you have an idea, a project or simply something you'd like to have made. Maybe we can design and build it together.",
       ],
     },
   },
@@ -118,11 +128,16 @@ const I18N = {
       title: '故事',
       back: '返回菜单',
       text: [
-        '我们是一家"大公司"……其实只有我一个人。我是安德烈斯·巴埃萨·霍尔丹（Andrés Baeza Jordán），31岁。建筑师出身，热爱家具制造与设计。',
-        '8年前，我辞去了传统工作，开始自己创业。最初是为品牌和其他企业制作招牌、展台和展示架。',
-        '如今，我想让 AndiWorks 迈上新台阶：通过网页应用（WebApp）辅助制造参数化家具。一个简单的界面，让你可以直接在浏览器里创建、设计并下单定制家具，无需安装任何软件，还能送货上门。',
-        '目前我有一个新的工作空间，位于智利圣地亚哥 Barrio Matta 南区。我正在整理和准备，以便接收新的订单。',
-        '我很希望你能成为这个故事的一部分。欢迎在 Instagram 上关注我，了解日常动态，或者写信告诉我你的想法。一起合作会很棒！',
+        '<strong>我们是一家“大公司”……其实只有我一个人。</strong>',
+        '我是安德烈斯·巴埃萨·霍尔丹（Andrés Baeza Jordán），31岁，建筑师出身，一直热爱设计和制作各种东西。',
+        '8年前，我决定辞去传统工作，自己创业。最初为品牌和创业者制作招牌、展台、展示架以及其他定制产品。那段经历让我学到的远不止制作本身：我学会了如何与客户、材料、供应商、工期和交付打交道，以及处理一个想法从电脑走向现实时出现的种种细节。就这样，我一边学习、一边尝试，一点一点地建立起了 AndiWorks。',
+        '如今，我想把贯穿我一生的两件事重新结合在一起：<strong>设计与制造</strong>。',
+        '我想设计并制作能够融入我们空间和日常生活的家具：设计精良、可以根据你的需求和喜好调整，而无需从零开始设计。',
+        '<em>想法很简单：</em>你选择一件家具，按自己的想法进行定制——尺寸、布局、门、抽屉、材料或表面处理——<em>实时</em>看到它的样子，满意之后，<em>就可以下单制作。</em>',
+        '为了实现这一点，我正在开发一种在浏览器中进行设计的体验，基于参数化设计、数字化制造和自动化。技术可以让许多通常需要图纸、专业软件和多次沟通的决定，变成一种更简单、更直接的体验。',
+        '<strong>这不仅仅是挑选一件现成的家具。而是让你可以拿一个设计，根据你的空间进行调整，最终得到一件真正属于你的家具。</strong>',
+        '这是 AndiWorks 新阶段的开始。目前我在智利圣地亚哥 Barrio Matta 南区拥有一个新的工作空间，配备了所需的工具和机器，可以承接不同规模的项目，从定制产品到大型家具。正是在这里，我把这些年积累的经验带向一种全新的设计与制造方式。',
+        '<strong>我很希望你能成为这个故事的一部分。</strong>欢迎在 Instagram 上关注我，看看 AndiWorks 是如何一步步成形的；如果你有想法、项目，或者只是想做点什么，也欢迎写信给我。也许我们可以一起设计、一起把它做出来。',
       ],
     },
   },
@@ -258,7 +273,9 @@ function applyLang(lang, animate) {
     /* Sección "Historia": no entra en la coreografía de fade/FLIP de arriba
        (solo se ve si esa sección está abierta) — basta con cambiar el texto. */
     if (bioTitleEl) bioTitleEl.textContent = t.bio.title;
-    bioTextEls.forEach((el, i) => { if (t.bio.text[i] != null) el.textContent = t.bio.text[i]; });
+    /* innerHTML (no textContent) para conservar <strong>/<em> del texto — el
+       contenido viene solo del objeto I18N de arriba, nunca de input externo. */
+    bioTextEls.forEach((el, i) => { if (t.bio.text[i] != null) el.innerHTML = t.bio.text[i]; });
     if (bioBackBtn) bioBackBtn.textContent = t.bio.back;
     updateOpenStatus();
   };

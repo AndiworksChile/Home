@@ -52,6 +52,15 @@ body {
 }
 .brand-title:hover, .brand-title:focus-visible { color: var(--accent); outline: none; }
 
+/* Cabeza animada a la izquierda de "AndiWorks" (ver brand-head.js). El
+   tamaño va en em para que siga al font-size del título. */
+.brand-title { display: inline-flex; align-items: center; gap: .22em; }
+.brand-head { display: inline-block; flex: none; width: .84em; height: .92em; margin-top: -.08em; }
+.brand-head svg { display: block; width: 100%; height: 100%; overflow: visible; fill: currentColor; }
+.brand-head .bh-head { transform-box: fill-box; transform-origin: 50% 50%; will-change: transform; }
+.brand-head .bh-eye-look { transform-box: fill-box; }
+.brand-head .bh-eye { transform-box: fill-box; transform-origin: 50% 50%; }
+
 .cat-switch {
   display: flex;
   align-items: center;
