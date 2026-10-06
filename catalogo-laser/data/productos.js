@@ -9,7 +9,9 @@
  *   + extraTags  -> description ("Subtítulo | tag1, tag2, ....")
  *   images[]     -> media[] (copiadas a assets/products/<slug>/)
  *
- * Sin modelos 3D ni video en este catálogo (coverType siempre 'media').
+ * Sin modelos 3D (coverType siempre 'media'). Si un producto tiene video
+ * y se quiere como portada de la card, va PRIMERO en media[] (la card usa
+ * media[0]) y lleva `poster` (una foto) por si el navegador no reproduce el video.
  *
  * Se expone como `window.PRODUCTS` (script clásico), igual que
  * catalogo/data/productos.js.
@@ -582,17 +584,17 @@ window.PRODUCTS = [
     links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
   },
   {
-    id: '01-exhibidor-shawarma-s-chile',
+    id: '36-exhibidor-shawarma-s-chile',
     name: 'Exhibidor Shawarma\'s Chile',
     year: '2025',
     description: 'Exhibidor Piramidal | Apilable, Acrílico, Grabado láser.',
     dimensions: ['2025'],
     media: [
-      { type: 'image', src: 'assets/products/01-exhibidor-shawarma-s-chile/exhibidor_shawarma_s_chile_1.webp' },
-      { type: 'image', src: 'assets/products/01-exhibidor-shawarma-s-chile/exhibidor_shawarma_s_chile_2.webp' },
-      { type: 'image', src: 'assets/products/01-exhibidor-shawarma-s-chile/exhibidor_shawarma_s_chile_3.webp' },
-      { type: 'image', src: 'assets/products/01-exhibidor-shawarma-s-chile/exhibidor_shawarma_s_chile_4.webp' },
-      { type: 'image', src: 'assets/products/01-exhibidor-shawarma-s-chile/exhibidor_shawarma_s_chile_5.webp' },
+      { type: 'image', src: 'assets/products/36-exhibidor-shawarma-s-chile/exhibidor_shawarma_s_chile_1.webp' },
+      { type: 'image', src: 'assets/products/36-exhibidor-shawarma-s-chile/exhibidor_shawarma_s_chile_2.webp' },
+      { type: 'image', src: 'assets/products/36-exhibidor-shawarma-s-chile/exhibidor_shawarma_s_chile_3.webp' },
+      { type: 'image', src: 'assets/products/36-exhibidor-shawarma-s-chile/exhibidor_shawarma_s_chile_4.webp' },
+      { type: 'image', src: 'assets/products/36-exhibidor-shawarma-s-chile/exhibidor_shawarma_s_chile_5.webp' },
     ],
     model3d: null,
     coverType: 'media',
@@ -632,4 +634,23 @@ window.PRODUCTS = [
     coverType: 'media',
     links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
   },
-];
+  {
+    id: '39-repisero-piercings-dorado',
+    name: 'Repisero Piercings Dorado',
+    category: 'Objetos',
+    year: '2026',
+    description: 'Logo horizontal con letras -PIERCINGS- en color dorado.',
+    dimensions: ['18cm', '8cm', '10cm'],
+    media: [
+      /* Video primero = portada de la card. El poster se ve mientras carga. */
+      { type: 'video', src: 'assets/products/39-repisero-piercings-dorado/39-repisero-piercings-dorado_video6.mp4', poster: 'assets/products/39-repisero-piercings-dorado/39-repisero-piercings-dorado_imagen1.webp' },
+      { type: 'image', src: 'assets/products/39-repisero-piercings-dorado/39-repisero-piercings-dorado_imagen1.webp' },
+      { type: 'image', src: 'assets/products/39-repisero-piercings-dorado/39-repisero-piercings-dorado_imagen2.webp' },
+      { type: 'image', src: 'assets/products/39-repisero-piercings-dorado/39-repisero-piercings-dorado_imagen3.webp' },
+      { type: 'image', src: 'assets/products/39-repisero-piercings-dorado/39-repisero-piercings-dorado_imagen4.webp' },
+      { type: 'image', src: 'assets/products/39-repisero-piercings-dorado/39-repisero-piercings-dorado_imagen5.webp' },
+    ],
+    model3d: null,
+    coverType: 'media',
+    links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
+  },];
