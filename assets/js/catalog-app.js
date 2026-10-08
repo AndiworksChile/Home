@@ -1,7 +1,9 @@
 /* AndiWorks · Catálogo — interacción del mosaico, overlay e idiomas.
  * Los productos llegan por window.PRODUCTS (data/productos.js). */
 
-const PRODUCTS = Array.isArray(window.PRODUCTS) ? window.PRODUCTS : [];
+/* productos.js se escribe en orden de ingreso (el último agregado va al final),
+ * pero el catálogo muestra primero el más reciente: se invierte una copia. */
+const PRODUCTS = Array.isArray(window.PRODUCTS) ? window.PRODUCTS.slice().reverse() : [];
 
 const track = document.querySelector('#mosaic-track');
 const viewport = document.querySelector('.mosaic-viewport');
