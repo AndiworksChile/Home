@@ -56,6 +56,8 @@ const I18N = {
     back: 'Volver al Home',
     dock: { info: 'Descripción', media: 'Fotos y videos', '3d': 'Ver en 3D', whatsapp: 'Consultar por WhatsApp', instagram: 'Ver en Instagram' },
     measures: 'Medidas',
+    year: 'Año',
+    badge: { wip: 'En progreso', new: 'Nuevo', top: 'El más visto' },
     modeLabel: { media: 'Imágenes del producto', '3d': 'Modelo 3D' },
     empty: 'Catálogo en desarrollo…',
   },
@@ -64,6 +66,8 @@ const I18N = {
     back: 'Back to Home',
     dock: { info: 'Description', media: 'Photos & videos', '3d': 'View in 3D', whatsapp: 'Ask on WhatsApp', instagram: 'View on Instagram' },
     measures: 'Dimensions',
+    year: 'Year',
+    badge: { wip: 'In progress', new: 'New', top: 'Most viewed' },
     modeLabel: { media: 'Product images', '3d': '3D model' },
     empty: 'Catalogue in progress…',
   },
@@ -72,12 +76,13 @@ const I18N = {
     back: '返回首页',
     dock: { info: '产品说明', media: '照片和视频', '3d': '查看 3D', whatsapp: '通过 WhatsApp 咨询', instagram: '在 Instagram 查看' },
     measures: '尺寸',
+    year: '年份',
+    badge: { wip: '进行中', new: '新品', top: '最受关注' },
     modeLabel: { media: '产品图片', '3d': '3D 模型' },
     empty: '目录建设中…',
   },
 };
-/* Cada página de catálogo puede pisar textos puntuales (hoy: "sub" y
-   "measures") definiendo window.CATALOG_I18N_OVERRIDES ANTES de cargar este
+/* Cada página de catálogo puede pisar textos puntuales definiendo window.CATALOG_I18N_OVERRIDES ANTES de cargar este
    script — así este archivo es el único con la lógica, sin copias. */
 if (window.CATALOG_I18N_OVERRIDES) {
   Object.keys(window.CATALOG_I18N_OVERRIDES).forEach((lang) => {
@@ -85,6 +90,10 @@ if (window.CATALOG_I18N_OVERRIDES) {
   });
 }
 let currentLang = 'es';
+/* Opciones de comportamiento por página (hoy solo `showYear`, del catálogo
+   láser), definidas igual que los overrides: ANTES de cargar este script. */
+const OPTIONS = window.CATALOG_OPTIONS || {};
+const CARD_BADGES = ['top', 'new', 'wip'];
 
 /* ── MOSAICO ─────────────────────────────────────────────────── */
 let page = 0;
@@ -214,6 +223,23 @@ function buildCard(product, indexInPage, pageIndex) {
   const coverEl = buildCoverEl(product);
   if (coverEl) media.appendChild(coverEl);
   card.appendChild(media);
+
+  /* Etiquetas "En progreso" / "Nuevo" / "El más visto" (esquina superior
+     derecha, solo en el mosaico — el overlay no las muestra). El texto se
+     actualiza en applyLang(); el orden es siempre el de CARD_BADGES. */
+  const badges = CARD_BADGES.filter((b) => (product.badges || []).includes(b));
+  if (badges.length) {
+    const wrap = document.createElement('span');
+    wrap.className = 'card-badges';
+    badges.forEach((b) => {
+      const badge = document.createElement('span');
+      badge.className = `card-badge card-badge--${b}`;
+      badge.dataset.badge = b;
+      badge.textContent = (I18N[currentLang] || I18N.es).badge[b];
+      wrap.appendChild(badge);
+    });
+    card.appendChild(wrap);
+  }
 
   const tag = document.createElement('span');
   tag.className = 'card-tag';
@@ -706,9 +732,14 @@ function renderInfoText() {
   if (!ovProduct) return;
   const t = I18N[currentLang] || I18N.es;
   ovInfoTitle.textContent = ovProduct.name;
-  const dims = ovProduct.dimensions || [];
-  ovInfoMeasures.textContent = dims.length ? `${t.measures}: ${dims.join(' | ')}` : '';
-  ovInfoMeasures.hidden = !dims.length;
+  /* Año (solo si la página lo pide) y medidas, cada uno en su línea; sin
+     medidas ingresadas, esa línea simplemente no aparece. */
+  const dims = (ovProduct.dimensions || []).filter(Boolean);
+  const lines = [];
+  if (OPTIONS.showYear && ovProduct.year) lines.push(`${t.year}: ${ovProduct.year}`);
+  if (dims.length) lines.push(`${t.measures}: ${dims.join(' | ')}`);
+  ovInfoMeasures.textContent = lines.join('\n');
+  ovInfoMeasures.hidden = !lines.length;
   ovInfoText.textContent = ovProduct.description || '';
 }
 
@@ -862,6 +893,8 @@ function applyLang(lang, animate) {
     if (label) { btn.setAttribute('aria-label', label); btn.title = label; }
   });
   if (ovProduct && !overlay.hidden) { renderInfoText(); updateModeLabel(); }
+
+  track.querySelectorAll('.card-badge').forEach((b) => { b.textContent = t.badge[b.dataset.badge]; });
 
   const emptyEl = track.querySelector('.mosaic-empty');
   if (emptyEl) emptyEl.textContent = t.empty;

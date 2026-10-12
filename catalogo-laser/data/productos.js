@@ -3,15 +3,25 @@
  * Adaptado desde el catálogo comercial de un proyecto anterior (Proyectos
  * antiguos/menupage/catalogo-comercial). Mapeo de campos:
  *   name         -> title de la card / overlay
- *   year         -> única "medida" activa (dimensions[0])
+ *   year         -> línea "Año" del overlay (ver CATALOG_OPTIONS.showYear
+ *                   en catalogo-laser/index.html)
  *   subtitle +
  *   materialTypes
  *   + extraTags  -> description ("Subtítulo | tag1, tag2, ....")
  *   images[]     -> media[] (copiadas a assets/products/<slug>/)
  *
- * Sin modelos 3D (coverType siempre 'media'). Si un producto tiene video
- * y se quiere como portada de la card, va PRIMERO en media[] (la card usa
- * media[0]) y lleva `poster` (una foto) por si el navegador no reproduce el video.
+ * dimensions[] son medidas reales (ej. Stands QR), igual que en catalogo/;
+ * vacío = el overlay no muestra la línea "Medidas".
+ * badges[] opcional: 'top' ("El más visto"), 'new' ("Nuevo") y/o 'wip'
+ * ("En progreso") — etiquetas en la esquina de la card del mosaico (no en el
+ * overlay).
+ * Modelo 3D opcional, igual que en catalogo/: `model3d: { src, poster }`
+ * (el .glb va en la misma carpeta del producto) habilita el botón "3D" del
+ * overlay; con `coverType: '3d'` la card usa el modelo como portada,
+ * auto-rotando. Sin modelo: `model3d: null` y `coverType: 'media'`.
+ * Si un producto tiene video y se quiere como portada de la card, va PRIMERO
+ * en media[] (la card usa media[0]) y lleva `poster` (una foto) por si el
+ * navegador no reproduce el video.
  *
  * Se expone como `window.PRODUCTS` (script clásico), igual que
  * catalogo/data/productos.js.
@@ -23,7 +33,7 @@ window.PRODUCTS = [
     name: 'Jardines Vizcachas Mediterráneas',
     year: '2022',
     description: 'Placa de terciado | Terciado 9mm, Grabado láser, Logo personalizado, Lacado.',
-    dimensions: ['2022'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/01-jardines-vizcachas-mediterraneas/jardines_vizcachas_mediterraneas_1.webp' },
       { type: 'image', src: 'assets/products/01-jardines-vizcachas-mediterraneas/jardines_vizcachas_mediterraneas_2.webp' },
@@ -40,7 +50,7 @@ window.PRODUCTS = [
     name: 'Kavana Reposteria Saludable',
     year: '2025',
     description: 'Stand QR DUO | Acrílico, Grabado láser, Datos de transferencia, Personalizado.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/02-kavana-reposteria-saludable/kavana_reposteria_saludable_1.webp' },
       { type: 'image', src: 'assets/products/02-kavana-reposteria-saludable/kavana_reposteria_saludable_2.webp' },
@@ -56,7 +66,7 @@ window.PRODUCTS = [
     name: 'Hágale pues! Almacén Minimarket',
     year: '2022',
     description: 'Letrero | Terciado, Piezas en relieve, Logo personalizado, Lacado, 90cm diámetro.',
-    dimensions: ['2022'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/03-hagale-pues-almacen-minimarket/hagale_pues_almacen_minimarket_1.webp' },
       { type: 'image', src: 'assets/products/03-hagale-pues-almacen-minimarket/hagale_pues_almacen_minimarket_2.webp' },
@@ -72,7 +82,7 @@ window.PRODUCTS = [
     name: 'Club Pets Quality Life',
     year: '2022',
     description: 'Letrero de madera de pino | Base de pino, 90cm Diámetro, Grabado láser, Personalizado.',
-    dimensions: ['2022'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/04-club-pets-quality-life/club_pets_quality_life_1.webp' },
       { type: 'image', src: 'assets/products/04-club-pets-quality-life/club_pets_quality_life_2.webp' },
@@ -88,7 +98,7 @@ window.PRODUCTS = [
     name: 'Bonpanier Waffers & Chocolates',
     year: '2021',
     description: 'Letrero de madera | Terciado 9mm, Grabado láser, Soporte de pino.',
-    dimensions: ['2021'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/05-bonpanier-waffers-chocolates/bonpanier_waffers_chocolates_1.webp' },
       { type: 'image', src: 'assets/products/05-bonpanier-waffers-chocolates/bonpanier_waffers_chocolates_2.webp' },
@@ -104,7 +114,7 @@ window.PRODUCTS = [
     name: 'Golden Flowers',
     year: '2022',
     description: 'Letrero de Terciado | Terciado 9mm, Grabado láser, Lacado.',
-    dimensions: ['2022'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/06-golden-flowers/golden_flowers_1.webp' },
       { type: 'image', src: 'assets/products/06-golden-flowers/golden_flowers_2.webp' },
@@ -120,7 +130,7 @@ window.PRODUCTS = [
     name: 'Color Ropera',
     year: '2023',
     description: 'Letrero de madera | Terciado 9mm, Grabado láser, Enmarcado.',
-    dimensions: ['2023'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/07-color-ropera/color_ropera_1.webp' },
       { type: 'image', src: 'assets/products/07-color-ropera/color_ropera_2.webp' },
@@ -135,7 +145,7 @@ window.PRODUCTS = [
     name: 'Goth & Clothes',
     year: '2024',
     description: 'Letrero QR Acrílico | Código QR, Grabado láser, Interio / Exterior.',
-    dimensions: ['2024'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/08-goth-clothes/goth_clothes_1.webp' },
       { type: 'image', src: 'assets/products/08-goth-clothes/goth_clothes_2.webp' },
@@ -150,7 +160,7 @@ window.PRODUCTS = [
     name: 'Stand QR Sabor Mediterraneo',
     year: '2025',
     description: 'Stand QR Google | Acrílico, Letras Google, Piezas en relieve, Grabado láser.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/09-stand-qr-sabor-mediterraneo/stand_qr_sabor_mediterraneo_1.webp' },
       { type: 'image', src: 'assets/products/09-stand-qr-sabor-mediterraneo/stand_qr_sabor_mediterraneo_2.webp' },
@@ -167,7 +177,7 @@ window.PRODUCTS = [
     name: 'Retrato en Tono de grises',
     year: '2022',
     description: 'Letrero | Terciado, Grabado láser, Negro, Gris, Blanco, Lacado.',
-    dimensions: ['2022'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/10-retrato-en-tono-de-grises/retrato_en_tono_de_grises_1.webp' },
       { type: 'image', src: 'assets/products/10-retrato-en-tono-de-grises/retrato_en_tono_de_grises_2.webp' },
@@ -183,7 +193,7 @@ window.PRODUCTS = [
     name: 'La Verdi Pizzas y Cocina de la Tierra',
     year: '2022',
     description: 'Letrero | Terciado, Piezas en relieve, Logo personalizado, Lacado, 75cm diámetro.',
-    dimensions: ['2022'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/11-la-verdi-pizzas-y-cocina-de-la-tierra/la_verdi_pizzas_y_cocina_de_la_tierra_1.webp' },
       { type: 'image', src: 'assets/products/11-la-verdi-pizzas-y-cocina-de-la-tierra/la_verdi_pizzas_y_cocina_de_la_tierra_2.webp' },
@@ -199,7 +209,7 @@ window.PRODUCTS = [
     name: 'Exhibidor Contadoor',
     year: '2025',
     description: 'Repisero acrílico | Logo.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/12-exhibidor-contadoor/exhibidor_contadoor_1.webp' },
       { type: 'image', src: 'assets/products/12-exhibidor-contadoor/exhibidor_contadoor_2.webp' },
@@ -216,7 +226,7 @@ window.PRODUCTS = [
     name: 'Verde Liken',
     year: '2022',
     description: 'Letrero | Terciado, Piezas en relieve, Grabado láser, Lacado, 30cm diámetro.',
-    dimensions: ['2022'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/13-verde-liken/verde_liken_1.webp' },
       { type: 'image', src: 'assets/products/13-verde-liken/verde_liken_2.webp' },
@@ -231,7 +241,7 @@ window.PRODUCTS = [
     name: 'Casa Palermo',
     year: '2022',
     description: 'Letrero de madera de pino | Madera de pino 1", Piezas en relieve, Logo personalizado, Lacado, 35cm diámetro.',
-    dimensions: ['2022'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/14-casa-palermo/casa_palermo_1.webp' },
       { type: 'image', src: 'assets/products/14-casa-palermo/casa_palermo_2.webp' },
@@ -246,7 +256,7 @@ window.PRODUCTS = [
     name: 'Stand QR Deleitoso Fast Food',
     year: '2025',
     description: 'Stand QR piezas con relieve | Acrílico, Logo en relieve, Grabado láser.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/15-stand-qr-deleitoso/stand_qr_deleitoso_1.webp' },
       { type: 'image', src: 'assets/products/15-stand-qr-deleitoso/stand_qr_deleitoso_2.webp' },
@@ -260,7 +270,7 @@ window.PRODUCTS = [
     name: 'Crematorio Cemas',
     year: '2025',
     description: 'Mini-Exhibidor QR | Código QR, Acrílico, Grabado láser, Personalizado.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/16-crematorio-cemas/crematorio_cemas_1.webp' },
       { type: 'image', src: 'assets/products/16-crematorio-cemas/crematorio_cemas_2.webp' },
@@ -277,7 +287,7 @@ window.PRODUCTS = [
     name: 'Plaza Clemente',
     year: '2022',
     description: 'Letrero enmarcado | Terciado, Piezas en relieve, Lacado, 35cm diámetro.',
-    dimensions: ['2022'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/17-plaza-clemente/plaza_clemente_1.webp' },
       { type: 'image', src: 'assets/products/17-plaza-clemente/plaza_clemente_2.webp' },
@@ -292,7 +302,7 @@ window.PRODUCTS = [
     name: 'Exhibidor Parrilleros con Camisa',
     year: '2025',
     description: 'Exhibidor QR Grande | Formato Grande, Código QR, Personalizado, Grabado láser, Con relieve.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/18-exhibidor-parrilleros-con-camisa/exhibidor_parrilleros_con_camisa_1.webp' },
       { type: 'image', src: 'assets/products/18-exhibidor-parrilleros-con-camisa/exhibidor_parrilleros_con_camisa_2.webp' },
@@ -309,7 +319,7 @@ window.PRODUCTS = [
     name: 'Reina Nalca Helados Artesanales',
     year: '2022',
     description: 'Letrero | Terciado, Piezas en relieve, Logo personalizado, Lacado, 35cm diámetro.',
-    dimensions: ['2022'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/19-reina-nalca-helados-artesanales/reina_nalca_helados_artesanales_1.webp' },
       { type: 'image', src: 'assets/products/19-reina-nalca-helados-artesanales/reina_nalca_helados_artesanales_2.webp' },
@@ -324,7 +334,7 @@ window.PRODUCTS = [
     name: 'Letrero Espacio Suyai',
     year: '2025',
     description: 'Letrero código QR | Acrílico, Grabado láser, Letras en relieve.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/20-letrero-espacio-suyai/letrero_espacio_suyai_1.webp' },
       { type: 'image', src: 'assets/products/20-letrero-espacio-suyai/letrero_espacio_suyai_2.webp' },
@@ -356,7 +366,7 @@ window.PRODUCTS = [
     name: 'Como en Casa Cocian Vegana',
     year: '2022',
     description: 'Letrero de terciado full color | Piezas en relieve, Logo personalizado, Lacado, 35cm diámetro.',
-    dimensions: ['2022'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/22-como-en-casa-cocian-vegana/como_en_casa_cocian_vegana_1.webp' },
       { type: 'image', src: 'assets/products/22-como-en-casa-cocian-vegana/como_en_casa_cocian_vegana_2.webp' },
@@ -371,7 +381,7 @@ window.PRODUCTS = [
     name: 'Jardin de María y Enrique',
     year: '2022',
     description: 'Letrero enmarcado | Terciado, Piezas en relieve, Lacado, 35cm diámetro.',
-    dimensions: ['2022'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/23-jardin-de-maria-y-enrique/jardin_de_maria_y_enrique_1.webp' },
       { type: 'image', src: 'assets/products/23-jardin-de-maria-y-enrique/jardin_de_maria_y_enrique_2.webp' },
@@ -387,7 +397,7 @@ window.PRODUCTS = [
     name: 'Stand QR DeltaMotos Garage & Racing',
     year: '2026',
     description: 'Stand QR con relieve | Acrílico, Grabado láser.',
-    dimensions: ['2026'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/24-stand-qr-deltamotos-garage-racing/stand_qr_deltamotos_garage_racing_1.webp' },
       { type: 'image', src: 'assets/products/24-stand-qr-deltamotos-garage-racing/stand_qr_deltamotos_garage_racing_2.webp' },
@@ -404,7 +414,7 @@ window.PRODUCTS = [
     name: 'Stand QR Astoria',
     year: '2025',
     description: 'Stand QR Numerado | Acrílico, Código QR, Grabado láser.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/25-stand-qr-astoria/stand_qr_astoria_1.webp' },
       { type: 'image', src: 'assets/products/25-stand-qr-astoria/stand_qr_astoria_2.webp' },
@@ -421,7 +431,7 @@ window.PRODUCTS = [
     name: 'Exhibidor Shawarma\'s Chile',
     year: '2025',
     description: 'Exhibidor Piramidal | Apilable, Acrílico, Grabado láser.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/26-exhibidor-shawarma-s-chile/exhibidor_shawarma_s_chile_1.webp' },
       { type: 'image', src: 'assets/products/26-exhibidor-shawarma-s-chile/exhibidor_shawarma_s_chile_2.webp' },
@@ -438,7 +448,7 @@ window.PRODUCTS = [
     name: 'Jovi Park & Lab',
     year: '2022',
     description: 'Letrero de terciado | Grabado láser, Logo personalizado, Lacado, 80cm diámetro.',
-    dimensions: ['2022'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/27-jovi-park-lab/jovi_park_lab_1.webp' },
       { type: 'image', src: 'assets/products/27-jovi-park-lab/jovi_park_lab_2.webp' },
@@ -454,7 +464,7 @@ window.PRODUCTS = [
     name: 'Stand Qr Duo Brows by Carla',
     year: '2025',
     description: 'Stand Qr Duo | Acrílico, Grabado láser.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/28-stand-qr-duo-brows-by-carla/stand_qr_duo_brows_by_carla_1.webp' },
       { type: 'image', src: 'assets/products/28-stand-qr-duo-brows-by-carla/stand_qr_duo_brows_by_carla_2.webp' },
@@ -471,7 +481,7 @@ window.PRODUCTS = [
     name: 'Stand QR Doggy Snack',
     year: '2025',
     description: 'Stand QR con relieve | Acrílico, Letras en relieve, Grabado láser, Color a elección, Datos de transferencia.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/29-stand-qr-doggy-snack/stand_qr_doggy_snack_1.webp' },
       { type: 'image', src: 'assets/products/29-stand-qr-doggy-snack/stand_qr_doggy_snack_2.webp' },
@@ -488,7 +498,7 @@ window.PRODUCTS = [
     name: 'Trofeo Empresa STLI',
     year: '2025',
     description: 'Trofeo de Roble | Grabado láser, Personalizado, Lacado.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/30-trofeo-empresa-stli/IMG_1106-2.webp' },
       { type: 'image', src: 'assets/products/30-trofeo-empresa-stli/trofeo_empresa_stli_1.webp' },
@@ -499,6 +509,7 @@ window.PRODUCTS = [
     ],
     model3d: null,
     coverType: 'media',
+    badges: ['top'],
     links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
   },
   {
@@ -506,7 +517,7 @@ window.PRODUCTS = [
     name: 'Serpiente negra',
     year: '2025',
     description: 'Letrero de madera | Terciado 9mm, Grabado láser.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/31-serpiente-negra/serpiente_negra_1.webp' },
       { type: 'image', src: 'assets/products/31-serpiente-negra/serpiente_negra_2.webp' },
@@ -523,7 +534,7 @@ window.PRODUCTS = [
     name: 'Parrilleros con camisa',
     year: '2025',
     description: 'Letrero de terciado, acrílico y grabado láser | Terciado 9mm, Grabado láser, Personalizado, Lacado.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/32-parrilleros-con-camisa/parrilleros_con_camisa_1.webp' },
       { type: 'image', src: 'assets/products/32-parrilleros-con-camisa/parrilleros_con_camisa_2.webp' },
@@ -540,7 +551,7 @@ window.PRODUCTS = [
     name: 'Grace Is Good 7',
     year: '2025',
     description: 'Mini-Exhibidor QR | Código QR, Grabado láser, Personalizado, Acrílico, Corte láser.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/33-grace-is-good-7/grace_is_good_7_1.webp' },
       { type: 'image', src: 'assets/products/33-grace-is-good-7/grace_is_good_7_2.webp' },
@@ -557,13 +568,14 @@ window.PRODUCTS = [
     name: 'Exhibidor Kai Elegancia',
     year: '2025',
     description: 'Exhibidor QR Grande, acrílico y madera | Base de madera, Piezas en relieve, Color a elección.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/34-exhibidor-kai-elegancia/exhibidor_kai_elegancia_1.webp' },
       { type: 'image', src: 'assets/products/34-exhibidor-kai-elegancia/exhibidor_kai_elegancia_2.webp' },
     ],
     model3d: null,
     coverType: 'media',
+    badges: ['top'],
     links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
   },
   {
@@ -571,7 +583,7 @@ window.PRODUCTS = [
     name: 'Exhibidor QR SCF Servicios Automotriz',
     year: '2025',
     description: 'Exhibidor QR Grande | Acrílico a color, Piezas en relieve, Datos de transferencia, Grabado láser.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/35-exhibidor-qr-scf-servicios-automotriz/exhibidor_qr_scf_servicios_automotriz_1.webp' },
       { type: 'image', src: 'assets/products/35-exhibidor-qr-scf-servicios-automotriz/exhibidor_qr_scf_servicios_automotriz_2.webp' },
@@ -588,7 +600,7 @@ window.PRODUCTS = [
     name: 'Stand Qr VidaTinta',
     year: '2025',
     description: 'Stand QR | Acrílico, Código QR, Grabado láser.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/36-stand-qr-vidatinta/stand_qr_vidatinta_1.webp' },
       { type: 'image', src: 'assets/products/36-stand-qr-vidatinta/stand_qr_vidatinta_2.webp' },
@@ -605,7 +617,7 @@ window.PRODUCTS = [
     name: 'Stand QR Valevita Panadería',
     year: '2025',
     description: 'Stand QR | Acrílico, Grabado láser, Color a elección.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/37-stand-qr-valevita-panaderia/stand_qr_valevita_panaderia_1.webp' },
       { type: 'image', src: 'assets/products/37-stand-qr-valevita-panaderia/stand_qr_valevita_panaderia_2.webp' },
@@ -622,7 +634,7 @@ window.PRODUCTS = [
     name: 'Exhibidor QR Aura Accesorios',
     year: '2025',
     description: 'Exhibidor QR Grande | Acrílico dorado, Piezas en relieve, Datos de transferencia, Grabado láser.',
-    dimensions: ['2025'],
+    dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/38-exhibidor-qr-aura-accesorios/exhibidor_qr_aura_accesorios_1.webp' },
       { type: 'image', src: 'assets/products/38-exhibidor-qr-aura-accesorios/exhibidor_qr_aura_accesorios_2.webp' },
@@ -653,4 +665,24 @@ window.PRODUCTS = [
     model3d: null,
     coverType: 'media',
     links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
-  },];
+  },
+  {
+    id: '40-crash-jewels-totem-qr',
+    name: 'Crash Jewels Totem QR',
+    year: '2026',
+    description: 'Stand Acrílico QR tipo Totem. Códigos QR, datos de transferencia y logo grabado en láser. Colores personalizados.',
+    dimensions: [],
+    media: [
+      { type: 'image', src: 'assets/products/40-crash-jewels-totem-qr/40-crash-jewels-totem-qr_imagen1.webp' },
+      { type: 'image', src: 'assets/products/40-crash-jewels-totem-qr/40-crash-jewels-totem-qr_imagen2.webp' },
+      { type: 'image', src: 'assets/products/40-crash-jewels-totem-qr/40-crash-jewels-totem-qr_imagen3.webp' },
+      { type: 'image', src: 'assets/products/40-crash-jewels-totem-qr/40-crash-jewels-totem-qr_imagen4.webp' },
+      { type: 'image', src: 'assets/products/40-crash-jewels-totem-qr/40-crash-jewels-totem-qr_imagen5.webp' },
+      { type: 'image', src: 'assets/products/40-crash-jewels-totem-qr/40-crash-jewels-totem-qr_imagen6.webp' },
+    ],
+    model3d: null,
+    coverType: 'media',
+    badges: ['new'],
+    links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
+  },
+];

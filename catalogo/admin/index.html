@@ -11,7 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/admin.css?v=20261005a">
+  <link rel="stylesheet" href="assets/admin.css?v=20261012c">
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 </head>
 <body>
   <header class="pb-top">
@@ -49,9 +50,9 @@
           <textarea id="f-desc" rows="2" maxlength="280"></textarea>
         </label>
 
-        <!-- Solo catálogo de muebles -->
-        <div class="pb-grid pb-only-muebles">
-          <label class="pb-f pb-f-cat">
+        <div class="pb-grid">
+          <!-- Solo catálogo de muebles -->
+          <label class="pb-f pb-f-cat pb-only-muebles">
             <span>Categoría</span>
             <input id="f-cat" list="cat-list" placeholder="Mobiliario" autocomplete="off">
             <datalist id="cat-list">
@@ -66,6 +67,14 @@
           <label class="pb-f pb-f-dim"><span>Ancho</span><input data-dim="1" placeholder="—" autocomplete="off"></label>
           <label class="pb-f pb-f-dim"><span>Alto</span><input data-dim="2" placeholder="—" autocomplete="off"></label>
         </div>
+        <p class="pb-note pb-only-laser">Medidas opcionales (ej. Stands QR) · las vacías no aparecen en el overlay.</p>
+
+        <div class="pb-badges">
+          <span class="pb-label">Etiquetas en la card</span>
+          <label class="pb-check"><input type="checkbox" data-badge="top"> <span class="pb-badge pb-badge--top">El más visto</span></label>
+          <label class="pb-check"><input type="checkbox" data-badge="new"> <span class="pb-badge pb-badge--new">Nuevo</span></label>
+          <label class="pb-check"><input type="checkbox" data-badge="wip"> <span class="pb-badge pb-badge--wip">En progreso</span></label>
+        </div>
       </div>
 
       <div class="pb-block">
@@ -76,16 +85,30 @@
           <span>o haz clic para elegirlos · se respeta su formato (webp, webm, mp4…)</span>
         </label>
         <ol class="pb-tiles" id="tiles"></ol>
+      </div>
 
-        <!-- Solo catálogo de muebles -->
-        <div class="pb-only-muebles pb-3d">
-          <label class="pb-check"><input type="checkbox" id="f-3d"> Tiene modelo 3D (.glb)</label>
-          <label class="pb-check" id="f-3d-cover-wrap" hidden><input type="checkbox" id="f-3d-cover"> Usarlo como portada</label>
+      <!-- Ambos catálogos: modelo 3D opcional (botón "3D" del overlay) y,
+           si se marca, portada de la card auto-rotando -->
+      <div class="pb-block">
+        <h2 class="pb-h"><b>3</b> Modelo 3D <em>opcional · .glb</em></h2>
+        <label class="pb-drop" id="drop-3d">
+          <input type="file" id="f-glb" accept=".glb,model/gltf-binary">
+          <strong>Arrastra el modelo .glb aquí</strong>
+          <span>o haz clic para elegirlo · se renombra y entra al .zip</span>
+        </label>
+        <div class="pb-model" id="model-row" hidden>
+          <model-viewer class="pb-model-view" id="model-view" auto-rotate rotation-per-second="22deg" camera-controls environment-image="neutral" tone-mapping="neutral" shadow-intensity="0.9" shadow-softness="0.8"></model-viewer>
+          <div class="pb-model-info">
+            <p class="pb-model-name" id="model-name"></p>
+            <p class="pb-tiny" id="model-size"></p>
+            <label class="pb-check"><input type="checkbox" id="f-3d-cover"> Usarlo como portada de la card</label>
+            <button type="button" class="pb-btn" id="model-remove">Quitar modelo</button>
+          </div>
         </div>
       </div>
 
       <details class="pb-block pb-links">
-        <summary class="pb-h"><b>3</b> Contacto <em id="links-summary"></em></summary>
+        <summary class="pb-h"><b>4</b> Contacto <em id="links-summary"></em></summary>
         <div class="pb-grid">
           <label class="pb-f pb-f-half"><span>WhatsApp (sin +)</span><input id="f-wa" autocomplete="off"></label>
           <label class="pb-f pb-f-half"><span>Instagram (URL o @usuario)</span><input id="f-ig" autocomplete="off"></label>
@@ -98,6 +121,7 @@
       <div class="pb-out-top">
         <div class="pb-card" id="card">
           <div class="pb-card-media" id="card-media"></div>
+          <span class="pb-card-badges" id="card-badges"></span>
           <span class="pb-card-tag" id="card-tag"></span>
         </div>
 
@@ -119,6 +143,6 @@
     </aside>
   </main>
 
-  <script src="assets/admin.js?v=20261005a" defer></script>
+  <script src="assets/admin.js?v=20261012d" defer></script>
 </body>
 </html>

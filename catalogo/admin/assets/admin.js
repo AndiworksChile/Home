@@ -4,6 +4,8 @@
  *     avisar si un número ya está ocupado,
  *   - toma los archivos reales (arrastrados o elegidos), respeta su formato
  *     y propone el nombre final de cada uno,
+ *   - toma el modelo 3D (.glb) opcional, con vista previa y opción de
+ *     usarlo como portada de la card,
  *   - descarga un .zip con la carpeta y los archivos ya renombrados,
  *   - genera el objeto listo para pegar en data/productos.js.
  * No hay backend: nada se sube a ningún lado, todo ocurre en el navegador. */
@@ -30,6 +32,7 @@ const CATALOGS = {
   },
 };
 const DEFAULT_WA = '56953706307';
+const BADGE_LABELS = { top: 'El más visto', new: 'Nuevo', wip: 'En progreso' };
 const DEFAULT_IG = 'https://www.instagram.com/andiworks.cl/';
 
 /* ── ESTADO ──────────────────────────────────────────────────── */
@@ -42,8 +45,9 @@ const state = {
   desc: '',
   category: '',
   dims: ['', '', ''],
+  badges: [],          // 'top' ("El más visto"), 'new' ("Nuevo"), 'wip' ("En progreso") — etiquetas de la card
   files: [],           // [{ file, url, kind: 'image'|'video', ext }] — el orden es el final
-  has3d: false,
+  model: null,         // { file, url } — modelo 3D (.glb) opcional
   cover3d: false,
   wa: DEFAULT_WA,
   ig: DEFAULT_IG,
@@ -135,11 +139,18 @@ const el = {
   descHint: $('#desc-hint'),
   cat: $('#f-cat'),
   dims: $$('[data-dim]'),
+  badges: $$('[data-badge]'),
+  cardBadges: $('#card-badges'),
   drop: $('#drop'),
   files: $('#f-files'),
   tiles: $('#tiles'),
-  has3d: $('#f-3d'),
-  cover3dWrap: $('#f-3d-cover-wrap'),
+  drop3d: $('#drop-3d'),
+  glb: $('#f-glb'),
+  modelRow: $('#model-row'),
+  modelView: $('#model-view'),
+  modelName: $('#model-name'),
+  modelSize: $('#model-size'),
+  modelRemove: $('#model-remove'),
   cover3d: $('#f-3d-cover'),
   wa: $('#f-wa'),
   ig: $('#f-ig'),
@@ -180,14 +191,12 @@ el.year.addEventListener('input', () => { state.year = el.year.value; render(); 
 el.desc.addEventListener('input', () => { state.desc = el.desc.value; render(); });
 el.cat.addEventListener('input', () => { state.category = el.cat.value; render(); });
 el.dims.forEach((input) => input.addEventListener('input', () => { state.dims[+input.dataset.dim] = input.value; render(); }));
+el.badges.forEach((input) => input.addEventListener('change', () => {
+  state.badges = el.badges.filter((b) => b.checked).map((b) => b.dataset.badge);
+  render();
+}));
 el.wa.addEventListener('input', () => { state.wa = el.wa.value; render(); });
 el.ig.addEventListener('input', () => { state.ig = el.ig.value; render(); });
-el.has3d.addEventListener('change', () => {
-  state.has3d = el.has3d.checked;
-  el.cover3dWrap.hidden = !state.has3d;
-  if (!state.has3d) { state.cover3d = false; el.cover3d.checked = false; }
-  render();
-});
 el.cover3d.addEventListener('change', () => { state.cover3d = el.cover3d.checked; render(); });
 
 /* ── ARCHIVOS ────────────────────────────────────────────────── */
@@ -205,6 +214,26 @@ el.files.addEventListener('change', () => { addFiles(el.files.files); el.files.v
 ['dragenter', 'dragover'].forEach((t) => el.drop.addEventListener(t, (e) => { e.preventDefault(); el.drop.classList.add('is-over'); }));
 ['dragleave', 'drop'].forEach((t) => el.drop.addEventListener(t, (e) => { e.preventDefault(); el.drop.classList.remove('is-over'); }));
 el.drop.addEventListener('drop', (e) => addFiles(e.dataTransfer.files));
+
+/* ── MODELO 3D ───────────────────────────────────────────────── */
+/* Un solo .glb por producto: soltar otro reemplaza al anterior. */
+function setModel(file) {
+  if (state.model) URL.revokeObjectURL(state.model.url);
+  state.model = file ? { file, url: URL.createObjectURL(file) } : null;
+  if (!state.model) { state.cover3d = false; el.cover3d.checked = false; }
+  render();
+}
+function pickModel(list) {
+  const file = [...list].find((f) => /\.glb$/i.test(f.name));
+  if (file) setModel(file);
+}
+el.glb.addEventListener('change', () => { pickModel(el.glb.files); el.glb.value = ''; });
+['dragenter', 'dragover'].forEach((t) => el.drop3d.addEventListener(t, (e) => { e.preventDefault(); el.drop3d.classList.add('is-over'); }));
+['dragleave', 'drop'].forEach((t) => el.drop3d.addEventListener(t, (e) => { e.preventDefault(); el.drop3d.classList.remove('is-over'); }));
+el.drop3d.addEventListener('drop', (e) => pickModel(e.dataTransfer.files));
+el.modelRemove.addEventListener('click', () => setModel(null));
+
+function modelFileName() { return `${slug()}_modelo3d.glb`; }
 
 function move(from, to) {
   if (to < 0 || to >= state.files.length) return;
@@ -274,8 +303,8 @@ function buildProduct() {
 
   const isLaser = state.cat === 'laser';
   const year = state.year.trim();
-  const model3d = (!isLaser && state.has3d)
-    ? { src: `${folder}/${s}_modelo3d.glb`, poster: firstImage ? firstImage.src : '' }
+  const model3d = state.model
+    ? { src: `${folder}/${modelFileName()}`, poster: firstImage ? firstImage.src : '' }
     : null;
   return {
     id: s,
@@ -283,11 +312,13 @@ function buildProduct() {
     category: isLaser ? '' : state.category.trim(),
     year,
     description: state.desc.trim(),
-    /* En el catálogo láser el año es la única "medida" (ver su productos.js). */
-    dimensions: isLaser ? (year ? [year] : []) : state.dims.map(normalizeDim).filter(Boolean),
+    /* Ambos catálogos: medidas reales (vacías = no se muestran). En el láser
+       el año sale de `year` (ver CATALOG_OPTIONS en catalogo-laser/index.html). */
+    dimensions: state.dims.map(normalizeDim).filter(Boolean),
     media,
     model3d,
     coverType: (model3d && state.cover3d) ? '3d' : 'media',
+    badges: state.badges.slice(),
     links: { whatsapp: waLink(state.wa), instagram: igLink(state.ig) },
   };
 }
@@ -326,6 +357,7 @@ function generateCode(p) {
     ? `    model3d: { src: ${jsStr(p.model3d.src)}, poster: ${jsStr(p.model3d.poster)} },`
     : '    model3d: null,');
   L.push(`    coverType: ${jsStr(p.coverType)},`);
+  if (p.badges.length) L.push(`    badges: [${p.badges.map(jsStr).join(', ')}],`);
   L.push(`    links: { whatsapp: ${jsStr(p.links.whatsapp)}, instagram: ${jsStr(p.links.instagram)} },`);
   L.push('  },');
   return L.join('\n');
@@ -349,13 +381,27 @@ function renderNumNote() {
 let lastCoverUrl = null;
 function renderCard(p) {
   el.cardTag.textContent = p.name || 'Nombre del producto';
+  el.cardBadges.innerHTML = p.badges.map((b) =>
+    `<span class="pb-badge pb-badge--${b}">${BADGE_LABELS[b]}</span>`).join('');
   const cover = state.files[0];
-  const key = (p.coverType === '3d' ? '3d' : '') + (cover ? cover.url : '');
+  const key = p.coverType === '3d' ? `3d${state.model.url}` : (cover ? cover.url : '');
   if (key === lastCoverUrl) return;   // no reiniciar el video en cada tecla
   lastCoverUrl = key;
   el.cardMedia.innerHTML = '';
   if (p.coverType === '3d') {
-    el.cardMedia.innerHTML = '<p class="pb-card-empty">Portada 3D<br>(.glb)</p>';
+    /* Mismos atributos que la portada 3D del catálogo (buildCoverEl() en
+       assets/js/catalog-app.js): auto-rotando y sin interacción. */
+    const mv = document.createElement('model-viewer');
+    mv.setAttribute('src', state.model.url);
+    mv.setAttribute('auto-rotate', '');
+    mv.setAttribute('rotation-per-second', '22deg');
+    mv.setAttribute('environment-image', 'neutral');
+    mv.setAttribute('exposure', '1');
+    mv.setAttribute('tone-mapping', 'neutral');
+    mv.setAttribute('shadow-intensity', '0.9');
+    mv.setAttribute('shadow-softness', '0.8');
+    mv.style.pointerEvents = 'none';
+    el.cardMedia.appendChild(mv);
   } else if (cover) {
     el.cardMedia.appendChild(thumbEl(cover));
   } else {
@@ -378,13 +424,25 @@ function renderChips(p) {
   el.chips.innerHTML = '';
   el.chips.appendChild(chip(p.id, 'Nombre de la carpeta')).firstChild.classList.add('pb-chip-folder');
   state.files.forEach((item, i) => el.chips.appendChild(chip(fileName(item, i))));
-  if (p.model3d) el.chips.appendChild(chip(p.model3d.src.split('/').pop()));
-  el.zipBtn.disabled = !state.files.length;
+  if (p.model3d) el.chips.appendChild(chip(modelFileName()));
+  el.zipBtn.disabled = !state.files.length && !state.model;
   el.destPath.textContent = CATALOGS[state.cat].dest;
+}
+
+function renderModel() {
+  const m = state.model;
+  el.drop3d.hidden = !!m;
+  el.modelRow.hidden = !m;
+  el.modelRow.classList.toggle('is-cover', !!m && state.cover3d);
+  if (!m) { el.modelView.removeAttribute('src'); return; }
+  if (el.modelView.getAttribute('src') !== m.url) el.modelView.setAttribute('src', m.url);
+  el.modelName.textContent = modelFileName();
+  el.modelSize.textContent = `${m.file.name} · ${(m.file.size / 1048576).toFixed(1)} MB`;
 }
 
 function render() {
   const p = buildProduct();
+  renderModel();
   renderNumNote();
   renderTiles();
   renderCard(p);
@@ -486,7 +544,7 @@ function makeZip(entries) {   // entries: [{ name, data: Uint8Array }]
 }
 
 el.zipBtn.addEventListener('click', async () => {
-  if (!state.files.length) return;
+  if (!state.files.length && !state.model) return;
   const s = slug();
   el.zipBtn.disabled = true;
   const prev = el.zipBtn.textContent;
@@ -496,6 +554,9 @@ el.zipBtn.addEventListener('click', async () => {
       name: `${s}/${fileName(item, i)}`,
       data: new Uint8Array(await item.file.arrayBuffer()),
     })));
+    if (state.model) {
+      entries.push({ name: `${s}/${modelFileName()}`, data: new Uint8Array(await state.model.file.arrayBuffer()) });
+    }
     const a = document.createElement('a');
     a.href = URL.createObjectURL(makeZip(entries));
     a.download = `${s}.zip`;
