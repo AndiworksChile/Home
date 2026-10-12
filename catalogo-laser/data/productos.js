@@ -12,9 +12,8 @@
  *
  * dimensions[] son medidas reales (ej. Stands QR), igual que en catalogo/;
  * vacío = el overlay no muestra la línea "Medidas".
- * badges[] opcional: 'top' ("El más visto"), 'new' ("Nuevo") y/o 'wip'
- * ("En progreso") — etiquetas en la esquina de la card del mosaico (no en el
- * overlay).
+ * badges[] opcional: 'wip' ("En progreso") y/o 'new' ("Nuevo") — etiquetas
+ * en la esquina de la card del mosaico (no en el overlay).
  * Modelo 3D opcional, igual que en catalogo/: `model3d: { src, poster }`
  * (el .glb va en la misma carpeta del producto) habilita el botón "3D" del
  * overlay; con `coverType: '3d'` la card usa el modelo como portada,
@@ -509,7 +508,6 @@ window.PRODUCTS = [
     ],
     model3d: null,
     coverType: 'media',
-    badges: ['top'],
     links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
   },
   {
@@ -575,7 +573,6 @@ window.PRODUCTS = [
     ],
     model3d: null,
     coverType: 'media',
-    badges: ['top'],
     links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
   },
   {
@@ -682,7 +679,19 @@ window.PRODUCTS = [
     ],
     model3d: null,
     coverType: 'media',
-    badges: ['new'],
+    links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
+  },
+    {
+    id: '41-letrero-contadoor-acrilico',
+    name: 'Letrero Contadoor Acrílico',
+    year: '2026',
+    description: 'Letrero de acrílico de 60x25cm, con logo y letras en relieve  de 3mm.',
+    dimensions: ['60cm', '25cm'],
+    media: [
+    ],
+    model3d: { src: 'assets/products/41-letrero-contadoor-acrilico/41-letrero-contadoor-acrilico_modelo3d.glb', poster: '' },
+    coverType: '3d',
+    badges: ['wip', 'new'],
     links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
   },
 ];
