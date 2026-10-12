@@ -15,10 +15,8 @@ main { position:relative; z-index:2; display:grid; min-height:100dvh; place-item
 body:not(.page-ready) .menu-footer,body:not(.page-ready) .home-logo,body:not(.page-ready) .eyebrow,body:not(.page-ready) h1,body:not(.page-ready) .choice-btn,body:not(.page-ready) .subtitle,body:not(.page-ready) .status-line,body:not(.page-ready) .hover-arrow { opacity:0; }
 body.page-ready h1,body.page-ready .eyebrow,body.page-ready .home-logo { animation:riseIn 860ms cubic-bezier(.2,.9,.2,1) 180ms backwards; }body.page-ready .choice-btn { animation:riseIn 780ms cubic-bezier(.2,.9,.2,1) backwards; }body.page-ready .choice-btn:nth-of-type(1) { animation-delay:820ms; }body.page-ready .choice-btn:nth-of-type(2) { animation-delay:980ms; }body.page-ready .choice-btn:nth-of-type(3) { animation-delay:1140ms; }body.page-ready .subtitle { animation:riseIn 760ms cubic-bezier(.2,.9,.2,1) 1620ms backwards; }body.page-ready .status-line { animation:riseIn 700ms cubic-bezier(.2,.9,.2,1) 1700ms backwards; }body.page-ready .hover-arrow { animation:arrowIn 760ms cubic-bezier(.2,.9,.2,1) 1620ms backwards; }body.page-ready .menu-footer { animation:riseIn 700ms cubic-bezier(.2,.9,.2,1) 1780ms backwards; }
 @media (prefers-reduced-motion:reduce) { .menu-footer,.home-logo,.home-logo-mark,.eyebrow,h1,.choice-btn,.subtitle,.status-line,.hover-arrow { animation:none !important; opacity:1 !important; transform:none !important; } }
-/* Salida al dejar el Home de verdad (click en "Ver el catálogo", "Catálogo
-   láser", etc. — cualquier link que navega a otra página). Incluye
-   .panel-back porque "Catálogo láser" se puede clickear estando dentro de
-   #laser-options, con "Volver al menú" todavía visible al lado. */
+/* Salida al dejar el Home de verdad (click en "Catálogo Láser", etc. —
+   cualquier link que navega a otra página). */
 .leaving .menu-footer,.leaving .home-logo,.leaving .eyebrow,.leaving h1,.leaving .choice-btn,.leaving .subtitle,.leaving .status-line,.leaving .hover-arrow,.leaving .panel-back { opacity:0; transform:translateY(10px); transition:opacity .22s ease,transform .22s ease; }
 .leaving .video-stage { opacity:0 !important; transition:opacity .26s ease; }
 /* Logo del Home (icon.svg, inline en index.html): blanco en reposo y del
@@ -30,7 +28,7 @@ body.page-ready h1,body.page-ready .eyebrow,body.page-ready .home-logo { animati
 body:not(.theme-gray) { --logo-color:rgb(var(--theme-rgb)); }
 @keyframes logoFloat { 0%,100% { transform:translateY(0) rotate(0); } 50% { transform:translateY(-7px) rotate(-1.5deg); } }
 body.is-touch .hover-arrow { display:none; }   /* afordancia de hover: no aplica en táctil */
-body.page-ready .choice-btn[data-action="laser"] { animation-delay:1300ms; }
+body.page-ready .choice-btn[data-track-id="disenar-idea"] { animation-delay:1300ms; }
 body.page-ready .choice-btn[data-action="bio"] { animation-delay:1450ms; }
 
 /* Salida hacia la sección "Historia": igual que .leaving pero SIN apagar
@@ -38,51 +36,6 @@ body.page-ready .choice-btn[data-action="bio"] { animation-delay:1450ms; }
    openBio/closeBio) NI el menu-footer (idiomas/RRSS deben seguir visibles
    también dentro de "Historia"). */
 .menu-hiding .home-logo,.menu-hiding .eyebrow,.menu-hiding h1,.menu-hiding .choice-btn,.menu-hiding .subtitle,.menu-hiding .status-line,.menu-hiding .hover-arrow { opacity:0; transform:translateY(10px); transition:opacity .22s ease,transform .22s ease; }
-
-/* ── SECCIÓN "CORTE Y GRABADO LÁSER" ─────────────────────────────
-   A diferencia de "Historia": SOLO se desvanecen los botones de navegación
-   y las flechas (".choices-hiding") — eyebrow, título, subtítulo y horario
-   quedan visibles todo el tiempo. En su lugar entran, en el mismo lugar,
-   los dos botones de #laser-options (ver JS: openLaser/closeLaser). */
-.choices-hiding #choice-list .choice-btn,.choices-hiding .hover-arrow { opacity:0; transform:translateY(10px); transition:opacity .22s ease,transform .22s ease; }
-body.laser-open #choice-list { display:none; }
-
-.laser-options { position:relative; display:flex; flex-direction:column; align-items:center; gap:.62rem; width:min(100%,470px); padding:0 2rem; }
-.laser-options[hidden] { display:none; }
-
-body:not(.laser-ready) .laser-options .choice-btn,body:not(.laser-ready) #laser-back,body:not(.laser-ready) .laser-options .hover-arrow { opacity:0; }
-body.laser-ready .laser-options .choice-btn { animation:riseIn 560ms cubic-bezier(.2,.9,.2,1) backwards; }
-body.laser-ready #laser-catalogo-btn { animation-delay:60ms; }
-body.laser-ready #laser-cotizador-btn { animation-delay:200ms; }
-body.laser-ready #laser-back { animation:riseIn 560ms cubic-bezier(.2,.9,.2,1) 340ms backwards; }
-body.laser-ready .laser-options .hover-arrow { animation:arrowIn 560ms cubic-bezier(.2,.9,.2,1) 60ms backwards; }
-
-.laser-leaving .laser-options .choice-btn,.laser-leaving #laser-back,.laser-leaving .laser-options .hover-arrow { opacity:0; transform:translateY(10px); transition:opacity .2s ease,transform .2s ease; }
-
-/* "Volver al menú" de la sección láser: mismo lenguaje visual que los
-   choice-btn (misma tipografía, borde, relleno al pasar el mouse) pero
-   menos ancho, para que se note que es un botón levemente distinto aunque
-   su función sea la misma. */
-.panel-back.panel-back--menu-like {
-  width:100%;
-  border:1.5px solid var(--outline);
-  color:var(--page-ink);
-  font:800 clamp(1.15rem,4vw,1.42rem)/1.2 var(--font-ui);
-  letter-spacing:.04em;
-  padding:.84rem 1rem;
-  margin:0;
-  text-transform:uppercase;
-  transition:.22s;
-}
-.panel-back.panel-back--menu-like:hover,.panel-back.panel-back--menu-like:focus-visible,.panel-back.panel-back--menu-like:active {
-  outline:none;
-  transform:translateY(-2px);
-  background:rgb(var(--theme-rgb));
-  border-color:rgb(var(--theme-rgb));
-  color:#fff;
-}
-
-@media (prefers-reduced-motion:reduce) { .laser-options .choice-btn,#laser-back,.laser-options .hover-arrow { animation:none !important; opacity:1 !important; transform:none !important; } }
 
 /* ── SECCIÓN "HISTORIA" ──────────────────────────────────────────
    Ocupa la misma celda del grid que .home-card (se superponen) para que

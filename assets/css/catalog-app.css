@@ -80,6 +80,11 @@ body {
 }
 .cat-switch-item.is-active { color: var(--ink); cursor: default; }   /* catálogo activo: negrita/negro, no clickeable */
 a.cat-switch-item:hover, a.cat-switch-item:focus-visible, a.cat-switch-item:active { color: var(--accent); transform: translateY(-1px); outline: none; cursor: pointer; }
+/* Catálogo bloqueado (hoy el Paramétrico): no navega, se sacude al tocarlo. */
+a.cat-switch-item.is-locked, a.cat-switch-item.is-locked:hover { cursor: not-allowed; }
+.cat-switch-item { display: inline-block; }
+.cat-switch-item.is-shaking { animation: lockedShake 420ms ease; }
+@keyframes lockedShake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(5px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(3px); } }
 .cat-switch-sep { font-size: .8em; color: var(--line); user-select: none; }
 
 .top-right {

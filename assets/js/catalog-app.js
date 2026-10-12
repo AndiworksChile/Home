@@ -52,7 +52,7 @@ const CARD_ENTER_STEP = 60;
 
 const I18N = {
   es: {
-    catSwitch: { productos: 'Catálogo de Productos', laser: 'Catálogo Láser' },
+    catSwitch: { productos: 'Catálogo Paramétrico', laser: 'Catálogo Láser' },
     back: 'Volver al Home',
     dock: { info: 'Descripción', media: 'Fotos y videos', '3d': 'Ver en 3D', whatsapp: 'Consultar por WhatsApp', instagram: 'Ver en Instagram' },
     measures: 'Medidas',
@@ -62,7 +62,7 @@ const I18N = {
     empty: 'Catálogo en desarrollo…',
   },
   en: {
-    catSwitch: { productos: 'Product Catalogue', laser: 'Laser Catalogue' },
+    catSwitch: { productos: 'Parametric Catalogue', laser: 'Laser Catalogue' },
     back: 'Back to Home',
     dock: { info: 'Description', media: 'Photos & videos', '3d': 'View in 3D', whatsapp: 'Ask on WhatsApp', instagram: 'View on Instagram' },
     measures: 'Dimensions',
@@ -72,7 +72,7 @@ const I18N = {
     empty: 'Catalogue in progress…',
   },
   zh: {
-    catSwitch: { productos: '产品目录', laser: '激光产品目录' },
+    catSwitch: { productos: '参数化产品目录', laser: '激光产品目录' },
     back: '返回首页',
     dock: { info: '产品说明', media: '照片和视频', '3d': '查看 3D', whatsapp: '通过 WhatsApp 咨询', instagram: '在 Instagram 查看' },
     measures: '尺寸',
@@ -847,9 +847,22 @@ const brandHome = document.querySelector('#brand-home');
 if (brandHome) brandHome.addEventListener('click', leaveToHome(brandHome.getAttribute('href'), 'catalog_brand_click'));
 
 /* El catálogo activo es un <span> (no navega); el otro es un <a> real —
-   solo ese recibe el click con la misma animación de salida. */
+   solo ese recibe el click con la misma animación de salida. Si está
+   bloqueado (.is-locked, hoy el Catálogo Paramétrico) no navega: se sacude,
+   igual que su botón en el Home. */
 [catSwitchProductos, catSwitchLaser].forEach((el) => {
-  if (el && el.tagName === 'A') el.addEventListener('click', leaveToHome(el.getAttribute('href'), 'catalog_switch_click'));
+  if (!el || el.tagName !== 'A') return;
+  if (el.classList.contains('is-locked')) {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      trackEvent('catalog_switch_locked', { target: el.id });
+      if (el.classList.contains('is-shaking')) return;
+      el.classList.add('is-shaking');
+      el.addEventListener('animationend', () => el.classList.remove('is-shaking'), { once: true });
+    });
+    return;
+  }
+  el.addEventListener('click', leaveToHome(el.getAttribute('href'), 'catalog_switch_click'));
 });
 
 /* ── IDIOMAS ─────────────────────────────────────────────────── */

@@ -1,8 +1,6 @@
-/* Solo los botones de navegación principal (hijos directos de #choice-list)
-   tienen video/tema propio y entran en la coreografía de I18N.buttons por
-   índice. Los botones que aparecen DENTRO de una subsección (ej. las dos
-   opciones de "Corte y grabado láser") usan la misma clase .choice-btn por
-   estilo, pero se consultan aparte para no romper ese mapeo por índice. */
+/* Botones de navegación principal (hijos directos de #choice-list): cada uno
+   tiene tema propio y entra en la coreografía de I18N.buttons por índice
+   (mismo orden que en index.html). */
 const buttons = [...document.querySelectorAll('#choice-list > .choice-btn')];
 const langButtons = [...document.querySelectorAll('.lang-btn')];
 const leftArrow = document.querySelector('#choice-list .hover-arrow-left');
@@ -11,29 +9,7 @@ const choiceList = document.querySelector('#choice-list');
 const homeCard = document.querySelector('.home-card');
 const bioPanel = document.querySelector('#bio-panel');
 const bioBackBtn = document.querySelector('#bio-back');
-const laserOptions = document.querySelector('#laser-options');
-const laserBackBtn = document.querySelector('#laser-back');
-/* Igual que #choice-list: las flechas también siguen al botón que se está
-   tocando/enfocando DENTRO de la subsección "Corte y grabado láser" — ver
-   positionArrowsIn() más abajo, la misma lógica generalizada a cualquier
-   contenedor de botones. */
-const laserArrowLeft = document.querySelector('#laser-arrow-left');
-const laserArrowRight = document.querySelector('#laser-arrow-right');
-const laserButtons = [...document.querySelectorAll('#laser-options .choice-btn, #laser-options .panel-back')];
-let lastLaserButton = null;
 const socialLinks = [...document.querySelectorAll('.social-link')];
-/* #choice-list y #laser-options tienen distinto alto (5 botones vs 2): al
-   intercambiar uno por otro, .home-card cambia de alto y —al estar
-   centrado por el grid (place-items:center)— TODOS sus hijos se corren
-   (los de arriba también, no solo los de abajo). Por eso el FLIP se aplica
-   a todos los hijos directos de .home-card, EXCEPTO los dos contenedores
-   que se están intercambiando: uno de los dos siempre está oculto
-   (display:none) en el momento de medir, así que su rect da 0 y ensuciaría
-   el cálculo — además cada uno ya tiene su propia animación de
-   entrada/salida (.choices-hiding / #laser-options.laser-ready). */
-function reflowEls() {
-  return [...homeCard.children].filter((el) => el.id !== 'choice-list' && el.id !== 'laser-options');
-}
 
 /* Envoltorio de analítica: nunca debe poder romper la página (por eso el
    try/catch adentro de AW.trackEvent, en assets/js/analytics.js). Si ese
@@ -43,7 +19,6 @@ function trackEvent(name, params) {
 }
 const themes = ['theme-gray', 'theme-red', 'theme-blue', 'theme-green', 'theme-yellow', 'theme-purple'];
 let bioActive = false;     /* mientras es true, el fondo (color+video) del botón "Historia" queda fijo */
-let laserActive = false;   /* ídem, para "Corte y grabado láser" */
 const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const canAnimate = !prefersReduce && typeof document.createElement('div').animate === 'function';
 const IS_TOUCH = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
@@ -58,11 +33,11 @@ const I18N = {
     open: 'Abierto ahora',
     closed: 'Cerrado ahora',
     buttons: [
-      { default: 'Quiero un espejo paramétrico', hover: '¡Próximamente!' },
-      { default: 'Ver el catálogo', hover: 'Catálogo de productos' },
+      { default: 'Catálogo Paramétrico', hover: 'Ver catálogo' },
+      { default: 'Catálogo Láser', hover: 'Ver catálogo láser' },
+      { default: 'Servicio de corte y grabado láser', hover: 'Cotiza tu trabajo' },
       { default: 'Diseñar una idea', hover: 'Hablemos' },
-      { default: 'Corte y grabado láser', hover: 'Catálogo Láser' },
-      { default: 'Historia / Por dónde empezamos', hover: 'Conoce mi historia' },
+      { default: 'Historia', hover: 'Por dónde empezamos' },
     ],
     bio: {
       title: 'Historia',
@@ -88,11 +63,11 @@ const I18N = {
     open: 'Open now',
     closed: 'Closed now',
     buttons: [
-      { default: 'I want a parametric mirror', hover: 'Coming soon!' },
-      { default: 'See the catalogue', hover: 'Product catalogue' },
+      { default: 'Parametric Catalogue', hover: 'See catalogue' },
+      { default: 'Laser Catalogue', hover: 'See laser catalogue' },
+      { default: 'Laser cutting & engraving service', hover: 'Get a quote' },
       { default: 'Design an idea', hover: "Let's talk" },
-      { default: 'Laser cutting & engraving', hover: 'Laser Catalogue' },
-      { default: 'Story / Where we start', hover: 'Get to know my story' },
+      { default: 'Story', hover: 'Where we start' },
     ],
     bio: {
       title: 'Story',
@@ -118,11 +93,11 @@ const I18N = {
     open: '现在营业',
     closed: '现在休息',
     buttons: [
-      { default: '我想要参数化镜子', hover: '敬请期待！' },
-      { default: '查看目录', hover: '产品目录' },
+      { default: '参数化产品目录', hover: '查看目录' },
+      { default: '激光产品目录', hover: '查看激光产品目录' },
+      { default: '激光切割与雕刻服务', hover: '获取报价' },
       { default: '设计一个想法', hover: '聊一聊' },
-      { default: '激光切割与雕刻', hover: '激光产品目录' },
-      { default: '故事 / 从哪里开始', hover: '了解我的故事' },
+      { default: '故事', hover: '从哪里开始' },
     ],
     bio: {
       title: '故事',
@@ -158,9 +133,7 @@ function setTheme(name) {
   document.body.classList.add(themes.includes(`theme-${name}`) ? `theme-${name}` : 'theme-gray');
 }
 
-/* Posiciona un par de flechas junto a un botón cualquiera dentro de
-   `container` — misma lógica para #choice-list (por índice, hover) y para
-   #laser-options (por botón, ver positionLaserArrowsAt). */
+/* Posiciona un par de flechas junto a un botón cualquiera dentro de `container`. */
 function positionArrowsIn(container, left, right, button) {
   if (!button || !container || !left || !right) return;
   const list = container.getBoundingClientRect();
@@ -175,43 +148,6 @@ function positionArrowsAt(button) {
 }
 function moveArrows(index) {
   positionArrowsAt(buttons[index]);
-}
-function positionLaserArrowsAt(button) {
-  if (!button) return;
-  lastLaserButton = button;
-  positionArrowsIn(laserOptions, laserArrowLeft, laserArrowRight, button);
-}
-
-/* FLIP genérico: mide la posición de `elements` antes de `mutate()` (el
-   cambio que reacomoda el layout — ej. ocultar #choice-list y mostrar
-   #laser-options, de distinto alto), y si se movieron los desliza desde su
-   posición anterior hasta la nueva en vez de dejarlos saltar de golpe.
-   Mismo criterio que ya usa applyLang() para el cambio de idioma. */
-function flipShift(elements, mutate) {
-  if (!canAnimate) { mutate(); return; }
-  const first = elements.map((el) => el.getBoundingClientRect().top);
-  mutate();
-  const last = elements.map((el) => el.getBoundingClientRect().top);
-  elements.forEach((el, i) => {
-    const delta = first[i] - last[i];
-    el.style.transition = 'none';
-    el.style.transform = Math.abs(delta) < 0.5 ? '' : `translateY(${delta}px)`;
-  });
-  void document.body.offsetHeight;   // fuerza reflow antes de animar al destino
-  requestAnimationFrame(() => {
-    elements.forEach((el) => {
-      if (!el.style.transform) return;
-      el.style.transition = 'transform 260ms cubic-bezier(.2,.9,.2,1)';
-      el.style.transform = 'translateY(0)';
-      const done = (e) => {
-        if (e.propertyName !== 'transform') return;
-        el.style.transition = '';
-        el.style.transform = '';
-        el.removeEventListener('transitionend', done);
-      };
-      el.addEventListener('transitionend', done);
-    });
-  });
 }
 
 const labelLogoTpl = document.querySelector('#tpl-label-logo');
@@ -435,76 +371,6 @@ function closeBio() {
 }
 bioBackBtn.addEventListener('click', closeBio);
 
-/* Sección "Corte y grabado láser": a diferencia de "Historia", acá SOLO se
-   desvanecen los botones de navegación (".choices-hiding" — eyebrow, título,
-   subtítulo y horario quedan visibles todo el tiempo) y en su lugar entran
-   dos botones nuevos (#laser-options). El color/video del botón sí se
-   mantienen fijos mientras se ve esta subsección, igual que en "Historia". */
-let laserTimer;
-function openLaser(button) {
-  clearTimeout(laserTimer);
-  laserActive = true;
-  trackEvent('laser_open');
-  if (button && !IS_TOUCH) { setTheme(button.dataset.theme); positionArrowsAt(button); }
-  document.body.classList.add('choices-hiding');
-  const after = () => {
-    document.body.classList.remove('choices-hiding');
-    flipShift(reflowEls(), () => {
-      document.body.classList.add('laser-open');
-      laserOptions.hidden = false;
-      positionLaserArrowsAt(laserButtons[0]);   /* posición inicial: primer botón de la subsección */
-    });
-    void laserOptions.offsetWidth;   // fuerza reflow para poder re-disparar la animación si se reabre
-    requestAnimationFrame(() => document.body.classList.add('laser-ready'));
-  };
-  if (!canAnimate) { after(); return; }
-  laserTimer = setTimeout(after, 260);
-}
-function closeLaser() {
-  clearTimeout(laserTimer);
-  trackEvent('laser_close');
-  /* Mismo motivo que en closeBio(): si se cierra apenas se abrió, la
-     animación de entrada (.laser-ready) puede seguir corriendo y taparía
-     la de salida — se corta sacando la clase de inmediato. */
-  document.body.classList.remove('laser-ready');
-  document.body.classList.add('laser-leaving');
-  const after = () => {
-    flipShift(reflowEls(), () => {
-      document.body.classList.remove('laser-open', 'laser-ready');
-      laserOptions.hidden = true;
-    });
-    document.body.classList.remove('laser-leaving');
-    laserActive = false;
-    setTheme('gray');
-    setVideoBlur(false);
-  };
-  if (!canAnimate) { after(); return; }
-  laserTimer = setTimeout(after, 220);
-}
-laserBackBtn.addEventListener('click', closeLaser);
-
-/* "Catálogo láser" navega a una página real (catalogo-laser/), con la misma
-   salida animada que el resto de los links que dejan el Home. "Cotizador"
-   todavía no tiene destino definido. */
-const laserCatalogBtn = document.querySelector('#laser-catalogo-btn');
-if (laserCatalogBtn) {
-  laserCatalogBtn.addEventListener('click', (event) => {
-    trackEvent('home_button_click', { button: 'laser-catalogo' });
-    if (!canAnimate) return;
-    event.preventDefault();
-    leaveHome(laserCatalogBtn.getAttribute('href'));
-  });
-}
-
-/* "Servicio de corte y grabado láser" abre WhatsApp en una pestaña nueva con
-   un mensaje precargado (mismo criterio que "Diseñar una idea" del menú
-   principal) — no navega dentro del Home, así que no necesita leaveHome(). */
-const laserCotizadorBtn = document.querySelector('#laser-cotizador-btn');
-if (laserCotizadorBtn) {
-  laserCotizadorBtn.addEventListener('click', () => {
-    trackEvent('home_button_click', { button: 'laser-cotizador' });
-  });
-}
 
 buttons.forEach((button, index) => {
   const show = () => {
@@ -529,28 +395,26 @@ buttons.forEach((button, index) => {
   button.addEventListener('click', (event) => {
     const locked = button.classList.contains('is-locked');
     const isBio = button.dataset.action === 'bio';
-    const isLaser = button.dataset.action === 'laser';
     const opensBlank = button.target === '_blank';
 
     if (locked) {
       event.preventDefault();
       setLabel(button, button.dataset.labelHover || button.dataset.labelDefault);
       shakeOnce(button);
-      /* En escritorio el hover ya deja el texto en "¡Próximamente!" y
+      /* En escritorio el hover ya deja el texto de hover (ej. "Ver catálogo") y
          pointerleave lo revierte al soltar el mouse. En táctil no hay ese
          paso, así que se revierte solo, apenas termina el sacudido. */
       if (IS_TOUCH) button.addEventListener('animationend', () => setLabel(button, button.dataset.labelDefault), { once: true });
       return;
     }
 
-    if (!isBio && !isLaser && button.dataset.trackId) trackEvent('home_button_click', { button: button.dataset.trackId });
+    if (!isBio && button.dataset.trackId) trackEvent('home_button_click', { button: button.dataset.trackId });
 
     /* En escritorio el hover ya sincronizó el fondo con este botón. En
        táctil no existe ese paso — el fondo va por su cuenta (autoplay
        nativo) y el tap solo dispara la animación de
        salida/entrada correspondiente, sin espera artificial de por medio. */
     if (isBio) { event.preventDefault(); openBio(button); return; }
-    if (isLaser) { event.preventDefault(); openLaser(button); return; }
     if (opensBlank) return;   // WhatsApp, etc.: sigue su click normal (nueva pestaña)
     event.preventDefault();
     leaveHome(button.getAttribute('href'));
@@ -559,18 +423,10 @@ buttons.forEach((button, index) => {
 
 if (!IS_TOUCH) {
   choiceList.addEventListener('mouseleave', () => {
-    if (bioActive || laserActive) return;   /* su fondo se mantiene fijo mientras esa sección está abierta */
+    if (bioActive) return;   /* su fondo se mantiene fijo mientras "Historia" está abierta */
     setTheme('gray');
     setVideoBlur(false);
     buttons.forEach((button) => setLabel(button, button.dataset.labelDefault));
-  });
-
-  /* Mismo criterio que los botones de #choice-list: las flechas de
-     #laser-options siguen a cualquiera de sus 3 botones al pasar el mouse o
-     enfocarlo (no cambian tema/video — esta subsección ya tiene el suyo fijo). */
-  laserButtons.forEach((button) => {
-    button.addEventListener('pointerenter', () => positionLaserArrowsAt(button));
-    button.addEventListener('focus', () => positionLaserArrowsAt(button));
   });
 }
 
@@ -582,7 +438,6 @@ if (!IS_TOUCH) {
 
 window.addEventListener('resize', () => {
   moveArrows(lastIndex);
-  if (laserActive) positionLaserArrowsAt(lastLaserButton || laserButtons[0]);
 });
 
 setInterval(updateOpenStatus, 60000);

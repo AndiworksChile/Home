@@ -23,9 +23,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css?v=20261013a">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261013b">
   <script src="assets/js/analytics.js" defer></script>
-  <script src="assets/js/main.js?v=20261013a" defer></script>
+  <script src="assets/js/main.js?v=20261013c" defer></script>
 </head>
 <body>
   <!-- `src` directo y un solo archivo: Safari en iOS no resuelve de forma
@@ -73,17 +73,13 @@
       <h1 id="home-title">¿Qué quieres hacer?</h1>
       <div class="choice-list" id="choice-list">
         <span class="hover-arrow hover-arrow-left" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span><span class="hover-arrow hover-arrow-right" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 12H6"></path><path d="m11 6-6 6 6 6"></path></svg></span>
-        <a class="choice-btn is-locked" data-theme="blue" data-track-id="espejo-bloqueado" data-label-default="Quiero un espejo paramétrico" data-label-hover="¡Próximamente!" role="button" tabindex="0" aria-disabled="true" hidden><span class="btn-shake-wrap"><span class="choice-label">Quiero un espejo paramétrico</span></span></a>
-        <a class="choice-btn" data-theme="red" data-track-id="ver-catalogo" data-label-default="Ver el catálogo" data-label-hover="Catálogo de productos" href="catalogo/index.html"><span class="btn-shake-wrap"><span class="choice-label">Ver el catálogo</span></span></a>
+        <!-- Bloqueado por ahora (is-locked: se sacude al tocarlo, no navega).
+             Para habilitarlo basta con quitar la clase is-locked y aria-disabled. -->
+        <a class="choice-btn is-locked" data-theme="red" data-track-id="catalogo-parametrico" data-label-default="Catálogo Paramétrico" data-label-hover="Ver catálogo" href="catalogo/index.html" aria-disabled="true"><span class="btn-shake-wrap"><span class="choice-label">Catálogo Paramétrico</span></span></a>
+        <a class="choice-btn" data-theme="blue" data-track-id="laser-catalogo" data-label-default="Catálogo Láser" data-label-hover="Ver catálogo láser" href="catalogo-laser/index.html"><span class="btn-shake-wrap"><span class="choice-label">Catálogo Láser</span></span></a>
+        <a class="choice-btn" data-theme="purple" data-track-id="laser-cotizador" data-label-default="Servicio de corte y grabado láser" data-label-hover="Cotiza tu trabajo" href="https://wa.me/56953706307?text=%C2%A1Hola%21%20Quiero%20cotizar%20un%20trabajo%20de%20corte%20y%20grabado%20l%C3%A1ser.%0AAdjunto%20mi%20archivo%20en%20formato%20vectorial%20%28.dxf%2C%20.dwg%20o%20.ai%29%2C%20diferenciando%20las%20l%C3%ADneas%20de%20corte%20y%20de%20grabado.%0AQuedo%20atento%20a%20tu%20respuesta%2C%20%C2%A1gracias%21" target="_blank" rel="noopener noreferrer"><span class="btn-shake-wrap"><span class="choice-label">Servicio de corte y grabado láser</span></span></a>
         <a class="choice-btn" data-theme="green" data-track-id="disenar-idea" data-label-default="Diseñar una idea" data-label-hover="Hablemos" data-hover-logo href="https://wa.me/56953706307?text=Hola%20AndiWorks,%20quiero%20hablar%20contigo" target="_blank" rel="noopener noreferrer"><span class="btn-shake-wrap"><span class="choice-label">Diseñar una idea</span></span></a>
-        <button type="button" class="choice-btn" data-theme="blue" data-action="laser" data-track-id="laser" data-label-default="Corte y grabado láser" data-label-hover="Catálogo Láser"><span class="btn-shake-wrap"><span class="choice-label">Corte y grabado láser</span></span></button>
-        <button type="button" class="choice-btn" data-theme="yellow" data-action="bio" data-track-id="historia" data-label-default="Historia / Por dónde empezamos" data-label-hover="Conoce mi historia"><span class="btn-shake-wrap"><span class="choice-label">Historia / Por dónde empezamos</span></span></button>
-      </div>
-      <div class="laser-options" id="laser-options" hidden>
-        <span class="hover-arrow hover-arrow-left" id="laser-arrow-left" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span><span class="hover-arrow hover-arrow-right" id="laser-arrow-right" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 12H6"></path><path d="m11 6-6 6 6 6"></path></svg></span>
-        <a class="choice-btn" id="laser-catalogo-btn" data-theme="blue" data-track-id="laser-catalogo" href="catalogo-laser/index.html">Proyectos personalizados</a>
-        <a class="choice-btn" id="laser-cotizador-btn" data-theme="blue" data-track-id="laser-cotizador" href="https://wa.me/56953706307?text=%C2%A1Hola%21%20Quiero%20cotizar%20un%20trabajo%20de%20corte%20y%20grabado%20l%C3%A1ser.%0AAdjunto%20mi%20archivo%20en%20formato%20vectorial%20%28.dxf%2C%20.dwg%20o%20.ai%29%2C%20diferenciando%20las%20l%C3%ADneas%20de%20corte%20y%20de%20grabado.%0AQuedo%20atento%20a%20tu%20respuesta%2C%20%C2%A1gracias%21" target="_blank" rel="noopener noreferrer">Servicio de corte y grabado láser</a>
-        <button type="button" class="panel-back panel-back--menu-like" id="laser-back">Volver al menú</button>
+        <button type="button" class="choice-btn" data-theme="yellow" data-action="bio" data-track-id="historia" data-label-default="Historia" data-label-hover="Por dónde empezamos"><span class="btn-shake-wrap"><span class="choice-label">Historia</span></span></button>
       </div>
       <p class="subtitle" id="home-subtitle">AndiWorks + Mueblería y diseño personalizado</p>
       <p class="status-line" id="status-line"><span class="status-dot" aria-hidden="true"></span><span id="status-text-home">Abierto ahora</span></p>
