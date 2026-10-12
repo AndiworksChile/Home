@@ -3,8 +3,9 @@
   --ink: #0b0b0c;
   --muted: rgba(0, 0, 0, .5);
   --line: rgba(0, 0, 0, .18);
-  --accent: #f27024;               /* color del botón "Ver tus productos fabricados" del Home */
-  --accent-rgb: 242, 112, 36;
+  --accent: #e23b34;               /* rojo del botón "Ver el catálogo" del Home */
+  --accent-rgb: 226, 59, 52;
+  --frame: #0b0b0c;                /* marco del mosaico: negro, NO sigue al acento */
   --font-title: 'Bebas Neue', sans-serif;
   --font-ui: 'Barlow Condensed', sans-serif;
   --cols: 6;
@@ -274,6 +275,7 @@ body.is-touch .mosaic-track { transition: none; }
 .card-badge--top {
   position: relative;
   overflow: hidden;
+  font-weight: 800;
   color: #0b0b0c;
   background: linear-gradient(135deg, #f7e08a 0%, #e2b33c 45%, #c8941f 70%, #f1d27a 100%);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .35), 0 1px 4px rgba(0, 0, 0, .3);
@@ -315,7 +317,7 @@ body.is-touch .card-tag {
   top: 0;
   left: 0;
   box-sizing: border-box;
-  border: 3px solid var(--accent);
+  border: 3px solid var(--frame);
   pointer-events: none;
   z-index: 3;
   opacity: 0;

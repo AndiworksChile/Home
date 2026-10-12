@@ -41,7 +41,7 @@ function reflowEls() {
 function trackEvent(name, params) {
   if (window.AW && typeof window.AW.trackEvent === 'function') window.AW.trackEvent(name, params);
 }
-const themes = ['theme-gray', 'theme-green', 'theme-blue', 'theme-orange', 'theme-purple', 'theme-teal'];
+const themes = ['theme-gray', 'theme-red', 'theme-blue', 'theme-green', 'theme-yellow', 'theme-purple'];
 let bioActive = false;     /* mientras es true, el fondo (color+video) del botón "Historia" queda fijo */
 let laserActive = false;   /* ídem, para "Corte y grabado láser" */
 const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -60,9 +60,9 @@ const I18N = {
     buttons: [
       { default: 'Quiero un espejo paramétrico', hover: '¡Próximamente!' },
       { default: 'Ver el catálogo', hover: 'Catálogo de productos' },
-      { default: 'Diseñar una idea', hover: 'Hablemos :)' },
+      { default: 'Diseñar una idea', hover: 'Hablemos' },
       { default: 'Corte y grabado láser', hover: 'Catálogo Láser' },
-      { default: 'Quién soy / Cómo trabajo', hover: 'Conoce mi historia' },
+      { default: 'Historia / Por dónde empezamos', hover: 'Conoce mi historia' },
     ],
     bio: {
       title: 'Historia',
@@ -90,9 +90,9 @@ const I18N = {
     buttons: [
       { default: 'I want a parametric mirror', hover: 'Coming soon!' },
       { default: 'See the catalogue', hover: 'Product catalogue' },
-      { default: 'Design an idea', hover: "Let's talk :)" },
+      { default: 'Design an idea', hover: "Let's talk" },
       { default: 'Laser cutting & engraving', hover: 'Laser Catalogue' },
-      { default: 'Who I am / How I work', hover: 'Get to know my story' },
+      { default: 'Story / Where we start', hover: 'Get to know my story' },
     ],
     bio: {
       title: 'Story',
@@ -120,9 +120,9 @@ const I18N = {
     buttons: [
       { default: '我想要参数化镜子', hover: '敬请期待！' },
       { default: '查看目录', hover: '产品目录' },
-      { default: '设计一个想法', hover: '聊一聊 :)' },
+      { default: '设计一个想法', hover: '聊一聊' },
       { default: '激光切割与雕刻', hover: '激光产品目录' },
-      { default: '关于我 / 我的工作方式', hover: '了解我的故事' },
+      { default: '故事 / 从哪里开始', hover: '了解我的故事' },
     ],
     bio: {
       title: '故事',
@@ -214,9 +214,17 @@ function flipShift(elements, mutate) {
   });
 }
 
+const labelLogoTpl = document.querySelector('#tpl-label-logo');
+
 function setLabel(button, label) {
   const el = button.querySelector('.choice-label');
-  if (el) el.textContent = label;
+  if (!el) return;
+  el.textContent = label;
+  /* Botones con data-hover-logo (hoy "Diseñar una idea" → "Hablemos"):
+     el texto de hover va acompañado del logo de la app. */
+  if (labelLogoTpl && button.hasAttribute('data-hover-logo') && label === button.dataset.labelHover) {
+    el.appendChild(labelLogoTpl.content.cloneNode(true));
+  }
 }
 
 /* El efecto blur sobre el video de fondo (en reproducción todo el tiempo)
