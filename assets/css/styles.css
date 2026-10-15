@@ -72,21 +72,31 @@ body.bio-open .home-card { display:none; }
 .bio-scroll::-webkit-scrollbar-thumb { background:var(--muted); border-radius:2px; }
 .bio-text { font-size:clamp(1.05rem,2.2vw,1.2rem); line-height:1.6; color:var(--page-ink); }
 .bio-text + .bio-text { margin-top:.9rem; }
+/* "Volver al menú": mismo lenguaje que los botones del menú (forma recta,
+   borde visible, sube y se rellena con el color de la sección), en tamaño
+   mediano. Mismo alto (38px) que los botones medianos del catálogo. */
 .panel-back {
-  font-weight:700;
-  font-size:.74rem;
+  display:inline-flex;
+  align-items:center;
+  height:38px;
+  padding:0 1rem;
+  margin:.4rem 0 0;
+  font:700 .74rem/1 var(--font-ui);
   letter-spacing:.16em;
   text-transform:uppercase;
   color:var(--page-ink);
   background:none;
   text-decoration:none;
-  padding:.35rem .6rem;
-  margin:.4rem -.6rem 0;
-  border:1.5px solid transparent;
+  border:1.5px solid var(--outline);
   cursor:pointer;
-  transition:border-color .2s ease,color .2s ease;
+  transition:transform .2s cubic-bezier(.2,.9,.2,1),background-color .2s ease,border-color .2s ease,color .2s ease,filter .2s ease;
 }
-.panel-back:hover,.panel-back:focus-visible,.panel-back:active { border-color:rgb(var(--theme-rgb)); color:rgb(var(--theme-rgb)); outline:none; }
+.panel-back:hover,.panel-back:focus-visible { transform:translateY(-2px); background:rgb(var(--theme-rgb)); border-color:rgb(var(--theme-rgb)); color:#fff; outline:none; }
+.panel-back:focus-visible { outline:2px solid var(--page-ink); outline-offset:3px; }
+.panel-back:active { transform:none; filter:brightness(.88); background:rgb(var(--theme-rgb)); border-color:rgb(var(--theme-rgb)); color:#fff; }
+/* Sobre amarillo (Historia) o el gris por defecto el texto blanco no contrasta. */
+body.theme-yellow .panel-back:hover,body.theme-yellow .panel-back:focus-visible,body.theme-yellow .panel-back:active,
+body.theme-gray .panel-back:hover,body.theme-gray .panel-back:focus-visible,body.theme-gray .panel-back:active { color:#0b0b0c; }
 
 /* Entrada escalonada (mismo criterio que el resto del Home: riseIn +
    body.bio-ready, invisible mientras esa clase no está presente). */

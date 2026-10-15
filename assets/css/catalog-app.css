@@ -6,6 +6,10 @@
   --accent: #e23b34;               /* rojo del botón "Ver el catálogo" del Home */
   --accent-rgb: 226, 59, 52;
   --frame: #0b0b0c;                /* marco del mosaico: negro, NO sigue al acento */
+  --btn-h: 38px;                   /* alto común de flechas y "Volver al Home" */
+  --btn-line: rgba(0, 0, 0, .3);   /* borde de botón en reposo (sobre papel) */
+  --btn-dur: .2s;
+  --btn-ease: cubic-bezier(.2, .9, .2, 1);
   --font-title: 'Bebas Neue', sans-serif;
   --font-ui: 'Barlow Condensed', sans-serif;
   --cols: 6;
@@ -252,9 +256,11 @@ body.is-touch .mosaic-track { transition: none; }
   pointer-events: none;
 }
 .card:hover .card-tag, .card:focus-visible .card-tag { opacity: 1; }
-/* Etiquetas "El más visto" (dorada, con 😎 y un destello que la barre) /
-   "Nuevo" (rojo) / "En progreso" (azul): esquina superior
-   derecha, una al lado de la otra si van ambas. Solo en el mosaico. */
+/* Etiquetas "El más visto" (dorada, con 😎) / "Nuevo" (rojo) / "En
+   fabricación" (azul): esquina superior derecha, una al lado de la otra si
+   van varias. Solo en el mosaico. Forma recta como el resto de la interfaz,
+   sin sombra ni reacción al mouse (no son botones); las tres llevan un
+   destello que las barre, cada una con su desfase para no brillar juntas. */
 .card-badges {
   position: absolute;
   top: .45rem;
@@ -264,47 +270,46 @@ body.is-touch .mosaic-track { transition: none; }
   pointer-events: none;
 }
 .card-badge {
-  padding: .22rem .5rem .18rem;
-  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+  padding: .24rem .5rem .2rem;
   font-size: clamp(.56rem, 1.1vw, .66rem);
-  font-weight: 700;
-  letter-spacing: .1em;
+  font-weight: 800;
+  letter-spacing: .12em;
   line-height: 1.2;
   text-transform: uppercase;
   white-space: nowrap;
   color: #fff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
 }
 .card-badge--wip { background: #2563eb; }
 .card-badge--new { background: #dc2626; }
 .card-badge--top {
-  position: relative;
-  overflow: hidden;
-  font-weight: 800;
   color: #0b0b0c;
   background: linear-gradient(135deg, #f7e08a 0%, #e2b33c 45%, #c8941f 70%, #f1d27a 100%);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .35), 0 1px 4px rgba(0, 0, 0, .3);
 }
 .card-badge--top::before { content: '😎'; margin-right: .3em; font-size: 1.15em; letter-spacing: 0; vertical-align: -.05em; }
 /* Destello: una franja de luz diagonal cruza la etiqueta cada ~4,5 s
    (el resto del ciclo queda quieta, para que sea sutil y no distraiga). */
-.card-badge--top::after {
+.card-badge::after {
   content: '';
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   width: 45%;
-  background: linear-gradient(105deg, transparent 0%, rgba(255, 255, 255, .7) 50%, transparent 100%);
+  background: linear-gradient(105deg, transparent 0%, rgba(255, 255, 255, .55) 50%, transparent 100%);
   transform: translateX(-120%) skewX(-18deg);
   animation: badgeShine 4.5s ease-in-out 1.2s infinite;
   pointer-events: none;
 }
+.card-badge--top::after { background: linear-gradient(105deg, transparent 0%, rgba(255, 255, 255, .7) 50%, transparent 100%); }
+.card-badge--new::after { animation-delay: 1.8s; }
+.card-badge--wip::after { animation-delay: 2.4s; }
 @keyframes badgeShine {
   0% { transform: translateX(-120%) skewX(-18deg); }
   22%, 100% { transform: translateX(340%) skewX(-18deg); }
 }
-@media (prefers-reduced-motion: reduce) { .card-badge--top::after { animation: none; display: none; } }
+@media (prefers-reduced-motion: reduce) { .card-badge::after { animation: none; display: none; } }
 body.is-touch .card-badges { top: .3rem; right: .3rem; gap: .2rem; }
 body.is-touch .card-badge { padding: .16rem .38rem .12rem; font-size: clamp(.48rem, 2.2vw, .56rem); }
 
@@ -344,21 +349,27 @@ body.is-touch .card-tag {
   padding: clamp(.45rem, 1.3vw, .95rem) 0;
 }
 
+/* Botones (flechas, "Volver al Home", cerrar, dock): un solo lenguaje,
+   el de los botones del menú del Home — forma recta, borde de 1,5px visible
+   en reposo y la misma respuesta: al pasar el mouse sube 2px y se rellena
+   con el acento del catálogo; al presionar vuelve a su lugar y oscurece.
+   Flechas y "Volver al Home" comparten alto (--btn-h) para alinearse. */
 .mnav-arrow {
-  width: 38px;
-  height: 38px;
+  width: var(--btn-h);
+  height: var(--btn-h);
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1.5px solid var(--line);
+  border: 1.5px solid var(--btn-line);
   background: none;
   color: var(--ink);
   cursor: pointer;
-  transition: border-color .18s ease, color .18s ease, opacity .18s ease;
+  transition: transform var(--btn-dur) var(--btn-ease), background-color var(--btn-dur) ease, border-color var(--btn-dur) ease, color var(--btn-dur) ease, opacity var(--btn-dur) ease, filter var(--btn-dur) ease;
 }
 .mnav-arrow svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.mnav-arrow:hover:not(:disabled), .mnav-arrow:active:not(:disabled) { border-color: var(--accent); color: var(--accent); }
-.mnav-arrow:disabled { opacity: .28; cursor: default; }
+.mnav-arrow:focus-visible:not(:disabled) { transform: translateY(-2px); background: var(--accent); border-color: var(--accent); color: #fff; outline: 2px solid var(--ink); outline-offset: 3px; }
+.mnav-arrow:active:not(:disabled) { transform: none; filter: brightness(.88); background: var(--accent); border-color: var(--accent); color: #fff; }
+.mnav-arrow:disabled { opacity: .3; cursor: default; }
 
 .mosaic-count {
   min-width: 5ch;
@@ -375,7 +386,7 @@ body.is-touch .card-tag {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: .5rem clamp(1rem, 3vw, 2rem);
+  padding: .4rem clamp(1rem, 3vw, 2rem);
   border-top: 1px solid var(--line);
 }
 
@@ -395,18 +406,21 @@ body.is-touch .card-tag {
 }
 
 .back-home {
+  display: inline-flex;
+  align-items: center;
+  height: var(--btn-h);
+  padding: 0 1rem;
   font-weight: 700;
   font-size: .74rem;
   letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--ink);
   text-decoration: none;
-  padding: .35rem .6rem;
-  margin: -.35rem -.6rem;
-  border: 1.5px solid transparent;
-  transition: border-color .2s ease, color .2s ease;
+  border: 1.5px solid var(--btn-line);
+  transition: transform var(--btn-dur) var(--btn-ease), background-color var(--btn-dur) ease, border-color var(--btn-dur) ease, color var(--btn-dur) ease, filter var(--btn-dur) ease;
 }
-.back-home:hover, .back-home:focus-visible, .back-home:active { border-color: var(--accent); color: var(--accent); outline: none; }
+.back-home:focus-visible { transform: translateY(-2px); background: var(--accent); border-color: var(--accent); color: #fff; outline: 2px solid var(--ink); outline-offset: 3px; }
+.back-home:active { transform: none; filter: brightness(.88); background: var(--accent); border-color: var(--accent); color: #fff; }
 
 /* ── ENTRADA ─────────────────────────────────────────────────── */
 @keyframes riseIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
@@ -531,12 +545,11 @@ body.is-touch .ov-media { touch-action: pan-y; }
   z-index: 3;
   padding: .3rem .65rem;
   font-size: .66rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: #fff;
-  background: rgba(10, 10, 11, .55);
-  border-radius: 5px;
+  background: rgba(10, 10, 11, .62);
   pointer-events: none;
   opacity: 0;
   transform: translateY(-4px);
@@ -619,72 +632,63 @@ body.is-touch .ov-info-text { font-size: clamp(.8rem, 3.4vw, .92rem); line-heigh
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 0;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, .06);
+  border: 1.5px solid rgba(255, 255, 255, .38);
+  background: rgba(255, 255, 255, .04);
   color: #fff;
   cursor: pointer;
   text-decoration: none;
-  transition: transform .16s cubic-bezier(.2, .9, .2, 1), background .16s ease;
+  transition: transform var(--btn-dur) var(--btn-ease), background-color var(--btn-dur) ease, border-color var(--btn-dur) ease, filter var(--btn-dur) ease;
 }
 .dock-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
 .dock-btn[data-act="whatsapp"] svg,
 .dock-btn[data-act="instagram"] svg { width: 23px; height: 23px; fill: currentColor; stroke: none; }
-.dock-btn:focus-visible, .dock-btn:active {
-  transform: translateY(-6px) scale(1.12);
-  background: var(--accent);
-  outline: none;
-}
-.dock-btn[data-act="whatsapp"]:focus-visible, .dock-btn[data-act="whatsapp"]:active { background: #25d366; }
-.dock-btn[data-act="instagram"]:focus-visible, .dock-btn[data-act="instagram"]:active { background: #ff4fa3; }
-.dock-btn.is-on { background: var(--accent); }
+.dock-btn:focus-visible { transform: translateY(-2px); background: var(--accent); border-color: var(--accent); outline: 2px solid #fff; outline-offset: 3px; }
+.dock-btn:active { transform: none; filter: brightness(.88); background: var(--accent); border-color: var(--accent); outline: none; }
+.dock-btn.is-on { background: var(--accent); border-color: var(--accent); }
 .dock-btn[hidden] { display: none; }
 
 .overlay-close {
   position: absolute;
-  top: -2.7rem;
+  top: -2.9rem;
   right: 0;
   z-index: 5;
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, .3);
-  border-radius: 50%;
-  background: rgba(255, 255, 255, .06);
+  border: 1.5px solid rgba(255, 255, 255, .38);
+  background: transparent;
   color: #fff;
   cursor: pointer;
-  transition: background .18s ease;
+  transition: transform var(--btn-dur) var(--btn-ease), background-color var(--btn-dur) ease, border-color var(--btn-dur) ease, filter var(--btn-dur) ease;
 }
 .overlay-close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
-.overlay-close:active { background: rgba(255, 255, 255, .16); }
+.overlay-close:active { transform: none; filter: brightness(.88); background: var(--accent); border-color: var(--accent); }
 /* Se enfoca por JS al abrir el overlay (para que Escape funcione y lectores
    de pantalla lo anuncien) — sin esto, el navegador dibuja su anillo de foco
    por defecto (celeste) como si estuviera "preseleccionada". Se mantiene el
    anillo solo para navegación real por teclado. */
 .overlay-close:focus { outline: none; }
-.overlay-close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.overlay-close:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 /* En táctil, arriba del panel puede quedar bajo la barra de estado: se mete
    adentro, sobre la esquina de la foto, con más contraste para que resalte. */
 body.is-touch .overlay-close {
   top: .6rem;
   right: .6rem;
   background: rgba(0, 0, 0, .45);
-  border-color: rgba(255, 255, 255, .4);
+  border-color: rgba(255, 255, 255, .45);
 }
 
 /* :hover real (mouse con precisión fina) separado de :active/:focus-visible:
    en táctil el navegador simula :hover al tocar y no lo "suelta" hasta el
-   próximo toque en otro lado — eso dejaba los botones del dock y la (X) del
-   overlay con pinta de seguir apretados después de soltar el dedo. Al
-   sacar :hover de estos botones en táctil, el único estado que queda tras
-   soltar es el normal — :active ya cubre el feedback instantáneo del tap. */
+   próximo toque en otro lado — eso dejaba los botones con pinta de seguir
+   apretados después de soltar el dedo. Al sacar :hover en táctil, el único
+   estado que queda tras soltar es el normal — :active ya cubre el feedback
+   instantáneo del tap. */
 @media (hover: hover) and (pointer: fine) {
-  .dock-btn:hover { transform: translateY(-6px) scale(1.12); background: var(--accent); outline: none; }
-  .dock-btn[data-act="whatsapp"]:hover { background: #25d366; }
-  .dock-btn[data-act="instagram"]:hover { background: #ff4fa3; }
-  .overlay-close:hover { background: rgba(255, 255, 255, .16); }
+  .dock-btn:hover, .overlay-close:hover { transform: translateY(-2px); background: var(--accent); border-color: var(--accent); }
+  .mnav-arrow:hover:not(:disabled), .back-home:hover { transform: translateY(-2px); background: var(--accent); border-color: var(--accent); color: #fff; }
 }
 
 /* ── MOVIMIENTO REDUCIDO ─────────────────────────────────────── */

@@ -32,7 +32,7 @@ const CATALOGS = {
   },
 };
 const DEFAULT_WA = '56953706307';
-const BADGE_LABELS = { top: 'El más visto', new: 'Nuevo', wip: 'En progreso' };
+const BADGE_LABELS = { top: 'El más visto', new: 'Nuevo', wip: 'En fabricación' };
 const DEFAULT_IG = 'https://www.instagram.com/andiworks.cl/';
 
 /* ── ESTADO ──────────────────────────────────────────────────── */
@@ -45,7 +45,7 @@ const state = {
   desc: '',
   category: '',
   dims: ['', '', ''],
-  badges: [],          // 'top' ("El más visto"), 'new' ("Nuevo"), 'wip' ("En progreso") — etiquetas de la card
+  badges: [],          // 'top' ("El más visto"), 'new' ("Nuevo"), 'wip' ("En fabricación") — etiquetas de la card
   files: [],           // [{ file, url, kind: 'image'|'video', ext }] — el orden es el final
   model: null,         // { file, url } — modelo 3D (.glb) opcional
   cover3d: false,

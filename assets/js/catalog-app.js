@@ -57,7 +57,7 @@ const I18N = {
     dock: { info: 'Descripción', media: 'Fotos y videos', '3d': 'Ver en 3D', whatsapp: 'Consultar por WhatsApp', instagram: 'Ver en Instagram' },
     measures: 'Medidas',
     year: 'Año',
-    badge: { wip: 'En progreso', new: 'Nuevo', top: 'El más visto' },
+    badge: { wip: 'En fabricación', new: 'Nuevo', top: 'El más visto' },
     modeLabel: { media: 'Imágenes del producto', '3d': 'Modelo 3D' },
     empty: 'Catálogo en desarrollo…',
   },
@@ -67,7 +67,7 @@ const I18N = {
     dock: { info: 'Description', media: 'Photos & videos', '3d': 'View in 3D', whatsapp: 'Ask on WhatsApp', instagram: 'View on Instagram' },
     measures: 'Dimensions',
     year: 'Year',
-    badge: { wip: 'In progress', new: 'New', top: 'Most viewed' },
+    badge: { wip: 'In production', new: 'New', top: 'Most viewed' },
     modeLabel: { media: 'Product images', '3d': '3D model' },
     empty: 'Catalogue in progress…',
   },
@@ -77,7 +77,7 @@ const I18N = {
     dock: { info: '产品说明', media: '照片和视频', '3d': '查看 3D', whatsapp: '通过 WhatsApp 咨询', instagram: '在 Instagram 查看' },
     measures: '尺寸',
     year: '年份',
-    badge: { wip: '进行中', new: '新品', top: '最受关注' },
+    badge: { wip: '制作中', new: '新品', top: '最受关注' },
     modeLabel: { media: '产品图片', '3d': '3D 模型' },
     empty: '目录建设中…',
   },
@@ -224,7 +224,7 @@ function buildCard(product, indexInPage, pageIndex) {
   if (coverEl) media.appendChild(coverEl);
   card.appendChild(media);
 
-  /* Etiquetas "En progreso" / "Nuevo" / "El más visto" (esquina superior
+  /* Etiquetas "En fabricación" / "Nuevo" / "El más visto" (esquina superior
      derecha, solo en el mosaico — el overlay no las muestra). El texto se
      actualiza en applyLang(); el orden es siempre el de CARD_BADGES. */
   const badges = CARD_BADGES.filter((b) => (product.badges || []).includes(b));

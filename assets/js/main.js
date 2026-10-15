@@ -32,6 +32,7 @@ const I18N = {
     subtitle: 'AndiWorks + Mueblería y diseño personalizado',
     open: 'Abierto ahora',
     closed: 'Cerrado ahora',
+    soon: 'Próximamente',
     buttons: [
       { default: 'Catálogo Paramétrico', hover: 'Ver catálogo' },
       { default: 'Catálogo Láser', hover: 'Ver catálogo láser' },
@@ -62,6 +63,7 @@ const I18N = {
     subtitle: 'AndiWorks + Custom furniture and design',
     open: 'Open now',
     closed: 'Closed now',
+    soon: 'Coming soon',
     buttons: [
       { default: 'Parametric Catalogue', hover: 'See catalogue' },
       { default: 'Laser Catalogue', hover: 'See laser catalogue' },
@@ -92,6 +94,7 @@ const I18N = {
     subtitle: 'AndiWorks + 定制家具与设计',
     open: '现在营业',
     closed: '现在休息',
+    soon: '敬请期待',
     buttons: [
       { default: '参数化产品目录', hover: '查看目录' },
       { default: '激光产品目录', hover: '查看激光产品目录' },
@@ -338,7 +341,9 @@ function openBio(button) {
      en táctil el fondo de video va por su cuenta (autoplay nativo), así que acá
      no se toca. */
   if (button && !IS_TOUCH) { setTheme(button.dataset.theme); positionArrowsAt(button); }
-  if (IS_TOUCH) setVideoBlur(true);   /* en táctil no hay hover: el tap en "Historia" es el disparador del blur */
+  /* El blur del video se mantiene durante toda la sección para que el
+     texto se lea mejor (en táctil, además, el tap es su único disparador). */
+  setVideoBlur(true);
   document.body.classList.add('menu-hiding');
   const after = () => {
     document.body.classList.remove('menu-hiding');
@@ -382,7 +387,7 @@ buttons.forEach((button, index) => {
   };
   const hide = () => {
     setLabel(button, button.dataset.labelDefault);
-    setVideoBlur(false);
+    if (!bioActive) setVideoBlur(false);   /* con "Historia" abierta el blur se queda */
   };
 
   if (!IS_TOUCH) {
@@ -399,12 +404,16 @@ buttons.forEach((button, index) => {
 
     if (locked) {
       event.preventDefault();
-      setLabel(button, button.dataset.labelHover || button.dataset.labelDefault);
+      /* Bloqueado: además del sacudido, el texto pasa a "Próximamente". En
+         escritorio queda así hasta que el mouse sale del botón (pointerleave
+         lo revierte); en táctil no hay ese paso, así que vuelve solo tras un
+         momento, lo justo para alcanzar a leerlo. */
+      setLabel(button, texts().soon);
       shakeOnce(button);
-      /* En escritorio el hover ya deja el texto de hover (ej. "Ver catálogo") y
-         pointerleave lo revierte al soltar el mouse. En táctil no hay ese
-         paso, así que se revierte solo, apenas termina el sacudido. */
-      if (IS_TOUCH) button.addEventListener('animationend', () => setLabel(button, button.dataset.labelDefault), { once: true });
+      if (IS_TOUCH) {
+        clearTimeout(button._soonTimer);
+        button._soonTimer = setTimeout(() => setLabel(button, button.dataset.labelDefault), 1600);
+      }
       return;
     }
 

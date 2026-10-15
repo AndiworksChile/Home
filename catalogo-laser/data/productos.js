@@ -13,7 +13,7 @@
  * dimensions[] son medidas reales (ej. Stands QR), igual que en catalogo/;
  * vacío = el overlay no muestra la línea "Medidas".
  * badges[] opcional: 'top' ("El más visto"), 'new' ("Nuevo") y/o 'wip'
- * ("En progreso") — etiquetas en la esquina de la card del mosaico (no en el
+ * ("En fabricación") — etiquetas en la esquina de la card del mosaico (no en el
  * overlay).
  * Modelo 3D opcional, igual que en catalogo/: `model3d: { src, poster }`
  * (el .glb va en la misma carpeta del producto) habilita el botón "3D" del

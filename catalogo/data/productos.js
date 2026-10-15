@@ -26,7 +26,7 @@
  *   media[]       galería para "Fotos y videos". { type:'image'|'video', src, poster? }
  *   model3d       { src, poster } | null — modelo para el botón "3D" (si existe)
  *   coverType     'media' (por defecto) | '3d' — qué usa la CARD como portada
- *   badges        opcional: 'top' "El más visto", 'new' "Nuevo", 'wip' "En progreso" —
+ *   badges        opcional: 'top' "El más visto", 'new' "Nuevo", 'wip' "En fabricación" —
  *                 etiquetas en la esquina de la card (no en el overlay)
  *   links         { whatsapp, instagram }
  *
