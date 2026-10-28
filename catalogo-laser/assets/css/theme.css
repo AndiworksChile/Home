@@ -1,7 +1,5 @@
-/* Único override real de este catálogo respecto al de productos: el acento.
- * Todo lo demás vive en assets/css/catalog-app.css (compartido) — cargar
- * este archivo DESPUÉS de ese, para que gane. */
-:root {
-  --accent: #5290eb;   /* mismo azul del botón "Corte y grabado láser" del Home */
-  --accent-rgb: 82, 144, 235;
-}
+/* Overrides propios de este catálogo respecto al de productos. Cargar este
+ * archivo DESPUÉS de assets/css/catalog-app.css, para que gane.
+ * Con el Manual de marca v1.0 ambos catálogos comparten el mismo acento
+ * (naranjo láser), así que hoy no hay nada que sobrescribir: el azul propio
+ * que tenía este catálogo no es un color de la marca. */

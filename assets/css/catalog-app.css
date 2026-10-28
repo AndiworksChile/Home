@@ -1,17 +1,25 @@
 :root {
-  --paper: #ffffff;
-  --ink: #0b0b0c;
+  /* Tokens del Manual de marca v1.0 (Manual-marca-Andiworks/marca.css). */
+  --aw-tinta: #15181D;
+  --aw-blanco: #FFFFFF;
+  --aw-naranjo: #F26A1B;           /* el láser: sólo acentos puntuales (~5 %) */
+  --aw-naranjo-texto: #C2470A;     /* naranjo legible sobre claro (AA) */
+  --aw-gris-taller: #EEF0EE;       /* fondos de fotos y video */
+  --paper: var(--aw-blanco);
+  --ink: var(--aw-tinta);
   --muted: rgba(0, 0, 0, .5);
   --line: rgba(0, 0, 0, .18);
-  --accent: #e23b34;               /* rojo del botón "Ver el catálogo" del Home */
-  --accent-rgb: 226, 59, 52;
-  --frame: #0b0b0c;                /* marco del mosaico: negro, NO sigue al acento */
+  --accent: var(--aw-naranjo-texto);   /* hover de textos y foco */
+  --accent-rgb: 194, 71, 10;
+  --frame: var(--aw-naranjo);      /* marco que viaja entre las cards: «el láser» del manual */
   --btn-h: 38px;                   /* alto común de flechas y "Volver al Home" */
   --btn-line: rgba(0, 0, 0, .3);   /* borde de botón en reposo (sobre papel) */
   --btn-dur: .2s;
   --btn-ease: cubic-bezier(.2, .9, .2, 1);
-  --font-title: 'Bebas Neue', sans-serif;
-  --font-ui: 'Barlow Condensed', sans-serif;
+  --font-title: 'Barlow Condensed', 'Arial Narrow', sans-serif;   /* títulos: MAYÚSCULAS 800 */
+  --font-ui: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-text: 'Barlow', system-ui, sans-serif;                   /* texto corrido */
+  --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;   /* medidas y datos */
   --cols: 6;
   --rows: 2;
   --card-gap: clamp(4px, .7vw, 9px);
@@ -43,28 +51,19 @@ body {
   border-bottom: 1px solid var(--line);
 }
 
+/* Firma horizontal del Manual de marca (assets/marca/sello-andiworks.svg).
+   Alto ≥ 40px: bajo eso el manual pide la cara en vez del sello. Sin
+   efectos sobre el logo: el hover sólo lo levanta. */
 .brand-title {
   display: inline-block;
-  font-family: var(--font-title);
-  font-size: clamp(1.5rem, 3.1vw, 2.4rem);
-  line-height: .86;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  color: inherit;
+  line-height: 0;
   text-decoration: none;
   cursor: pointer;
-  transition: color .2s ease;
+  transition: transform .2s var(--btn-ease);
 }
-.brand-title:hover, .brand-title:focus-visible { color: var(--accent); outline: none; }
-
-/* Cabeza animada a la izquierda de "AndiWorks" (ver brand-head.js). El
-   tamaño va en em para que siga al font-size del título. */
-.brand-title { display: inline-flex; align-items: center; gap: .22em; }
-.brand-head { display: inline-block; flex: none; width: .84em; height: .92em; margin-top: -.08em; }
-.brand-head svg { display: block; width: 100%; height: 100%; overflow: visible; fill: currentColor; }
-.brand-head .bh-head { transform-box: fill-box; transform-origin: 50% 50%; will-change: transform; }
-.brand-head .bh-eye-look { transform-box: fill-box; }
-.brand-head .bh-eye { transform-box: fill-box; transform-origin: 50% 50%; }
+.brand-firma { display: block; width: auto; height: clamp(40px, 5vw, 52px); }
+.brand-title:hover, .brand-title:focus-visible { transform: translateY(-1px); outline: none; }
+.brand-title:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
 .cat-switch {
   display: flex;
@@ -77,7 +76,7 @@ body {
 }
 .cat-switch-item {
   font-weight: 700;
-  color: rgba(0, 0, 0, .28);      /* catálogo inactivo: gris claro, bien apagado */
+  color: rgba(21, 24, 29, .28);  /* catálogo inactivo: gris claro, bien apagado */
   text-decoration: none;
   cursor: default;
   transition: color .18s ease, transform .18s ease;
@@ -125,9 +124,7 @@ a.cat-switch-item.is-locked, a.cat-switch-item.is-locked:hover { cursor: not-all
 }
 .social-link svg { width: 27px; height: 27px; fill: currentColor; }   /* algo mayores que los botones de idioma */
 .social-link:hover, .social-link:focus-visible, .social-link:active { transform: translateY(-2px); outline: none; }
-.social-link[data-brand="whatsapp"]:hover, .social-link[data-brand="whatsapp"]:active { color: #25d366; filter: drop-shadow(0 0 10px rgba(37, 211, 102, .28)); }
-.social-link[data-brand="instagram"]:hover, .social-link[data-brand="instagram"]:active { color: #ff4fa3; filter: drop-shadow(0 0 10px rgba(255, 79, 163, .28)); }
-.social-link[data-brand="facebook"]:hover, .social-link[data-brand="facebook"]:active { color: #1877f2; filter: drop-shadow(0 0 10px rgba(24, 119, 242, .28)); }
+.social-link:hover, .social-link:active { color: var(--accent); }
 
 /* ── FRANJA CENTRAL · MOSAICO ────────────────────────────────── */
 .mosaic-section {
@@ -180,7 +177,7 @@ body.is-touch .mosaic-track { transition: none; }
   overflow: hidden;
   padding: 0;
   border: 0;
-  background: #ececec;
+  background: var(--aw-gris-taller);
   cursor: pointer;
   animation: cardIn .55s cubic-bezier(.2, .9, .2, 1) backwards;
 }
@@ -208,15 +205,27 @@ body.is-touch .mosaic-track { transition: none; }
   flex: none;
   cursor: default;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 1.1rem;
   padding: 1.5rem;
-  color: var(--muted);
+  color: var(--ink);
   font-family: var(--font-title);
+  font-weight: 800;
   font-size: clamp(1rem, 4vw, 1.5rem);
-  letter-spacing: .04em;
+  letter-spacing: .02em;
   text-transform: uppercase;
   text-align: center;
+}
+/* Andi en la pantalla vacía (Manual de marca, escenario 07): entero, en
+   tinta y blanco, sin recortar. Va como fondo para que el texto del estado
+   vacío se pueda seguir cambiando por idioma con textContent. */
+.mosaic-empty::before {
+  content: '';
+  width: clamp(96px, 30vw, 150px);
+  aspect-ratio: 1;
+  background: url('../marca/andi-completo.svg') center / contain no-repeat;
 }
 
 .card-media, .card-media > * {
@@ -227,7 +236,7 @@ body.is-touch .mosaic-track { transition: none; }
   object-fit: cover;
   display: block;
 }
-.card-media model-viewer { --poster-color: #ececec; }
+.card-media model-viewer { --poster-color: #EEF0EE; }
 /* La foto se revela con un fundido en cuanto termina de cargar, en vez de
    aparecer de golpe (o dejar ver el fondo oscuro/gris mientras carga). */
 .card-media img, .ov-media img { opacity: 0; transition: opacity .22s ease; }
@@ -297,13 +306,9 @@ body.is-touch .card-num { top: .3rem; left: .35rem; font-size: clamp(.48rem, 2.2
   white-space: nowrap;
   color: #fff;
 }
-.card-badge--wip { background: #2563eb; }
-.card-badge--new { background: #dc2626; }
-.card-badge--top {
-  color: #0b0b0c;
-  background: linear-gradient(135deg, #f7e08a 0%, #e2b33c 45%, #c8941f 70%, #f1d27a 100%);
-}
-.card-badge--top::before { content: '😎'; margin-right: .3em; font-size: 1.15em; letter-spacing: 0; vertical-align: -.05em; }
+.card-badge--wip { background: var(--aw-tinta); }
+.card-badge--new { background: var(--aw-naranjo); color: var(--aw-tinta); }
+.card-badge--top { color: var(--aw-tinta); background: var(--aw-blanco); box-shadow: inset 0 0 0 1.5px var(--aw-tinta); }
 /* Destello: una franja de luz diagonal cruza la etiqueta cada ~4,5 s
    (el resto del ciclo queda quieta, para que sea sutil y no distraiga). */
 .card-badge::after {
@@ -383,15 +388,16 @@ body.is-touch .card-tag {
   transition: transform var(--btn-dur) var(--btn-ease), background-color var(--btn-dur) ease, border-color var(--btn-dur) ease, color var(--btn-dur) ease, opacity var(--btn-dur) ease, filter var(--btn-dur) ease;
 }
 .mnav-arrow svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.mnav-arrow:focus-visible:not(:disabled) { transform: translateY(-2px); background: var(--accent); border-color: var(--accent); color: #fff; outline: 2px solid var(--ink); outline-offset: 3px; }
-.mnav-arrow:active:not(:disabled) { transform: none; filter: brightness(.88); background: var(--accent); border-color: var(--accent); color: #fff; }
+.mnav-arrow:focus-visible:not(:disabled) { transform: translateY(-2px); background: var(--ink); border-color: var(--ink); color: #fff; outline: 2px solid var(--ink); outline-offset: 3px; }
+.mnav-arrow:active:not(:disabled) { transform: none; filter: brightness(.88); background: var(--ink); border-color: var(--ink); color: #fff; }
 .mnav-arrow:disabled { opacity: .3; cursor: default; }
 
 .mosaic-count {
   min-width: 5ch;
   text-align: center;
-  font-weight: 700;
-  letter-spacing: .22em;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: .12em;
   font-size: .78rem;
   color: var(--muted);
 }
@@ -435,8 +441,8 @@ body.is-touch .card-tag {
   border: 1.5px solid var(--btn-line);
   transition: transform var(--btn-dur) var(--btn-ease), background-color var(--btn-dur) ease, border-color var(--btn-dur) ease, color var(--btn-dur) ease, filter var(--btn-dur) ease;
 }
-.back-home:focus-visible { transform: translateY(-2px); background: var(--accent); border-color: var(--accent); color: #fff; outline: 2px solid var(--ink); outline-offset: 3px; }
-.back-home:active { transform: none; filter: brightness(.88); background: var(--accent); border-color: var(--accent); color: #fff; }
+.back-home:focus-visible { transform: translateY(-2px); background: var(--ink); border-color: var(--ink); color: #fff; outline: 2px solid var(--ink); outline-offset: 3px; }
+.back-home:active { transform: none; filter: brightness(.88); background: var(--ink); border-color: var(--ink); color: #fff; }
 
 /* ── ENTRADA ─────────────────────────────────────────────────── */
 @keyframes riseIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
@@ -526,7 +532,7 @@ body.is-touch .card-tag {
   width: 100%;
   aspect-ratio: 3 / 4;
   max-height: 66vh;
-  background: #111214;
+  background: #15181D;
   border: 3px solid transparent;
   overflow: hidden;
   transition: background .2s ease, border-color .2s ease;
@@ -535,7 +541,7 @@ body.is-touch .card-tag {
    modelo "flota" sobre el backdrop en vez de ir sobre un panel oscuro sólido. */
 .ov-stage.is-3d {
   background: transparent;
-  border-color: var(--accent);
+  border-color: var(--aw-naranjo);
 }
 .ov-media, .ov-media > * {
   position: absolute;
@@ -548,11 +554,11 @@ body.is-touch .card-tag {
    como scroll/gesto propio: sin esto Android puede cancelar el gesto a
    mitad de camino antes de que llegue el pointerup. */
 body.is-touch .ov-media { touch-action: pan-y; }
-.ov-media img { object-fit: contain; background: #111214; }
+.ov-media img { object-fit: contain; background: #15181D; }
 /* El video llena todo el marco 4:3 (sin franjas negras); se recorta un poco
    por los bordes si su proporción es otra. */
-.ov-media video { object-fit: cover; background: #111214; }
-.ov-media model-viewer { --poster-color: #111214; background: #111214; }
+.ov-media video { object-fit: cover; background: #15181D; }
+.ov-media model-viewer { --poster-color: #15181D; background: #15181D; }
 .ov-media model-viewer.is-floating { --poster-color: transparent; background: transparent; }
 
 /* Rótulo que indica qué se está mostrando ("Fotos y videos" / "Modelo 3D"),
@@ -594,6 +600,7 @@ body.is-touch .ov-mode-label { font-size: .58rem; padding: .25rem .5rem; top: .5
 .ov-info.is-visible { opacity: 1; transform: none; pointer-events: auto; }
 .ov-info-title {
   font-family: var(--font-title);
+  font-weight: 800;
   font-size: clamp(1.3rem, 5vw, 1.85rem);
   line-height: .92;
   letter-spacing: .04em;
@@ -603,9 +610,10 @@ body.is-touch .ov-mode-label { font-size: .58rem; padding: .25rem .5rem; top: .5
 }
 .ov-info-measures {
   white-space: pre-line;   /* "Año" y "Medidas" en líneas separadas */
-  font-size: clamp(.85rem, 2.4vw, .98rem);
-  font-weight: 700;
-  letter-spacing: .08em;
+  font-family: var(--font-mono);
+  font-size: clamp(.8rem, 2.2vw, .9rem);
+  font-weight: 500;
+  letter-spacing: .02em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, .88);
   margin-bottom: .45rem;
@@ -622,6 +630,7 @@ body.is-touch .ov-mode-label { font-size: .58rem; padding: .25rem .5rem; top: .5
   opacity: .55;
 }
 .ov-info-text {
+  font-family: var(--font-text);
   font-size: clamp(.92rem, 2.6vw, 1.05rem);
   line-height: 1.46;
   letter-spacing: .01em;
@@ -647,7 +656,7 @@ body.is-touch .ov-info-text { font-size: clamp(.8rem, 3.4vw, .92rem); line-heigh
   cursor: pointer;
   transition: background .2s ease, transform .2s ease;
 }
-.ov-dot.is-active { background: var(--accent); transform: scale(1.4); }
+.ov-dot.is-active { background: var(--aw-naranjo); transform: scale(1.4); }
 
 /* Dock estilo macOS (sin recuadro agrupador) */
 .ov-dock {
@@ -672,9 +681,9 @@ body.is-touch .ov-info-text { font-size: clamp(.8rem, 3.4vw, .92rem); line-heigh
 .dock-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
 .dock-btn[data-act="whatsapp"] svg,
 .dock-btn[data-act="instagram"] svg { width: 23px; height: 23px; fill: currentColor; stroke: none; }
-.dock-btn:focus-visible { transform: translateY(-2px); background: var(--accent); border-color: var(--accent); outline: 2px solid #fff; outline-offset: 3px; }
-.dock-btn:active { transform: none; filter: brightness(.88); background: var(--accent); border-color: var(--accent); outline: none; }
-.dock-btn.is-on { background: var(--accent); border-color: var(--accent); }
+.dock-btn:focus-visible { transform: translateY(-2px); background: var(--aw-blanco); border-color: var(--aw-blanco); color: var(--aw-tinta); outline: 2px solid #fff; outline-offset: 3px; }
+.dock-btn:active { transform: none; filter: brightness(.88); background: var(--aw-blanco); border-color: var(--aw-blanco); color: var(--aw-tinta); outline: none; }
+.dock-btn.is-on { background: var(--aw-blanco); border-color: var(--aw-blanco); color: var(--aw-tinta); }
 .dock-btn[hidden] { display: none; }
 
 .overlay-close {
@@ -694,7 +703,7 @@ body.is-touch .ov-info-text { font-size: clamp(.8rem, 3.4vw, .92rem); line-heigh
   transition: transform var(--btn-dur) var(--btn-ease), background-color var(--btn-dur) ease, border-color var(--btn-dur) ease, filter var(--btn-dur) ease;
 }
 .overlay-close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
-.overlay-close:active { transform: none; filter: brightness(.88); background: var(--accent); border-color: var(--accent); }
+.overlay-close:active { transform: none; filter: brightness(.88); background: var(--aw-blanco); border-color: var(--aw-blanco); color: var(--aw-tinta); }
 /* Se enfoca por JS al abrir el overlay (para que Escape funcione y lectores
    de pantalla lo anuncien) — sin esto, el navegador dibuja su anillo de foco
    por defecto (celeste) como si estuviera "preseleccionada". Se mantiene el
@@ -717,8 +726,8 @@ body.is-touch .overlay-close {
    estado que queda tras soltar es el normal — :active ya cubre el feedback
    instantáneo del tap. */
 @media (hover: hover) and (pointer: fine) {
-  .dock-btn:hover, .overlay-close:hover { transform: translateY(-2px); background: var(--accent); border-color: var(--accent); }
-  .mnav-arrow:hover:not(:disabled), .back-home:hover { transform: translateY(-2px); background: var(--accent); border-color: var(--accent); color: #fff; }
+  .dock-btn:hover, .overlay-close:hover { transform: translateY(-2px); background: var(--aw-blanco); border-color: var(--aw-blanco); color: var(--aw-tinta); }
+  .mnav-arrow:hover:not(:disabled), .back-home:hover { transform: translateY(-2px); background: var(--ink); border-color: var(--ink); color: #fff; }
 }
 
 /* ── MOVIMIENTO REDUCIDO ─────────────────────────────────────── */
