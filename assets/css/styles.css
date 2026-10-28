@@ -75,6 +75,8 @@ body.bio-open .home-card { display:none; }
 .bio-text + .bio-text { margin-top:.9rem; }
 /* Lo destacado de la historia (negritas y cursivas) va en naranjo láser. */
 .bio-text strong,.bio-text em { color:var(--aw-naranjo); }
+/* Las cursivas se leen igual que las negritas: naranjo y en negrita, sin inclinar. */
+.bio-text em { font-style:normal; font-weight:700; }
 /* Propuesta de valor entre llaves { }. Cada llave se arma con dos mitades
    (<i>): la propia <i> es el tramo recto (se estira con el alto del
    párrafo), ::before la curva del extremo y ::after la punta del medio.
