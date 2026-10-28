@@ -58,7 +58,7 @@ const I18N = {
     measures: 'Medidas',
     year: 'Año',
     badge: { wip: 'En fabricación', new: 'Nuevo', top: 'El más visto' },
-    modeLabel: { media: 'Imágenes del producto', '3d': 'Modelo 3D' },
+    modeLabel: { media: '', '3d': 'Modelo 3D' },
     empty: 'Catálogo en desarrollo…',
   },
   en: {
@@ -68,7 +68,7 @@ const I18N = {
     measures: 'Dimensions',
     year: 'Year',
     badge: { wip: 'In production', new: 'New', top: 'Most viewed' },
-    modeLabel: { media: 'Product images', '3d': '3D model' },
+    modeLabel: { media: '', '3d': '3D model' },
     empty: 'Catalogue in progress…',
   },
   zh: {
@@ -78,7 +78,7 @@ const I18N = {
     measures: '尺寸',
     year: '年份',
     badge: { wip: '制作中', new: '新品', top: '最受关注' },
-    modeLabel: { media: '产品图片', '3d': '3D 模型' },
+    modeLabel: { media: '', '3d': '3D 模型' },
     empty: '目录建设中…',
   },
 };
@@ -163,6 +163,38 @@ function preloadGallery(product) {
   });
 }
 
+/* Video de producto "como una foto animada": mudo, en loop, sin controles
+   ni ícono de audio, y sin capturar clicks/gestos (los recibe la card o el
+   stage, igual que con una imagen). muted va como propiedad Y atributo
+   (defaultMuted): Safari/iOS lo exige para permitir el autoplay silencioso,
+   mismo criterio que el video de fondo del Home. */
+function silentLoopVideo(poster) {
+  const v = document.createElement('video');
+  v.defaultMuted = true;
+  v.muted = true;
+  v.loop = true;
+  v.autoplay = true;
+  v.playsInline = true;
+  v.setAttribute('playsinline', '');
+  v.setAttribute('webkit-playsinline', '');
+  v.setAttribute('disablepictureinpicture', '');
+  v.setAttribute('disableremoteplayback', '');
+  v.style.pointerEvents = 'none';
+  if (poster) v.poster = poster;
+  return v;
+}
+
+/* Si el navegador rechazó el autoplay, reintenta cuando el video ya tiene
+   datos (algunos rechazan el play() hecho antes de cargar). */
+function playSilent(v) {
+  const attempt = v.play();
+  if (attempt && attempt.catch) attempt.catch(() => {});
+  if (!v._retryBound) {
+    v._retryBound = true;
+    v.addEventListener('loadeddata', () => { if (v.paused && v.isConnected) v.play().catch(() => {}); });
+  }
+}
+
 /* Resuelve la portada de una card: modelo 3D (auto-rotando, sin poder
    interactuar), video (loop) o imagen — según lo que declare el producto.
    El video y el modelo 3D NO se cargan aquí: solo se les reserva el `src`
@@ -188,13 +220,9 @@ function buildCoverEl(product) {
   }
   const cover = product.media && product.media[0];
   if (cover && cover.type === 'video') {
-    const v = document.createElement('video');
+    const v = silentLoopVideo(cover.poster);
     v.dataset.src = cover.src;
-    v.muted = true;
-    v.loop = true;
-    v.playsInline = true;
     v.preload = 'none';
-    if (cover.poster) v.poster = cover.poster;
     return v;
   }
   if (cover) {
@@ -276,7 +304,7 @@ function syncPageMedia() {
     pageEl.querySelectorAll('video').forEach((v) => {
       if (!active) { if (!v.paused) v.pause(); return; }
       if (v.dataset.src) { v.src = v.dataset.src; delete v.dataset.src; }
-      v.play().catch(() => {});
+      playSilent(v);
     });
     if (active) {
       pageEl.querySelectorAll('model-viewer[data-src]').forEach((mv) => {
@@ -567,11 +595,12 @@ function syncDockMode() {
 /* Rótulo en la esquina superior izquierda del stage: aclara si lo que se ve
    son las fotos del producto o el modelo 3D, sin depender solo del ícono
    resaltado en el dock (útil también en táctil, donde el dock puede no
-   estar a la vista). Se muestra siempre que el overlay esté abierto. */
+   estar a la vista). En "Fotos y videos" va vacío (no se muestra): solo
+   aparece en 3D. */
 function updateModeLabel() {
   const t = (I18N[currentLang] || I18N.es).modeLabel;
   ovModeLabel.textContent = t[ovMode] || '';
-  ovModeLabel.classList.toggle('is-visible', !!ovProduct);
+  ovModeLabel.classList.toggle('is-visible', !!ovProduct && !!ovModeLabel.textContent);
 }
 
 function renderStage() {
@@ -604,15 +633,10 @@ function renderStage() {
   const m = ovProduct.media[ovIndex];
   if (!m) return;
   if (m.type === 'video') {
-    const v = document.createElement('video');
+    const v = silentLoopVideo(m.poster);
     v.src = m.src;
-    v.controls = true;
-    v.autoplay = true;
-    v.loop = true;
-    v.playsInline = true;
-    if (m.poster) v.poster = m.poster;
     ovMedia.appendChild(v);
-    v.play().catch(() => {});
+    playSilent(v);
   } else {
     ovMedia.appendChild(fadeImage(m.src, ovProduct.name));
   }
@@ -634,8 +658,9 @@ function stepMedia(dir) {
 }
 
 /* Swipe (izq/der) o tap sobre la foto para cambiar de imagen (solo en modo
-   "Fotos y videos" — en 3D el gesto lo usa el propio <model-viewer>). Se
-   ignora sobre <video>: ahí manda el control nativo (play/pausa).
+   "Fotos y videos" — en 3D el gesto lo usa el propio <model-viewer>). Los
+   videos no tienen controles ni capturan el puntero, así que se pasan
+   igual que una foto.
    Usa Pointer Events con umbrales propios en vez de 'click': un 'click'
    sintetizado desde touch se cancela en Chrome/Android apenas hay un
    pequeño desplazamiento del dedo entre touchstart y touchend (a diferencia
@@ -653,7 +678,6 @@ if (IS_TOUCH) {
 
   ovMedia.addEventListener('pointerdown', (e) => {
     if (ovMode !== 'media' || !ovProduct || ovProduct.media.length < 2) return;
-    if (e.target.tagName === 'VIDEO') return;
     dragId = e.pointerId;
     startX = e.clientX;
     startY = e.clientY;
@@ -664,7 +688,6 @@ if (IS_TOUCH) {
     if (dragId === null || e.pointerId !== dragId) return;
     dragId = null;
     if (ovMode !== 'media' || !ovProduct || ovProduct.media.length < 2) return;
-    if (e.target.tagName === 'VIDEO') return;
     const dx = e.clientX - startX;
     const dy = e.clientY - startY;
     if (Math.abs(dx) >= SWIPE_MIN_DIST && Math.abs(dx) > Math.abs(dy)) {
@@ -745,11 +768,26 @@ function renderInfoText() {
   /* Año (solo si la página lo pide) y medidas, cada uno en su línea; sin
      medidas ingresadas, esa línea simplemente no aparece. */
   const dims = (ovProduct.dimensions || []).filter(Boolean);
-  const lines = [];
-  if (OPTIONS.showYear && ovProduct.year) lines.push(`${t.year}: ${ovProduct.year}`);
-  if (dims.length) lines.push(`${t.measures}: ${dims.join(' | ')}`);
-  ovInfoMeasures.textContent = lines.join('\n');
-  ovInfoMeasures.hidden = !lines.length;
+  ovInfoMeasures.textContent = '';
+  if (OPTIONS.showYear && ovProduct.year) {
+    ovInfoMeasures.append(`${t.year}: ${ovProduct.year}`);
+    if (dims.length) ovInfoMeasures.append('\n');
+  }
+  /* Separador como línea fina y alta (span), no un "|" de texto: en negrita
+     se confundía con un "1" junto a los números. */
+  if (dims.length) {
+    ovInfoMeasures.append(`${t.measures}: `);
+    dims.forEach((d, i) => {
+      if (i) {
+        const sep = document.createElement('span');
+        sep.className = 'ov-measures-sep';
+        sep.setAttribute('aria-hidden', 'true');
+        ovInfoMeasures.append(sep);
+      }
+      ovInfoMeasures.append(d);
+    });
+  }
+  ovInfoMeasures.hidden = !ovInfoMeasures.textContent;
   ovInfoText.textContent = ovProduct.description || '';
 }
 
