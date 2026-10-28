@@ -664,7 +664,7 @@ window.PRODUCTS = [
     ],
     model3d: null,
     coverType: 'media',
-    badges: ['new'],
+    badges: [],
     links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
   },
   {
@@ -683,7 +683,7 @@ window.PRODUCTS = [
     ],
     model3d: null,
     coverType: 'media',
-    badges: ['new'],
+    badges: [],
     links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
   },
   {
@@ -696,7 +696,7 @@ window.PRODUCTS = [
     ],
     model3d: { src: 'assets/products/41-letrero-contadoor-acrilico/41-letrero-contadoor-acrilico_modelo3d.glb', poster: '' },
     coverType: '3d',
-    badges: ['wip', 'new'],
+    badges: ['wip'],
     links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
   },
     {
