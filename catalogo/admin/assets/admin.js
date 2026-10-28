@@ -191,7 +191,10 @@ el.year.addEventListener('input', () => { state.year = el.year.value; render(); 
 el.desc.addEventListener('input', () => { state.desc = el.desc.value; render(); });
 el.cat.addEventListener('input', () => { state.category = el.cat.value; render(); });
 el.dims.forEach((input) => input.addEventListener('input', () => { state.dims[+input.dataset.dim] = input.value; render(); }));
+/* Una sola etiqueta por card: marcar una desmarca las demás (se puede
+   dejar ninguna, por eso checkbox y no radio). */
 el.badges.forEach((input) => input.addEventListener('change', () => {
+  if (input.checked) el.badges.forEach((b) => { if (b !== input) b.checked = false; });
   state.badges = el.badges.filter((b) => b.checked).map((b) => b.dataset.badge);
   render();
 }));

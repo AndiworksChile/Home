@@ -267,8 +267,10 @@ function buildCard(product, indexInPage, pageIndex) {
 
   /* Etiquetas "En fabricación" / "Nuevo" / "El más visto" (esquina superior
      derecha, solo en el mosaico — el overlay no las muestra). El texto se
-     actualiza en applyLang(); el orden es siempre el de CARD_BADGES. */
-  const badges = CARD_BADGES.filter((b) => (product.badges || []).includes(b));
+     actualiza en applyLang(). Una sola por card (con varias, chocaban con
+     el número #X en móvil): si el producto trae más, gana la primera según
+     el orden de CARD_BADGES. */
+  const badges = CARD_BADGES.filter((b) => (product.badges || []).includes(b)).slice(0, 1);
   if (badges.length) {
     const wrap = document.createElement('span');
     wrap.className = 'card-badges';
@@ -656,6 +658,7 @@ function renderStage() {
 
 function stepMedia(dir) {
   const n = ovProduct.media.length;
+  if (n < 2) return;   /* con 0 o 1 foto no hay a dónde avanzar */
   ovIndex = (ovIndex + dir + n) % n;
   renderStageAnimated();
 }
@@ -802,13 +805,17 @@ function openOverlay(product, opener) {
   ovProduct = product;
   ovIndex = 0;
   ovOpener = opener || null;
-  ovMode = (product.coverType === '3d' && product.model3d) ? '3d' : 'media';
+  /* Sin fotos (ej. "En fabricación", solo modelo 3D) se abre siempre en 3D
+     y el botón "Fotos y videos" se oculta: no hay nada que mostrar ahí. */
+  const hasMedia = !!(product.media && product.media.length);
+  ovMode = (product.model3d && (product.coverType === '3d' || !hasMedia)) ? '3d' : 'media';
   trackEvent('product_view', { product_id: product.id, product_name: product.name, category: product.category || '' });
 
   renderInfoText();
   setInfoVisible(true);   /* la descripción va activada por defecto, en escritorio y en táctil */
 
   dock3dBtn.hidden = !product.model3d;
+  dockMediaBtn.hidden = !hasMedia;
 
   const wa = ovDock.querySelector('[data-act="whatsapp"]');
   wa.href = `${product.links.whatsapp}?text=${encodeURIComponent('Hola AndiWorks, me interesa: ' + product.name)}`;
