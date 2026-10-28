@@ -771,27 +771,33 @@ function renderInfoText() {
   if (!ovProduct) return;
   const t = I18N[currentLang] || I18N.es;
   ovInfoTitle.textContent = ovProduct.name;
-  /* Año (solo si la página lo pide) y medidas, cada uno en su línea; sin
-     medidas ingresadas, esa línea simplemente no aparece. */
+  /* Año (solo si la página lo pide) a la izquierda y medidas a la derecha,
+     en una misma línea (ver .ov-info-measures); lo que no esté ingresado
+     simplemente no aparece. */
   const dims = (ovProduct.dimensions || []).filter(Boolean);
   ovInfoMeasures.textContent = '';
   if (OPTIONS.showYear && ovProduct.year) {
-    ovInfoMeasures.append(`${t.year}: ${ovProduct.year}`);
-    if (dims.length) ovInfoMeasures.append('\n');
+    const year = document.createElement('span');
+    year.className = 'ov-year';
+    year.textContent = `${t.year}: ${ovProduct.year}`;
+    ovInfoMeasures.append(year);
   }
   /* Separador como línea fina y alta (span), no un "|" de texto: en negrita
      se confundía con un "1" junto a los números. */
   if (dims.length) {
-    ovInfoMeasures.append(`${t.measures}: `);
+    const dimsEl = document.createElement('span');
+    dimsEl.className = 'ov-dims';
+    dimsEl.append(`${t.measures}: `);
     dims.forEach((d, i) => {
       if (i) {
         const sep = document.createElement('span');
         sep.className = 'ov-measures-sep';
         sep.setAttribute('aria-hidden', 'true');
-        ovInfoMeasures.append(sep);
+        dimsEl.append(sep);
       }
-      ovInfoMeasures.append(d);
+      dimsEl.append(d);
     });
+    ovInfoMeasures.append(dimsEl);
   }
   ovInfoMeasures.hidden = !ovInfoMeasures.textContent;
   ovInfoText.textContent = ovProduct.description || '';

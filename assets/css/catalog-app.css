@@ -424,7 +424,7 @@ body.is-touch .card-tag {
   font-size: .62rem;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--accent);   /* naranjo legible sobre papel, igual que en el Home */
   text-align: center;
 }
 
@@ -501,7 +501,7 @@ body.is-touch .card-tag {
   flex-direction: column;
   align-items: center;
   gap: .9rem;
-  width: min(92vw, 540px);
+  width: min(92vw, 600px);
 }
 @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes ovRise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
@@ -532,7 +532,7 @@ body.is-touch .card-tag {
   box-sizing: border-box;
   width: 100%;
   aspect-ratio: 3 / 4;
-  max-height: 66vh;
+  max-height: 74vh;
   background: #15181D;
   border: 3px solid transparent;
   overflow: hidden;
@@ -602,17 +602,22 @@ body.is-touch .ov-mode-label { font-size: .58rem; padding: .25rem .5rem; top: .5
 .ov-info-title {
   font-family: var(--font-title);
   font-weight: 800;
-  font-size: clamp(1.3rem, 5vw, 1.85rem);
+  font-size: clamp(1.22rem, 4.6vw, 1.7rem);
   line-height: .92;
-  letter-spacing: .04em;
+  letter-spacing: .03em;
   text-transform: uppercase;
   color: #fff;
   margin-bottom: .5rem;
 }
 .ov-info-measures {
-  white-space: pre-line;   /* "Año" y "Medidas" en líneas separadas */
+  /* "Año" a la izquierda y "Medidas" a la derecha, en una misma línea; si
+     no caben, las medidas bajan y siguen alineadas a la derecha. */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .2rem 1rem;
   font-family: var(--font-mono);
-  font-size: clamp(.8rem, 2.2vw, .9rem);
+  font-size: clamp(.76rem, 2vw, .85rem);
   font-weight: 500;
   letter-spacing: .02em;
   text-transform: uppercase;
@@ -630,9 +635,11 @@ body.is-touch .ov-mode-label { font-size: .58rem; padding: .25rem .5rem; top: .5
   background: currentColor;
   opacity: .55;
 }
+.ov-info-measures[hidden] { display: none; }
+.ov-dims { margin-left: auto; text-align: right; }
 .ov-info-text {
   font-family: var(--font-text);
-  font-size: clamp(.92rem, 2.6vw, 1.05rem);
+  font-size: clamp(.86rem, 2.4vw, .98rem);
   line-height: 1.46;
   letter-spacing: .01em;
   color: rgba(255, 255, 255, .95);
@@ -640,9 +647,9 @@ body.is-touch .ov-mode-label { font-size: .58rem; padding: .25rem .5rem; top: .5
 /* En táctil el panel arranca cerrado (se prioriza ver la foto); si se abre,
    un tamaño más compacto y proporcional a la pantalla chica. */
 body.is-touch .ov-info { padding: .85rem .9rem .9rem; }
-body.is-touch .ov-info-title { font-size: clamp(1.05rem, 5.5vw, 1.4rem); margin-bottom: .35rem; }
-body.is-touch .ov-info-measures { font-size: clamp(.72rem, 3.2vw, .84rem); margin-bottom: .3rem; }
-body.is-touch .ov-info-text { font-size: clamp(.8rem, 3.4vw, .92rem); line-height: 1.4; }
+body.is-touch .ov-info-title { font-size: clamp(1rem, 5.2vw, 1.32rem); margin-bottom: .35rem; }
+body.is-touch .ov-info-measures { font-size: clamp(.68rem, 3vw, .78rem); margin-bottom: .3rem; }
+body.is-touch .ov-info-text { font-size: clamp(.76rem, 3.2vw, .87rem); line-height: 1.4; }
 
 /* Altura siempre reservada (min-height) aunque quede sin puntos en modo 3D,
    para que el panel nunca cambie de alto y el dock/la X no se reposicionen. */
@@ -680,6 +687,7 @@ body.is-touch .ov-info-text { font-size: clamp(.8rem, 3.4vw, .92rem); line-heigh
   transition: transform var(--btn-dur) var(--btn-ease), background-color var(--btn-dur) ease, border-color var(--btn-dur) ease, filter var(--btn-dur) ease;
 }
 .dock-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.dock-txt { font: 800 1.12rem/1 var(--font-title); letter-spacing: .02em; }
 .dock-btn[data-act="whatsapp"] svg,
 .dock-btn[data-act="instagram"] svg { width: 23px; height: 23px; fill: currentColor; stroke: none; }
 .dock-btn:focus-visible { transform: translateY(-2px); background: var(--aw-blanco); border-color: var(--aw-blanco); color: var(--aw-tinta); outline: 2px solid #fff; outline-offset: 3px; }
