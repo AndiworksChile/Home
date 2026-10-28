@@ -75,6 +75,26 @@ body.bio-open .home-card { display:none; }
 .bio-text + .bio-text { margin-top:.9rem; }
 /* Lo destacado de la historia (negritas y cursivas) va en naranjo láser. */
 .bio-text strong,.bio-text em { color:var(--aw-naranjo); }
+/* Propuesta de valor entre llaves { }. Cada llave se arma con dos mitades
+   (<i>): la propia <i> es el tramo recto (se estira con el alto del
+   párrafo), ::before la curva del extremo y ::after la punta del medio.
+   Así las curvas mantienen su forma sin importar cuántas líneas tenga el
+   texto. La de cierre es la misma, reflejada. */
+.bio-clave { --ll-w:14px; --ll-r:8px; --ll-s:2px; position:relative; margin:1.4rem 0; padding:.2rem calc(var(--ll-w) + .9rem); }
+.bio-text + .bio-clave,.bio-clave + .bio-text { margin-top:1.4rem; }
+.bio-clave .bio-text { font-size:clamp(1.05rem,2.1vw,1.16rem); }
+.llave { position:absolute; top:0; bottom:0; left:0; width:var(--ll-w); pointer-events:none; }
+.llave--cierre { left:auto; right:0; transform:scaleX(-1); }
+.llave i { position:absolute; left:calc(var(--ll-w) / 2); width:calc(var(--ll-w) / 2); border-left:var(--ll-s) solid var(--aw-naranjo); }
+.llave i:first-child { top:var(--ll-r); bottom:calc(50% + var(--ll-r)); }
+.llave i:last-child { top:calc(50% + var(--ll-r)); bottom:var(--ll-r); }
+.llave i::before,.llave i::after { content:''; position:absolute; height:var(--ll-r); border:0 solid var(--aw-naranjo); }
+/* Extremos: la curva se abre hacia el texto. */
+.llave i:first-child::before { top:calc(-1 * var(--ll-r)); left:calc(-1 * var(--ll-s)); width:100%; border-width:var(--ll-s) 0 0 var(--ll-s); border-top-left-radius:var(--ll-r); }
+.llave i:last-child::before { bottom:calc(-1 * var(--ll-r)); left:calc(-1 * var(--ll-s)); width:100%; border-width:0 0 var(--ll-s) var(--ll-s); border-bottom-left-radius:var(--ll-r); }
+/* Punta del medio: las dos mitades se juntan hacia afuera. */
+.llave i:first-child::after { bottom:calc(-1 * var(--ll-r)); right:100%; width:100%; border-width:0 var(--ll-s) var(--ll-s) 0; border-bottom-right-radius:var(--ll-r); }
+.llave i:last-child::after { top:calc(-1 * var(--ll-r)); right:100%; width:100%; border-width:var(--ll-s) var(--ll-s) 0 0; border-top-right-radius:var(--ll-r); }
 /* "Volver al menú": mismo lenguaje que los botones del menú (forma recta,
    borde visible, sube y se rellena con el color de la sección), en tamaño
    mediano. Mismo alto (38px) que los botones medianos del catálogo. */
