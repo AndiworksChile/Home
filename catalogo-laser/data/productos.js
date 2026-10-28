@@ -699,4 +699,21 @@ window.PRODUCTS = [
     badges: ['wip', 'new'],
     links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
   },
+    {
+    id: '42-stand-qr-olfatica-luxury-scents',
+    name: 'Stand Qr Olfatica Luxury Scents',
+    year: '2026',
+    description: 'Placa de acrílico blanco de 16cm de alto, por 12cm de ancho. 2 Códigos QRs para RRSS. Base de acrílico negro de 6mm de 7cm x 13cm.',
+    dimensions: ['13 cm', '7 cm', '16 cm'],
+    media: [
+      { type: 'image', src: 'assets/products/42-stand-qr-olfatica-luxury-scents/42-stand-qr-olfatica-luxury-scents_imagen1.webp' },
+      { type: 'image', src: 'assets/products/42-stand-qr-olfatica-luxury-scents/42-stand-qr-olfatica-luxury-scents_imagen2.webp' },
+      { type: 'image', src: 'assets/products/42-stand-qr-olfatica-luxury-scents/42-stand-qr-olfatica-luxury-scents_imagen3.webp' },
+      { type: 'image', src: 'assets/products/42-stand-qr-olfatica-luxury-scents/42-stand-qr-olfatica-luxury-scents_imagen4.webp' },
+    ],
+    model3d: { src: 'assets/products/42-stand-qr-olfatica-luxury-scents/42-stand-qr-olfatica-luxury-scents_modelo3d.glb', poster: 'assets/products/42-stand-qr-olfatica-luxury-scents/42-stand-qr-olfatica-luxury-scents_imagen1.webp' },
+    coverType: '3d',
+    badges: ['new'],
+    links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
+  },
 ];
