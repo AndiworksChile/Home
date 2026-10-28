@@ -54,6 +54,7 @@ const I18N = {
   es: {
     catSwitch: { productos: 'Catálogo Paramétrico', laser: 'Catálogo Láser' },
     back: 'Volver al Home',
+    backShort: 'Volver',
     dock: { info: 'Descripción', media: 'Fotos y videos', '3d': 'Ver en 3D', whatsapp: 'Consultar por WhatsApp', instagram: 'Ver en Instagram' },
     measures: 'Medidas',
     year: 'Año',
@@ -64,6 +65,7 @@ const I18N = {
   en: {
     catSwitch: { productos: 'Parametric Catalogue', laser: 'Laser Catalogue' },
     back: 'Back to Home',
+    backShort: 'Back',
     dock: { info: 'Description', media: 'Photos & videos', '3d': 'View in 3D', whatsapp: 'Ask on WhatsApp', instagram: 'View on Instagram' },
     measures: 'Dimensions',
     year: 'Year',
@@ -74,6 +76,7 @@ const I18N = {
   zh: {
     catSwitch: { productos: '参数化产品目录', laser: '激光产品目录' },
     back: '返回首页',
+    backShort: '返回',
     dock: { info: '产品说明', media: '照片和视频', '3d': '查看 3D', whatsapp: '通过 WhatsApp 咨询', instagram: '在 Instagram 查看' },
     measures: '尺寸',
     year: '年份',
@@ -942,6 +945,12 @@ function fadeSwap(el, apply) {
   };
 }
 
+/* Texto largo y corto del botón de volver: el CSS muestra uno u otro
+   (en móvil va el corto, para que quepa en la franja junto a las flechas). */
+function backLabel(t) {
+  return `<span class="back-full">${t.back}</span><span class="back-short">${t.backShort || t.back}</span>&nbsp;&rarr;`;
+}
+
 function applyLang(lang, animate) {
   currentLang = I18N[lang] ? lang : 'es';
   const t = I18N[currentLang];
@@ -963,11 +972,11 @@ function applyLang(lang, animate) {
   if (animate) {
     if (catSwitchProductos) fadeSwap(catSwitchProductos, () => { catSwitchProductos.textContent = t.catSwitch.productos; });
     if (catSwitchLaser) fadeSwap(catSwitchLaser, () => { catSwitchLaser.textContent = t.catSwitch.laser; });
-    fadeSwap(backHome, () => { backHome.innerHTML = `${t.back}&nbsp;&rarr;`; });
+    fadeSwap(backHome, () => { backHome.innerHTML = backLabel(t); });
   } else {
     if (catSwitchProductos) catSwitchProductos.textContent = t.catSwitch.productos;
     if (catSwitchLaser) catSwitchLaser.textContent = t.catSwitch.laser;
-    backHome.innerHTML = `${t.back}&nbsp;&rarr;`;
+    backHome.innerHTML = backLabel(t);
   }
 }
 

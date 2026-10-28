@@ -548,7 +548,10 @@ body.is-touch .card-tag {
    como scroll/gesto propio: sin esto Android puede cancelar el gesto a
    mitad de camino antes de que llegue el pointerup. */
 body.is-touch .ov-media { touch-action: pan-y; }
-.ov-media img, .ov-media video { object-fit: contain; background: #111214; }
+.ov-media img { object-fit: contain; background: #111214; }
+/* El video llena todo el marco 4:3 (sin franjas negras); se recorta un poco
+   por los bordes si su proporción es otra. */
+.ov-media video { object-fit: cover; background: #111214; }
 .ov-media model-viewer { --poster-color: #111214; background: #111214; }
 .ov-media model-viewer.is-floating { --poster-color: transparent; background: transparent; }
 
@@ -738,4 +741,31 @@ body.is-touch .overlay-close {
   .top-bar { gap: .5rem; }
   .social-link svg { width: 23px; height: 23px; }
   .foot-location { display: none; }   /* barra inferior angosta: prioridad a créditos + volver al home */
+
+  /* Una sola franja inferior: créditos a la izquierda, flechas + contador
+     centrados y "Volver" a la derecha. Las flechas siguen en el <main>
+     pero se fijan sobre la barra inferior (mismo alto), así el mosaico
+     gana el alto de la franja que ocupaban. Sin transform para centrar:
+     lo usa la animación de entrada (riseIn). */
+  .mosaic-section { padding-bottom: .5rem; }
+  .mosaic-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    width: max-content;
+    height: calc(var(--btn-h) + .8rem + 1px);   /* = alto de .bottom-bar */
+    margin-inline: auto;
+    padding: 0;
+    gap: .5rem;
+  }
+  .mosaic-count { min-width: 4ch; letter-spacing: .12em; }
+  /* Créditos en dos líneas si no caben antes de las flechas. */
+  .foot-credit { max-width: calc(50% - 6.5rem); line-height: 1.3; letter-spacing: .12em; }
+  .back-home { padding: 0 .75rem; }
+  .back-full { display: none; }
+}
+@media (min-width: 481px) {
+  .back-short { display: none; }
 }
