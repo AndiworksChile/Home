@@ -736,4 +736,23 @@ window.PRODUCTS = [
     badges: ['top', 'new'],
     links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
   },
+    {
+    id: '44-exhibidor-qr-eventos-bon-appetit',
+    name: 'Exhibidor QR Eventos Bon Appetit',
+    year: '2026',
+    description: 'Exhibidor QR de gran mediano en acrílico blanco de 3mm. Logo en relieve, iconos de RRSS y códigos QR en relieve y a color. Base de acrílico blanco 6mm.',
+    dimensions: ['13 cm', '8 cm', '19 cm'],
+    media: [
+      { type: 'video', src: 'assets/products/44-exhibidor-qr-eventos-bon-appetit/44-exhibidor-qr-eventos-bon-appetit_video1.mp4', poster: 'assets/products/44-exhibidor-qr-eventos-bon-appetit/44-exhibidor-qr-eventos-bon-appetit_imagen2.webp' },
+      { type: 'image', src: 'assets/products/44-exhibidor-qr-eventos-bon-appetit/44-exhibidor-qr-eventos-bon-appetit_imagen2.webp' },
+      { type: 'image', src: 'assets/products/44-exhibidor-qr-eventos-bon-appetit/44-exhibidor-qr-eventos-bon-appetit_imagen3.webp' },
+      { type: 'image', src: 'assets/products/44-exhibidor-qr-eventos-bon-appetit/44-exhibidor-qr-eventos-bon-appetit_imagen4.webp' },
+      { type: 'image', src: 'assets/products/44-exhibidor-qr-eventos-bon-appetit/44-exhibidor-qr-eventos-bon-appetit_imagen5.webp' },
+      { type: 'image', src: 'assets/products/44-exhibidor-qr-eventos-bon-appetit/44-exhibidor-qr-eventos-bon-appetit_imagen6.webp' },
+    ],
+    model3d: { src: 'assets/products/44-exhibidor-qr-eventos-bon-appetit/44-exhibidor-qr-eventos-bon-appetit_modelo3d.glb', poster: 'assets/products/44-exhibidor-qr-eventos-bon-appetit/44-exhibidor-qr-eventos-bon-appetit_imagen2.webp' },
+    coverType: 'media',
+    badges: ['new'],
+    links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
+  },
 ];

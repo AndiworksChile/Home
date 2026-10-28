@@ -256,6 +256,22 @@ body.is-touch .mosaic-track { transition: none; }
   pointer-events: none;
 }
 .card:hover .card-tag, .card:focus-visible .card-tag { opacity: 1; }
+/* Número de producto: esquina superior izquierda, chico y semitransparente
+   para no competir con las etiquetas ni el nombre. Misma sombra que el
+   nombre para que se lea sobre portadas claras. */
+.card-num {
+  position: absolute;
+  top: .45rem;
+  left: .5rem;
+  font-size: clamp(.55rem, 1vw, .64rem);
+  font-weight: 600;
+  letter-spacing: .06em;
+  color: #fff;
+  opacity: .7;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, .85), 0 0 8px rgba(0, 0, 0, .5);
+  pointer-events: none;
+}
+body.is-touch .card-num { top: .3rem; left: .35rem; font-size: clamp(.48rem, 2.2vw, .56rem); }
 /* Etiquetas "El más visto" (dorada, con 😎) / "Nuevo" (rojo) / "En
    fabricación" (azul): esquina superior derecha, una al lado de la otra si
    van varias. Solo en el mosaico. Forma recta como el resto de la interfaz,

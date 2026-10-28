@@ -224,6 +224,16 @@ function buildCard(product, indexInPage, pageIndex) {
   if (coverEl) media.appendChild(coverEl);
   card.appendChild(media);
 
+  /* Número de producto (esquina superior izquierda), sacado del prefijo
+     del id ('07-slug' → '#7'). Discreto: solo referencia para pedidos. */
+  const num = /^(\d+)-/.exec(product.id || '');
+  if (num) {
+    const numEl = document.createElement('span');
+    numEl.className = 'card-num';
+    numEl.textContent = `#${parseInt(num[1], 10)}`;
+    card.appendChild(numEl);
+  }
+
   /* Etiquetas "En fabricación" / "Nuevo" / "El más visto" (esquina superior
      derecha, solo en el mosaico — el overlay no las muestra). El texto se
      actualiza en applyLang(); el orden es siempre el de CARD_BADGES. */
