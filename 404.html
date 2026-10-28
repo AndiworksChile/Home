@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#FFFFFF">
+  <title>AndiWorks | Página no encontrada</title>
+  <!-- GitHub Pages sirve este archivo para cualquier URL que no existe, en
+       cualquier profundidad (/algo/que/no/existe): por eso todas las rutas son
+       absolutas (/assets/...) y no relativas como en el resto del sitio. -->
+  <link rel="icon" href="/favicon.ico?v=20261028a" sizes="48x48">
+  <link rel="icon" type="image/svg+xml" href="/assets/logo-web.svg?v=20261028a">
+  <link rel="apple-touch-icon" href="/assets/logo-ios.png?v=20261028a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+  <script src="/assets/js/analytics.js" defer></script>
+  <style>
+    /* Tokens del Manual de marca v1.0. Pantalla de error = Andi (escenario 07):
+       entero, en tinta sobre fondo claro, una sola pieza protagonista. */
+    :root { --aw-tinta:#15181D; --aw-blanco:#FFFFFF; --aw-naranjo-texto:#C2470A; --aw-mute:#596069; --aw-linea:#C9CDCF; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html,body { min-height:100%; }
+    body { display:grid; min-height:100dvh; place-items:center; padding:2rem 1rem; background:var(--aw-blanco); color:var(--aw-tinta); font-family:'Barlow',system-ui,sans-serif; -webkit-font-smoothing:antialiased; text-align:center; }
+    main { display:flex; max-width:440px; flex-direction:column; align-items:center; gap:1rem; }
+    .andi { width:clamp(120px,32vw,160px); height:auto; margin-bottom:.4rem; }
+    .code { font:500 .78rem/1 'IBM Plex Mono',ui-monospace,Menlo,monospace; letter-spacing:.14em; color:var(--aw-naranjo-texto); }
+    h1 { font:800 clamp(2rem,8vw,3rem)/.95 'Barlow Condensed','Arial Narrow',sans-serif; letter-spacing:.01em; text-transform:uppercase; }
+    p.text { font-size:1.05rem; line-height:1.55; color:var(--aw-mute); }
+    /* Mismo botón que "Volver al Home" de los catálogos. */
+    .back { display:inline-flex; align-items:center; height:44px; margin-top:.6rem; padding:0 1.2rem; border:1.5px solid rgba(21,24,29,.3); color:var(--aw-tinta); font:700 .8rem/1 'Barlow Condensed','Arial Narrow',sans-serif; letter-spacing:.16em; text-decoration:none; text-transform:uppercase; transition:transform .2s cubic-bezier(.2,.9,.2,1),background-color .2s ease,border-color .2s ease,color .2s ease; }
+    .back:hover,.back:focus-visible { transform:translateY(-2px); background:var(--aw-tinta); border-color:var(--aw-tinta); color:var(--aw-blanco); outline:none; }
+    .back:focus-visible { outline:2px solid var(--aw-naranjo-texto); outline-offset:3px; }
+    @keyframes riseIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+    main > * { animation:riseIn 700ms cubic-bezier(.2,.9,.2,1) backwards; }
+    main > :nth-child(2) { animation-delay:120ms; } main > :nth-child(3) { animation-delay:200ms; } main > :nth-child(4) { animation-delay:280ms; } main > :nth-child(5) { animation-delay:360ms; }
+    @media (prefers-reduced-motion:reduce) { main > * { animation:none; } }
+  </style>
+</head>
+<body>
+  <main>
+    <img class="andi" src="/assets/marca/andi-completo.svg?v=20261028a" width="160" height="160" alt="Andi, la mascota de AndiWorks">
+    <p class="code">ERROR 404</p>
+    <h1 id="t-title">Esta página no existe</h1>
+    <p class="text" id="t-text">Puede que el enlace esté mal escrito o que la página se haya movido. Vuelve al inicio y elige tu camino desde ahí.</p>
+    <a class="back" id="t-back" href="/">Volver al inicio</a>
+  </main>
+  <script>
+    /* Mismo idioma que el resto del sitio: el guardado en aw-lang o, si no
+       hay, el del navegador (ver applyLang() en main.js). */
+    (function () {
+      var I18N = {
+        en: { title: 'This page doesn’t exist', text: 'The link may be mistyped or the page may have moved. Head back home and pick your path from there.', back: 'Back to home', doc: 'AndiWorks | Page not found' },
+        zh: { title: '页面不存在', text: '链接可能有误，或页面已被移动。请返回首页重新选择。', back: '返回首页', doc: 'AndiWorks | 页面未找到' }
+      };
+      var lang = null;
+      try { lang = localStorage.getItem('aw-lang'); } catch (e) {}
+      if (!lang) {
+        var langs = navigator.languages || [navigator.language || 'es'];
+        for (var i = 0; i < langs.length; i++) {
+          var l = String(langs[i]).slice(0, 2).toLowerCase();
+          if (l === 'es' || l === 'en' || l === 'zh') { lang = l; break; }
+        }
+      }
+      var t = I18N[lang];
+      if (!t) return;
+      document.documentElement.lang = lang;
+      document.title = t.doc;
+      document.getElementById('t-title').textContent = t.title;
+      document.getElementById('t-text').textContent = t.text;
+      document.getElementById('t-back').textContent = t.back;
+    })();
+    /* Registra qué URL rota trajo a la gente aquí. Nunca debe romper la página. */
+    window.addEventListener('load', function () {
+      try { window.AW && window.AW.trackEvent('page_not_found', { path: location.pathname }); } catch (e) {}
+    });
+  </script>
+</body>
+</html>

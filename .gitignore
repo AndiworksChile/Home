@@ -4,3 +4,6 @@ Thumbs.db
 *.log
 *.csv
 CLAUDE.md
+
+# Manual de marca: sólo local (no se publica). La web usa copias en assets/marca/
+Manual-marca-Andiworks/

@@ -51,9 +51,10 @@ body {
   border-bottom: 1px solid var(--line);
 }
 
-/* Firma horizontal del Manual de marca (assets/marca/sello-andiworks.svg).
-   Alto ≥ 40px: bajo eso el manual pide la cara en vez del sello. Sin
-   efectos sobre el logo: el hover sólo lo levanta. */
+/* Nombre ANDIWORKS.CL del Manual de marca (assets/marca/sello-andiworks-nombre.svg):
+   a este tamaño el anillo del sello no se lee, y el manual indica el nombre
+   solo cuando el sello no cabe (mínimo 90 px de ancho). Sin efectos sobre
+   el logo: el hover sólo lo levanta. */
 .brand-title {
   display: inline-block;
   line-height: 0;
@@ -61,7 +62,7 @@ body {
   cursor: pointer;
   transition: transform .2s var(--btn-ease);
 }
-.brand-firma { display: block; width: auto; height: clamp(40px, 5vw, 52px); }
+.brand-firma { display: block; width: auto; height: clamp(22px, 2.6vw, 32px); }
 .brand-title:hover, .brand-title:focus-visible { transform: translateY(-1px); outline: none; }
 .brand-title:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
@@ -688,21 +689,21 @@ body.is-touch .ov-info-text { font-size: clamp(.8rem, 3.4vw, .92rem); line-heigh
 
 .overlay-close {
   position: absolute;
-  top: -2.9rem;
-  right: 0;
+  top: .6rem;
+  right: .6rem;
   z-index: 5;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1.5px solid rgba(255, 255, 255, .38);
-  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, .45);
+  background: rgba(21, 24, 29, .55);   /* tinta: se lee sobre fotos claras y oscuras */
   color: #fff;
   cursor: pointer;
   transition: transform var(--btn-dur) var(--btn-ease), background-color var(--btn-dur) ease, border-color var(--btn-dur) ease, filter var(--btn-dur) ease;
 }
-.overlay-close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+.overlay-close svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; }
 .overlay-close:active { transform: none; filter: brightness(.88); background: var(--aw-blanco); border-color: var(--aw-blanco); color: var(--aw-tinta); }
 /* Se enfoca por JS al abrir el overlay (para que Escape funcione y lectores
    de pantalla lo anuncien) — sin esto, el navegador dibuja su anillo de foco
@@ -710,14 +711,6 @@ body.is-touch .ov-info-text { font-size: clamp(.8rem, 3.4vw, .92rem); line-heigh
    anillo solo para navegación real por teclado. */
 .overlay-close:focus { outline: none; }
 .overlay-close:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
-/* En táctil, arriba del panel puede quedar bajo la barra de estado: se mete
-   adentro, sobre la esquina de la foto, con más contraste para que resalte. */
-body.is-touch .overlay-close {
-  top: .6rem;
-  right: .6rem;
-  background: rgba(0, 0, 0, .45);
-  border-color: rgba(255, 255, 255, .45);
-}
 
 /* :hover real (mouse con precisión fina) separado de :active/:focus-visible:
    en táctil el navegador simula :hover al tocar y no lo "suelta" hasta el
