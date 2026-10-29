@@ -100,6 +100,10 @@ let currentLang = 'es';
    láser), definidas igual que los overrides: ANTES de cargar este script. */
 const OPTIONS = window.CATALOG_OPTIONS || {};
 const CARD_BADGES = ['top', 'new', 'wip'];
+/* Tipo de producto al inicio del nombre ("Porta QR Grande", "Letrero"…):
+   en el título del overlay va en naranjo y el resto (marca/cliente) en
+   blanco. Un tipo nuevo se agrega aquí. */
+const PRODUCT_TYPE_RE = /^(Porta QR(?: (?:Grande|Doble|Tótem|Numerado|Google|Piramidal))*|Letrero(?: Acrílico)?|Repisero(?: Acrílico)?|Trofeo)(?=\s|$)/i;
 
 /* ── MOSAICO ─────────────────────────────────────────────────── */
 let page = 0;
@@ -792,7 +796,16 @@ function setInfoVisible(show) {
 function renderInfoText() {
   if (!ovProduct) return;
   const t = I18N[currentLang] || I18N.es;
-  ovInfoTitle.textContent = ovProduct.name;
+  ovInfoTitle.textContent = '';
+  const typeMatch = ovProduct.name.match(PRODUCT_TYPE_RE);
+  if (typeMatch) {
+    const type = document.createElement('span');
+    type.className = 'ov-info-type';
+    type.textContent = typeMatch[0];
+    ovInfoTitle.append(type, ovProduct.name.slice(typeMatch[0].length));
+  } else {
+    ovInfoTitle.textContent = ovProduct.name;
+  }
   /* Año (solo si la página lo pide) a la izquierda y medidas a la derecha,
      en una misma línea (ver .ov-info-measures); lo que no esté ingresado
      simplemente no aparece. */

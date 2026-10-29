@@ -30,7 +30,7 @@
 window.PRODUCTS = [
   {
     id: '01-jardines-vizcachas-mediterraneas',
-    name: 'Jardines Vizcachas Mediterráneas',
+    name: 'Letrero Jardines Vizcachas Mediterráneas',
     year: '2022',
     description: 'Placa de terciado de 9 mm, con logo personalizado grabado láser. Terminación lacada.',
     dimensions: [],
@@ -63,7 +63,7 @@ window.PRODUCTS = [
   },
   {
     id: '03-hagale-pues-almacen-minimarket',
-    name: 'Hágale pues! Almacén Minimarket',
+    name: 'Letrero Hágale pues! Almacén Minimarket',
     year: '2022',
     description: 'Letrero circular de terciado de 90 cm de diámetro, con logo personalizado y piezas en relieve. Terminación lacada.',
     dimensions: [],
@@ -79,7 +79,7 @@ window.PRODUCTS = [
   },
   {
     id: '04-club-pets-quality-life',
-    name: 'Club Pets Quality Life',
+    name: 'Letrero Club Pets Quality Life',
     year: '2022',
     description: 'Letrero circular de madera de pino de 90 cm de diámetro, con diseño personalizado grabado láser.',
     dimensions: [],
@@ -95,7 +95,7 @@ window.PRODUCTS = [
   },
   {
     id: '05-bonpanier-waffers-chocolates',
-    name: 'Bonpanier Waffers & Chocolates',
+    name: 'Letrero Bonpanier Waffers & Chocolates',
     year: '2021',
     description: 'Letrero de terciado de 9 mm, con grabado láser. Soporte de madera de pino.',
     dimensions: [],
@@ -111,7 +111,7 @@ window.PRODUCTS = [
   },
   {
     id: '06-golden-flowers',
-    name: 'Golden Flowers',
+    name: 'Letrero Golden Flowers',
     year: '2022',
     description: 'Letrero de terciado de 9 mm, con grabado láser. Terminación lacada.',
     dimensions: [],
@@ -127,7 +127,7 @@ window.PRODUCTS = [
   },
   {
     id: '07-color-ropera',
-    name: 'Color Ropera',
+    name: 'Letrero Color Ropera',
     year: '2023',
     description: 'Letrero enmarcado de terciado de 9 mm, con grabado láser. Pintado en color blanco y letras según color del logo.',
     dimensions: [],
@@ -142,7 +142,7 @@ window.PRODUCTS = [
   },
   {
     id: '08-goth-clothes',
-    name: 'Goth & Clothes',
+    name: 'Letrero Goth & Clothes',
     year: '2024',
     description: 'Letrero QR de acrílico, con código QR grabado láser. Apto para interior y exterior.',
     dimensions: [],
@@ -174,7 +174,7 @@ window.PRODUCTS = [
   },
   {
     id: '10-retrato-en-tono-de-grises',
-    name: 'Retrato en Tono de grises',
+    name: 'Letrero Retrato en Tono de grises',
     year: '2022',
     description: 'Retrato en terciado grabado láser, en tonos negro, gris y blanco. Terminación lacada.',
     dimensions: [],
@@ -190,7 +190,7 @@ window.PRODUCTS = [
   },
   {
     id: '11-la-verdi-pizzas-y-cocina-de-la-tierra',
-    name: 'La Verdi Pizzas y Cocina de la Tierra',
+    name: 'Letrero La Verdi Pizzas y Cocina de la Tierra',
     year: '2022',
     description: 'Letrero circular de terciado de 75 cm de diámetro, con logo personalizado y piezas en relieve. Terminación lacada.',
     dimensions: [],
@@ -223,7 +223,7 @@ window.PRODUCTS = [
   },
   {
     id: '13-verde-liken',
-    name: 'Verde Liken',
+    name: 'Letrero Verde Liken',
     year: '2022',
     description: 'Letrero circular de terciado de 30 cm de diámetro, con piezas en relieve y grabado láser. Terminación lacada.',
     dimensions: [],
@@ -238,7 +238,7 @@ window.PRODUCTS = [
   },
   {
     id: '14-casa-palermo',
-    name: 'Casa Palermo',
+    name: 'Letrero Casa Palermo',
     year: '2022',
     description: 'Letrero circular de madera de pino de 1" y 35 cm de diámetro, con logo personalizado y piezas en relieve. Terminación lacada.',
     dimensions: [],
@@ -284,7 +284,7 @@ window.PRODUCTS = [
   },
   {
     id: '17-plaza-clemente',
-    name: 'Plaza Clemente',
+    name: 'Letrero Plaza Clemente',
     year: '2022',
     description: 'Letrero circular enmarcado de terciado de 35 cm de diámetro, con piezas en relieve. Terminación lacada.',
     dimensions: [],
@@ -316,7 +316,7 @@ window.PRODUCTS = [
   },
   {
     id: '19-reina-nalca-helados-artesanales',
-    name: 'Reina Nalca Helados Artesanales',
+    name: 'Letrero Reina Nalca Helados Artesanales',
     year: '2022',
     description: 'Letrero circular de terciado de 35 cm de diámetro, con logo personalizado y piezas en relieve. Terminación lacada.',
     dimensions: [],
@@ -363,7 +363,7 @@ window.PRODUCTS = [
   },
   {
     id: '22-como-en-casa-cocian-vegana',
-    name: 'Como en Casa Cocina Vegana',
+    name: 'Letrero Como en Casa Cocina Vegana',
     year: '2022',
     description: 'Letrero circular de terciado full color de 35 cm de diámetro, con logo personalizado y piezas en relieve. Terminación lacada.',
     dimensions: [],
@@ -378,7 +378,7 @@ window.PRODUCTS = [
   },
   {
     id: '23-jardin-de-maria-y-enrique',
-    name: 'Jardin de María y Enrique',
+    name: 'Letrero Jardín de María y Enrique',
     year: '2022',
     description: 'Letrero circular enmarcado de terciado de 35 cm de diámetro, con piezas en relieve. Terminación lacada.',
     dimensions: [],
@@ -445,7 +445,7 @@ window.PRODUCTS = [
   },
   {
     id: '27-jovi-park-lab',
-    name: 'Jovi Park & Lab',
+    name: 'Letrero Jovi Park & Lab',
     year: '2022',
     description: 'Letrero circular de terciado de 80 cm de diámetro, con logo personalizado grabado láser. Terminación lacada.',
     dimensions: [],
@@ -514,7 +514,7 @@ window.PRODUCTS = [
   },
   {
     id: '31-serpiente-negra',
-    name: 'Serpiente negra',
+    name: 'Letrero Serpiente negra',
     year: '2025',
     description: 'Letrero personalizado de terciado de 9 mm, con piezas en relieve y grabado láser. Pintado a color según solicitud y diseño del cliente.',
     dimensions: [],
@@ -531,7 +531,7 @@ window.PRODUCTS = [
   },
   {
     id: '32-parrilleros-con-camisa',
-    name: 'Parrilleros con camisa',
+    name: 'Letrero Parrilleros con camisa',
     year: '2025',
     description: 'Letrero de terciado de 9 mm y acrílico, con diseño personalizado grabado láser. Terminación lacada.',
     dimensions: [],
@@ -757,9 +757,9 @@ window.PRODUCTS = [
   },
     {
     id: '45-porta-qr-la-ronda-sii',
-    name: 'Porta QR Tótem La Ronda Sii',
+    name: 'Porta QR Tótem La Ronda SII',
     year: '2026',
-    description: 'Porta QR Tótem de acrílico transparente pintado blanco, con código QR y letras Sii grabadas al interior. Base de acrílico negro de 6 mm.',
+    description: 'Porta QR Tótem de acrílico transparente pintado blanco, con código QR y letras SII grabadas al interior. Base de acrílico negro de 6 mm.',
     dimensions: ['7 cm', '5 cm', '10 cm'],
     media: [
       { type: 'video', src: 'assets/products/45-porta-qr-la-ronda-sii/45-porta-qr-la-ronda-sii_video1.mp4', poster: 'assets/products/45-porta-qr-la-ronda-sii/45-porta-qr-la-ronda-sii_imagen2.webp' },
