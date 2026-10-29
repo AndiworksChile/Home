@@ -108,6 +108,13 @@ function normalizeDim(v) {
   v = v.trim();
   return /^[\d.,]+$/.test(v) ? `${v} cm` : v;
 }
+/* [largo, ancho, alto] sin las vacías del final; una intermedia vacía
+   queda como '' para no correr las etiquetas del overlay. */
+function dimsList() {
+  const dims = state.dims.map(normalizeDim);
+  while (dims.length && !dims[dims.length - 1]) dims.pop();
+  return dims;
+}
 
 /* ── PRODUCTOS EXISTENTES ────────────────────────────────────── */
 /* Ambos productos.js asignan window.PRODUCTS: se cargan de a uno como
@@ -317,7 +324,10 @@ function buildProduct() {
     description: state.desc.trim(),
     /* Ambos catálogos: medidas reales (vacías = no se muestran). En el láser
        el año sale de `year` (ver CATALOG_OPTIONS en catalogo-laser/index.html). */
-    dimensions: state.dims.map(normalizeDim).filter(Boolean),
+    /* Posicional [largo, ancho, alto]: el overlay pone la etiqueta según el
+       índice, así que una medida intermedia vacía queda como '' y solo se
+       recortan las vacías del final. */
+    dimensions: dimsList(),
     media,
     model3d,
     coverType: (model3d && state.cover3d) ? '3d' : 'media',

@@ -32,7 +32,7 @@ window.PRODUCTS = [
     id: '01-jardines-vizcachas-mediterraneas',
     name: 'Jardines Vizcachas Mediterráneas',
     year: '2022',
-    description: 'Placa de terciado | Terciado 9mm, Grabado láser, Logo personalizado, Lacado.',
+    description: 'Placa de terciado de 9 mm, con logo personalizado grabado láser. Terminación lacada.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/01-jardines-vizcachas-mediterraneas/jardines_vizcachas_mediterraneas_1.webp' },
@@ -47,9 +47,9 @@ window.PRODUCTS = [
   },
   {
     id: '02-kavana-reposteria-saludable',
-    name: 'Kavana Reposteria Saludable',
+    name: 'Porta QR Doble Kavana Repostería Saludable',
     year: '2025',
-    description: 'Stand QR DUO | Acrílico, Grabado láser, Datos de transferencia, Personalizado.',
+    description: 'Porta QR Doble de acrílico, con códigos QR y datos de transferencia. Grabado láser.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/02-kavana-reposteria-saludable/kavana_reposteria_saludable_1.webp' },
@@ -65,7 +65,7 @@ window.PRODUCTS = [
     id: '03-hagale-pues-almacen-minimarket',
     name: 'Hágale pues! Almacén Minimarket',
     year: '2022',
-    description: 'Letrero | Terciado, Piezas en relieve, Logo personalizado, Lacado, 90cm diámetro.',
+    description: 'Letrero circular de terciado de 90 cm de diámetro, con logo personalizado y piezas en relieve. Terminación lacada.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/03-hagale-pues-almacen-minimarket/hagale_pues_almacen_minimarket_1.webp' },
@@ -81,7 +81,7 @@ window.PRODUCTS = [
     id: '04-club-pets-quality-life',
     name: 'Club Pets Quality Life',
     year: '2022',
-    description: 'Letrero de madera de pino | Base de pino, 90cm Diámetro, Grabado láser, Personalizado.',
+    description: 'Letrero circular de madera de pino de 90 cm de diámetro, con diseño personalizado grabado láser.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/04-club-pets-quality-life/club_pets_quality_life_1.webp' },
@@ -97,7 +97,7 @@ window.PRODUCTS = [
     id: '05-bonpanier-waffers-chocolates',
     name: 'Bonpanier Waffers & Chocolates',
     year: '2021',
-    description: 'Letrero de madera | Terciado 9mm, Grabado láser, Soporte de pino.',
+    description: 'Letrero de terciado de 9 mm, con grabado láser. Soporte de madera de pino.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/05-bonpanier-waffers-chocolates/bonpanier_waffers_chocolates_1.webp' },
@@ -113,7 +113,7 @@ window.PRODUCTS = [
     id: '06-golden-flowers',
     name: 'Golden Flowers',
     year: '2022',
-    description: 'Letrero de Terciado | Terciado 9mm, Grabado láser, Lacado.',
+    description: 'Letrero de terciado de 9 mm, con grabado láser. Terminación lacada.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/06-golden-flowers/golden_flowers_1.webp' },
@@ -129,7 +129,7 @@ window.PRODUCTS = [
     id: '07-color-ropera',
     name: 'Color Ropera',
     year: '2023',
-    description: 'Letrero de madera | Terciado 9mm, Grabado láser, Enmarcado.',
+    description: 'Letrero enmarcado de terciado de 9 mm, con grabado láser. Pintado en color blanco y letras según color del logo.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/07-color-ropera/color_ropera_1.webp' },
@@ -144,7 +144,7 @@ window.PRODUCTS = [
     id: '08-goth-clothes',
     name: 'Goth & Clothes',
     year: '2024',
-    description: 'Letrero QR Acrílico | Código QR, Grabado láser, Interio / Exterior.',
+    description: 'Letrero QR de acrílico, con código QR grabado láser. Apto para interior y exterior.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/08-goth-clothes/goth_clothes_1.webp' },
@@ -157,9 +157,9 @@ window.PRODUCTS = [
   },
   {
     id: '09-stand-qr-sabor-mediterraneo',
-    name: 'Stand QR Sabor Mediterraneo',
+    name: 'Porta QR Google Sabor Mediterráneo',
     year: '2025',
-    description: 'Stand QR Google | Acrílico, Letras Google, Piezas en relieve, Grabado láser.',
+    description: 'Porta QR de acrílico para reseñas de Google, con letras de Google y piezas en relieve. Grabado láser.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/09-stand-qr-sabor-mediterraneo/stand_qr_sabor_mediterraneo_1.webp' },
@@ -176,7 +176,7 @@ window.PRODUCTS = [
     id: '10-retrato-en-tono-de-grises',
     name: 'Retrato en Tono de grises',
     year: '2022',
-    description: 'Letrero | Terciado, Grabado láser, Negro, Gris, Blanco, Lacado.',
+    description: 'Retrato en terciado grabado láser, en tonos negro, gris y blanco. Terminación lacada.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/10-retrato-en-tono-de-grises/retrato_en_tono_de_grises_1.webp' },
@@ -192,7 +192,7 @@ window.PRODUCTS = [
     id: '11-la-verdi-pizzas-y-cocina-de-la-tierra',
     name: 'La Verdi Pizzas y Cocina de la Tierra',
     year: '2022',
-    description: 'Letrero | Terciado, Piezas en relieve, Logo personalizado, Lacado, 75cm diámetro.',
+    description: 'Letrero circular de terciado de 75 cm de diámetro, con logo personalizado y piezas en relieve. Terminación lacada.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/11-la-verdi-pizzas-y-cocina-de-la-tierra/la_verdi_pizzas_y_cocina_de_la_tierra_1.webp' },
@@ -206,9 +206,9 @@ window.PRODUCTS = [
   },
   {
     id: '12-exhibidor-contadoor',
-    name: 'Exhibidor Contadoor',
+    name: 'Repisero Acrílico Contadoor',
     year: '2025',
-    description: 'Repisero acrílico | Logo.',
+    description: 'Repisero de acrílico, con el logo de la marca.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/12-exhibidor-contadoor/exhibidor_contadoor_1.webp' },
@@ -225,7 +225,7 @@ window.PRODUCTS = [
     id: '13-verde-liken',
     name: 'Verde Liken',
     year: '2022',
-    description: 'Letrero | Terciado, Piezas en relieve, Grabado láser, Lacado, 30cm diámetro.',
+    description: 'Letrero circular de terciado de 30 cm de diámetro, con piezas en relieve y grabado láser. Terminación lacada.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/13-verde-liken/verde_liken_1.webp' },
@@ -240,7 +240,7 @@ window.PRODUCTS = [
     id: '14-casa-palermo',
     name: 'Casa Palermo',
     year: '2022',
-    description: 'Letrero de madera de pino | Madera de pino 1", Piezas en relieve, Logo personalizado, Lacado, 35cm diámetro.',
+    description: 'Letrero circular de madera de pino de 1" y 35 cm de diámetro, con logo personalizado y piezas en relieve. Terminación lacada.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/14-casa-palermo/casa_palermo_1.webp' },
@@ -253,9 +253,9 @@ window.PRODUCTS = [
   },
   {
     id: '15-stand-qr-deleitoso',
-    name: 'Stand QR Deleitoso Fast Food',
+    name: 'Porta QR Deleitoso Fast Food',
     year: '2025',
-    description: 'Stand QR piezas con relieve | Acrílico, Logo en relieve, Grabado láser.',
+    description: 'Porta QR de acrílico, con logo en relieve. Grabado láser.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/15-stand-qr-deleitoso/stand_qr_deleitoso_1.webp' },
@@ -267,9 +267,9 @@ window.PRODUCTS = [
   },
   {
     id: '16-crematorio-cemas',
-    name: 'Crematorio Cemas',
+    name: 'Porta QR Tótem Crematorio Cemas',
     year: '2025',
-    description: 'Mini-Exhibidor QR | Código QR, Acrílico, Grabado láser, Personalizado.',
+    description: 'Porta QR Tótem de acrílico, con código QR y diseño personalizado. Grabado láser.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/16-crematorio-cemas/crematorio_cemas_1.webp' },
@@ -286,7 +286,7 @@ window.PRODUCTS = [
     id: '17-plaza-clemente',
     name: 'Plaza Clemente',
     year: '2022',
-    description: 'Letrero enmarcado | Terciado, Piezas en relieve, Lacado, 35cm diámetro.',
+    description: 'Letrero circular enmarcado de terciado de 35 cm de diámetro, con piezas en relieve. Terminación lacada.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/17-plaza-clemente/plaza_clemente_1.webp' },
@@ -299,9 +299,9 @@ window.PRODUCTS = [
   },
   {
     id: '18-exhibidor-parrilleros-con-camisa',
-    name: 'Exhibidor Parrilleros con Camisa',
+    name: 'Porta QR Grande Parrilleros con Camisa',
     year: '2025',
-    description: 'Exhibidor QR Grande | Formato Grande, Código QR, Personalizado, Grabado láser, Con relieve.',
+    description: 'Porta QR Grande personalizado, con código QR y piezas en relieve. Grabado láser.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/18-exhibidor-parrilleros-con-camisa/exhibidor_parrilleros_con_camisa_1.webp' },
@@ -318,7 +318,7 @@ window.PRODUCTS = [
     id: '19-reina-nalca-helados-artesanales',
     name: 'Reina Nalca Helados Artesanales',
     year: '2022',
-    description: 'Letrero | Terciado, Piezas en relieve, Logo personalizado, Lacado, 35cm diámetro.',
+    description: 'Letrero circular de terciado de 35 cm de diámetro, con logo personalizado y piezas en relieve. Terminación lacada.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/19-reina-nalca-helados-artesanales/reina_nalca_helados_artesanales_1.webp' },
@@ -333,7 +333,7 @@ window.PRODUCTS = [
     id: '20-letrero-espacio-suyai',
     name: 'Letrero Espacio Suyai',
     year: '2025',
-    description: 'Letrero código QR | Acrílico, Grabado láser, Letras en relieve.',
+    description: 'Letrero QR de acrílico, con letras en relieve y código QR grabado láser.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/20-letrero-espacio-suyai/letrero_espacio_suyai_1.webp' },
@@ -348,8 +348,8 @@ window.PRODUCTS = [
   },
   {
     id: '21-stand-qr-el-club-barbershop',
-    name: 'Stand QR El Club Barbershop',
-    description: 'Stand QR | Código QR, Acrílico, Letras en relieve, Grabado láser.',
+    name: 'Porta QR El Club Barbershop',
+    description: 'Porta QR de acrílico, con código QR y letras en relieve. Grabado láser.',
     media: [
       { type: 'image', src: 'assets/products/21-stand-qr-el-club-barbershop/stand_qr_el_club_barbershop_1.webp' },
       { type: 'image', src: 'assets/products/21-stand-qr-el-club-barbershop/stand_qr_el_club_barbershop_2.webp' },
@@ -363,9 +363,9 @@ window.PRODUCTS = [
   },
   {
     id: '22-como-en-casa-cocian-vegana',
-    name: 'Como en Casa Cocian Vegana',
+    name: 'Como en Casa Cocina Vegana',
     year: '2022',
-    description: 'Letrero de terciado full color | Piezas en relieve, Logo personalizado, Lacado, 35cm diámetro.',
+    description: 'Letrero circular de terciado full color de 35 cm de diámetro, con logo personalizado y piezas en relieve. Terminación lacada.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/22-como-en-casa-cocian-vegana/como_en_casa_cocian_vegana_1.webp' },
@@ -380,7 +380,7 @@ window.PRODUCTS = [
     id: '23-jardin-de-maria-y-enrique',
     name: 'Jardin de María y Enrique',
     year: '2022',
-    description: 'Letrero enmarcado | Terciado, Piezas en relieve, Lacado, 35cm diámetro.',
+    description: 'Letrero circular enmarcado de terciado de 35 cm de diámetro, con piezas en relieve. Terminación lacada.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/23-jardin-de-maria-y-enrique/jardin_de_maria_y_enrique_1.webp' },
@@ -394,9 +394,9 @@ window.PRODUCTS = [
   },
   {
     id: '24-stand-qr-deltamotos-garage-racing',
-    name: 'Stand QR DeltaMotos Garage & Racing',
+    name: 'Porta QR DeltaMotos Garage & Racing',
     year: '2026',
-    description: 'Stand QR con relieve | Acrílico, Grabado láser.',
+    description: 'Porta QR de acrílico, con piezas en relieve. Grabado láser.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/24-stand-qr-deltamotos-garage-racing/stand_qr_deltamotos_garage_racing_1.webp' },
@@ -411,9 +411,9 @@ window.PRODUCTS = [
   },
   {
     id: '25-stand-qr-astoria',
-    name: 'Stand QR Astoria',
+    name: 'Porta QR Numerado Astoria',
     year: '2025',
-    description: 'Stand QR Numerado | Acrílico, Código QR, Grabado láser.',
+    description: 'Porta QR Numerado de acrílico, con código QR y número grabado. Grabado láser.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/25-stand-qr-astoria/stand_qr_astoria_1.webp' },
@@ -428,9 +428,9 @@ window.PRODUCTS = [
   },
   {
     id: '26-exhibidor-shawarma-s-chile',
-    name: 'Exhibidor Shawarma\'s Chile',
+    name: 'Porta QR Piramidal Shawarma\'s Chile',
     year: '2025',
-    description: 'Exhibidor Piramidal | Apilable, Acrílico, Grabado láser.',
+    description: 'Porta QR Piramidal de acrílico apilable. Logo, letras y número de mesa grabados en ambas caras. Fabricado en acrílico de 3 mm.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/26-exhibidor-shawarma-s-chile/exhibidor_shawarma_s_chile_1.webp' },
@@ -447,7 +447,7 @@ window.PRODUCTS = [
     id: '27-jovi-park-lab',
     name: 'Jovi Park & Lab',
     year: '2022',
-    description: 'Letrero de terciado | Grabado láser, Logo personalizado, Lacado, 80cm diámetro.',
+    description: 'Letrero circular de terciado de 80 cm de diámetro, con logo personalizado grabado láser. Terminación lacada.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/27-jovi-park-lab/jovi_park_lab_1.webp' },
@@ -461,9 +461,9 @@ window.PRODUCTS = [
   },
   {
     id: '28-stand-qr-duo-brows-by-carla',
-    name: 'Stand Qr Duo Brows by Carla',
+    name: 'Porta QR Doble Brows by Carla',
     year: '2025',
-    description: 'Stand Qr Duo | Acrílico, Grabado láser.',
+    description: 'Porta QR Doble de acrílico, con dos códigos QR. Grabado láser.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/28-stand-qr-duo-brows-by-carla/stand_qr_duo_brows_by_carla_1.webp' },
@@ -478,9 +478,9 @@ window.PRODUCTS = [
   },
   {
     id: '29-stand-qr-doggy-snack',
-    name: 'Stand QR Doggy Snack',
+    name: 'Porta QR Doggy Snack',
     year: '2025',
-    description: 'Stand QR con relieve | Acrílico, Letras en relieve, Grabado láser, Color a elección, Datos de transferencia.',
+    description: 'Porta QR de acrílico, con letras en relieve y datos de transferencia. Pintado a color según diseño del cliente. Grabado láser.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/29-stand-qr-doggy-snack/stand_qr_doggy_snack_1.webp' },
@@ -497,7 +497,7 @@ window.PRODUCTS = [
     id: '30-trofeo-empresa-stli',
     name: 'Trofeo Empresa STLI',
     year: '2025',
-    description: 'Trofeo de Roble | Grabado láser, Personalizado, Lacado.',
+    description: 'Trofeo de roble personalizado, con grabado láser. Terminación lacada.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/30-trofeo-empresa-stli/IMG_1106-2.webp' },
@@ -516,7 +516,7 @@ window.PRODUCTS = [
     id: '31-serpiente-negra',
     name: 'Serpiente negra',
     year: '2025',
-    description: 'Letrero de madera | Terciado 9mm, Grabado láser.',
+    description: 'Letrero personalizado de terciado de 9 mm, con piezas en relieve y grabado láser. Pintado a color según solicitud y diseño del cliente.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/31-serpiente-negra/serpiente_negra_1.webp' },
@@ -533,7 +533,7 @@ window.PRODUCTS = [
     id: '32-parrilleros-con-camisa',
     name: 'Parrilleros con camisa',
     year: '2025',
-    description: 'Letrero de terciado, acrílico y grabado láser | Terciado 9mm, Grabado láser, Personalizado, Lacado.',
+    description: 'Letrero de terciado de 9 mm y acrílico, con diseño personalizado grabado láser. Terminación lacada.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/32-parrilleros-con-camisa/parrilleros_con_camisa_1.webp' },
@@ -548,9 +548,9 @@ window.PRODUCTS = [
   },
   {
     id: '33-grace-is-good-7',
-    name: 'Grace Is Good 7',
+    name: 'Porta QR Tótem Grace Is Good 7',
     year: '2025',
-    description: 'Mini-Exhibidor QR | Código QR, Grabado láser, Personalizado, Acrílico, Corte láser.',
+    description: 'Porta QR Tótem de acrílico cortado a láser, con código QR y diseño personalizado. Grabado láser.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/33-grace-is-good-7/grace_is_good_7_1.webp' },
@@ -565,9 +565,9 @@ window.PRODUCTS = [
   },
   {
     id: '34-exhibidor-kai-elegancia',
-    name: 'Exhibidor Kai Elegancia',
+    name: 'Porta QR Grande Kai Elegancia',
     year: '2025',
-    description: 'Exhibidor QR Grande, acrílico y madera | Base de madera, Piezas en relieve, Color a elección.',
+    description: 'Porta QR Grande de acrílico con base de madera y piezas en relieve. Pintado a color según diseño del cliente.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/34-exhibidor-kai-elegancia/exhibidor_kai_elegancia_1.webp' },
@@ -580,9 +580,9 @@ window.PRODUCTS = [
   },
   {
     id: '35-exhibidor-qr-scf-servicios-automotriz',
-    name: 'Exhibidor QR SCF Servicios Automotriz',
+    name: 'Porta QR Grande SCF Servicios Automotriz',
     year: '2025',
-    description: 'Exhibidor QR Grande | Acrílico a color, Piezas en relieve, Datos de transferencia, Grabado láser.',
+    description: 'Porta QR Grande de acrílico a color, con piezas en relieve y datos de transferencia. Grabado láser.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/35-exhibidor-qr-scf-servicios-automotriz/exhibidor_qr_scf_servicios_automotriz_1.webp' },
@@ -597,9 +597,9 @@ window.PRODUCTS = [
   },
   {
     id: '36-stand-qr-vidatinta',
-    name: 'Stand Qr VidaTinta',
+    name: 'Porta QR VidaTinta',
     year: '2025',
-    description: 'Stand QR | Acrílico, Código QR, Grabado láser.',
+    description: 'Porta QR de acrílico, con código QR. Grabado láser.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/36-stand-qr-vidatinta/stand_qr_vidatinta_1.webp' },
@@ -614,9 +614,9 @@ window.PRODUCTS = [
   },
   {
     id: '37-stand-qr-valevita-panaderia',
-    name: 'Stand QR Valevita Panadería',
+    name: 'Porta QR Valevita Panadería',
     year: '2025',
-    description: 'Stand QR | Acrílico, Grabado láser, Color a elección.',
+    description: 'Porta QR de acrílico de 3 mm, pintado a color según diseño del cliente. Grabado láser.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/37-stand-qr-valevita-panaderia/stand_qr_valevita_panaderia_1.webp' },
@@ -631,9 +631,9 @@ window.PRODUCTS = [
   },
   {
     id: '38-exhibidor-qr-aura-accesorios',
-    name: 'Exhibidor QR Aura Accesorios',
+    name: 'Porta QR Grande Aura Accesorios',
     year: '2025',
-    description: 'Exhibidor QR Grande | Acrílico dorado, Piezas en relieve, Datos de transferencia, Grabado láser.',
+    description: 'Porta QR Grande de acrílico dorado, con piezas en relieve y datos de transferencia. Grabado láser.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/38-exhibidor-qr-aura-accesorios/exhibidor_qr_aura_accesorios_1.webp' },
@@ -651,8 +651,8 @@ window.PRODUCTS = [
     name: 'Repisero Piercings Dorado',
     category: 'Objetos',
     year: '2026',
-    description: 'Logo horizontal con letras -PIERCINGS- en color dorado.',
-    dimensions: ['18cm', '8cm', '10cm'],
+    description: 'Repisero de acrílico blanco de 3 mm, con letras en horizontal "PIERCINGS" en acrílico dorado espejado.',
+    dimensions: ['18 cm', '8 cm', '10 cm'],
     media: [
       /* Video primero = portada de la card. El poster se ve mientras carga. */
       { type: 'video', src: 'assets/products/39-repisero-piercings-dorado/39-repisero-piercings-dorado_video6.mp4', poster: 'assets/products/39-repisero-piercings-dorado/39-repisero-piercings-dorado_imagen1.webp' },
@@ -669,9 +669,9 @@ window.PRODUCTS = [
   },
   {
     id: '40-crash-jewels-totem-qr',
-    name: 'Crash Jewels Totem QR',
+    name: 'Porta QR Tótem Crash Jewels',
     year: '2026',
-    description: 'Stand Acrílico QR tipo Totem. Códigos QR, datos de transferencia y logo grabado en láser. Colores personalizados.',
+    description: 'Porta QR Tótem de acrílico a color, con códigos QR, datos de transferencia y logo. Grabado láser.',
     dimensions: [],
     media: [
       { type: 'image', src: 'assets/products/40-crash-jewels-totem-qr/40-crash-jewels-totem-qr_imagen1.webp' },
@@ -690,8 +690,8 @@ window.PRODUCTS = [
     id: '41-letrero-contadoor-acrilico',
     name: 'Letrero Contadoor Acrílico',
     year: '2026',
-    description: 'Letrero de acrílico de 60x25cm, con logo y letras en relieve  de 3mm.',
-    dimensions: ['60cm', '25cm'],
+    description: 'Letrero de acrílico de 60 × 25 cm, con logo y letras en relieve de 3 mm.',
+    dimensions: ['60 cm', '', '25 cm'],
     media: [
     ],
     model3d: { src: 'assets/products/41-letrero-contadoor-acrilico/41-letrero-contadoor-acrilico_modelo3d.glb', poster: '' },
@@ -701,9 +701,9 @@ window.PRODUCTS = [
   },
     {
     id: '42-stand-qr-olfatica-luxury-scents',
-    name: 'Stand Qr Olfatica Luxury Scents',
+    name: 'Porta QR Doble Olfatica Luxury Scents',
     year: '2026',
-    description: 'Placa de acrílico blanco de 16cm de alto, por 12cm de ancho. 2 Códigos QRs para RRSS. Base de acrílico negro de 6mm de 7cm x 13cm.',
+    description: 'Porta QR Doble de acrílico blanco, con dos códigos QR para redes sociales. Base de acrílico negro de 6 mm.',
     dimensions: ['13 cm', '7 cm', '16 cm'],
     media: [
       { type: 'image', src: 'assets/products/42-stand-qr-olfatica-luxury-scents/42-stand-qr-olfatica-luxury-scents_imagen1.webp' },
@@ -718,9 +718,9 @@ window.PRODUCTS = [
   },
     {
     id: '43-exhibidor-qr-tiendita-diecast-y-junk',
-    name: 'Exhibidor QR Tiendita Diecast y Junk',
+    name: 'Porta QR Grande Tiendita Diecast y Junk',
     year: '2026',
-    description: 'Exhibidor QR de gran formato en acrílico negro de 3mm. Logo en relieve y a color, con datos de transferencia en la cara posterior. Código QR y logo de Instagram en relieve de 3mm de espesor.',
+    description: 'Porta QR Grande de acrílico negro de 3 mm, con logo a color, código QR e ícono de Instagram en relieve. Datos de transferencia en la cara posterior.',
     dimensions: ['16 cm', '9 cm', '25 cm'],
     media: [
       { type: 'image', src: 'assets/products/43-exhibidor-qr-tiendita-diecast-y-junk/43-exhibidor-qr-tiendita-diecast-y-junk_imagen1.webp' },
@@ -738,9 +738,9 @@ window.PRODUCTS = [
   },
     {
     id: '44-exhibidor-qr-eventos-bon-appetit',
-    name: 'Exhibidor QR Eventos Bon Appetit',
+    name: 'Porta QR Eventos Bon Appetit',
     year: '2026',
-    description: 'Exhibidor QR de gran mediano en acrílico blanco de 3mm. Logo en relieve, iconos de RRSS y códigos QR en relieve y a color. Base de acrílico blanco 6mm.',
+    description: 'Porta QR de acrílico blanco de 3 mm, con logo, íconos de redes sociales y códigos QR en relieve y a color. Base de acrílico blanco de 6 mm.',
     dimensions: ['13 cm', '8 cm', '19 cm'],
     media: [
       { type: 'video', src: 'assets/products/44-exhibidor-qr-eventos-bon-appetit/44-exhibidor-qr-eventos-bon-appetit_video1.mp4', poster: 'assets/products/44-exhibidor-qr-eventos-bon-appetit/44-exhibidor-qr-eventos-bon-appetit_imagen2.webp' },
@@ -756,18 +756,35 @@ window.PRODUCTS = [
     links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
   },
     {
-    id: '45-porta-qr-la-ronda',
-    name: 'Porta QR La Ronda',
+    id: '45-porta-qr-la-ronda-sii',
+    name: 'Porta QR Tótem La Ronda Sii',
     year: '2026',
-    description: 'Porta QR de acrílico transparente pintado blanco, con código QR, letras Sii, y letras al interior del acrílico. Base de acrílico negro de 6mm de espesor.',
-    dimensions: ['5 cm', '7 cm', '10 cm'],
+    description: 'Porta QR Tótem de acrílico transparente pintado blanco, con código QR y letras Sii grabadas al interior. Base de acrílico negro de 6 mm.',
+    dimensions: ['7 cm', '5 cm', '10 cm'],
     media: [
-      { type: 'video', src: 'assets/products/45-porta-qr-la-ronda/45-porta-qr-la-ronda_video1.mp4', poster: 'assets/products/45-porta-qr-la-ronda/45-porta-qr-la-ronda_imagen2.webp' },
-      { type: 'image', src: 'assets/products/45-porta-qr-la-ronda/45-porta-qr-la-ronda_imagen2.webp' },
-      { type: 'image', src: 'assets/products/45-porta-qr-la-ronda/45-porta-qr-la-ronda_imagen3.webp' },
-      { type: 'image', src: 'assets/products/45-porta-qr-la-ronda/45-porta-qr-la-ronda_imagen4.webp' },
-      { type: 'image', src: 'assets/products/45-porta-qr-la-ronda/45-porta-qr-la-ronda_imagen5.webp' },
-      { type: 'image', src: 'assets/products/45-porta-qr-la-ronda/45-porta-qr-la-ronda_imagen6.webp' },
+      { type: 'video', src: 'assets/products/45-porta-qr-la-ronda-sii/45-porta-qr-la-ronda-sii_video1.mp4', poster: 'assets/products/45-porta-qr-la-ronda-sii/45-porta-qr-la-ronda-sii_imagen2.webp' },
+      { type: 'image', src: 'assets/products/45-porta-qr-la-ronda-sii/45-porta-qr-la-ronda-sii_imagen2.webp' },
+      { type: 'image', src: 'assets/products/45-porta-qr-la-ronda-sii/45-porta-qr-la-ronda-sii_imagen3.webp' },
+      { type: 'image', src: 'assets/products/45-porta-qr-la-ronda-sii/45-porta-qr-la-ronda-sii_imagen4.webp' },
+      { type: 'image', src: 'assets/products/45-porta-qr-la-ronda-sii/45-porta-qr-la-ronda-sii_imagen5.webp' },
+      { type: 'image', src: 'assets/products/45-porta-qr-la-ronda-sii/45-porta-qr-la-ronda-sii_imagen6.webp' },
+    ],
+    model3d: null,
+    coverType: 'media',
+    badges: ['new'],
+    links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
+  },
+    {
+    id: '46-porta-qr-la-ronda',
+    name: 'Porta QR Tótem La Ronda',
+    year: '2026',
+    description: 'Porta QR Tótem de acrílico dorado de 6 mm, con código QR y letras grabadas al interior. Base de acrílico negro de 6 mm.',
+    dimensions: ['7 cm', '5 cm', '10 cm'],
+    media: [
+      { type: 'image', src: 'assets/products/46-porta-qr-la-ronda/46-porta-qr-la-ronda_imagen1.webp' },
+      { type: 'image', src: 'assets/products/46-porta-qr-la-ronda/46-porta-qr-la-ronda_imagen2.webp' },
+      { type: 'image', src: 'assets/products/46-porta-qr-la-ronda/46-porta-qr-la-ronda_imagen3.webp' },
+      { type: 'image', src: 'assets/products/46-porta-qr-la-ronda/46-porta-qr-la-ronda_imagen4.webp' },
     ],
     model3d: null,
     coverType: 'media',

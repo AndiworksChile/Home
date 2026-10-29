@@ -57,6 +57,7 @@ const I18N = {
     backShort: 'Volver',
     dock: { info: 'Descripción', media: 'Fotos y videos', '3d': 'Ver en 3D', whatsapp: 'Consultar por WhatsApp', instagram: 'Ver en Instagram' },
     measures: 'Medidas',
+    dimLabels: ['Largo', 'Ancho', 'Alto'],
     year: 'Año',
     badge: { wip: 'En fabricación', new: 'Nuevo', top: 'El más visto' },
     modeLabel: { media: '', '3d': 'Modelo 3D' },
@@ -68,6 +69,7 @@ const I18N = {
     backShort: 'Back',
     dock: { info: 'Description', media: 'Photos & videos', '3d': 'View in 3D', whatsapp: 'Ask on WhatsApp', instagram: 'View on Instagram' },
     measures: 'Dimensions',
+    dimLabels: ['Length', 'Width', 'Height'],
     year: 'Year',
     badge: { wip: 'In production', new: 'New', top: 'Most viewed' },
     modeLabel: { media: '', '3d': '3D model' },
@@ -79,6 +81,7 @@ const I18N = {
     backShort: '返回',
     dock: { info: '产品说明', media: '照片和视频', '3d': '查看 3D', whatsapp: '通过 WhatsApp 咨询', instagram: '在 Instagram 查看' },
     measures: '尺寸',
+    dimLabels: ['长', '宽', '高'],
     year: '年份',
     badge: { wip: '制作中', new: '新品', top: '最受关注' },
     modeLabel: { media: '', '3d': '3D 模型' },
@@ -793,7 +796,10 @@ function renderInfoText() {
   /* Año (solo si la página lo pide) a la izquierda y medidas a la derecha,
      en una misma línea (ver .ov-info-measures); lo que no esté ingresado
      simplemente no aparece. */
-  const dims = (ovProduct.dimensions || []).filter(Boolean);
+  /* dimensions[] es posicional — [largo, ancho, alto], igual que el admin —
+     así que se conserva el índice para poner la etiqueta correcta aunque
+     falte una medida intermedia (''). */
+  const dims = (ovProduct.dimensions || []).map((d, i) => ({ d, i })).filter((x) => x.d);
   ovInfoMeasures.textContent = '';
   if (OPTIONS.showYear && ovProduct.year) {
     const year = document.createElement('span');
@@ -807,14 +813,21 @@ function renderInfoText() {
     const dimsEl = document.createElement('span');
     dimsEl.className = 'ov-dims';
     dimsEl.append(`${t.measures}: `);
-    dims.forEach((d, i) => {
-      if (i) {
+    dims.forEach(({ d, i }, n) => {
+      if (n) {
         const sep = document.createElement('span');
         sep.className = 'ov-measures-sep';
         sep.setAttribute('aria-hidden', 'true');
         dimsEl.append(sep);
       }
-      dimsEl.append(d);
+      /* Etiqueta (Largo / Ancho / Alto) chica arriba de cada cifra. */
+      const dim = document.createElement('span');
+      dim.className = 'ov-dim';
+      const label = document.createElement('span');
+      label.className = 'ov-dim-label';
+      label.textContent = (t.dimLabels || I18N.es.dimLabels)[i] || '';
+      dim.append(label, d);
+      dimsEl.append(dim);
     });
     ovInfoMeasures.append(dimsEl);
   }
