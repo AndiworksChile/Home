@@ -266,6 +266,32 @@ body.is-touch .mosaic-track { transition: none; }
   pointer-events: none;
 }
 .card:hover .card-tag, .card:focus-visible .card-tag { opacity: 1; }
+/* Táctil: sin hover, el nombre nunca aparecía. Va siempre visible en una
+   franja tinta bajo la foto (que se acorta para dejarle sitio), máximo 2
+   líneas con "…". En teléfono además aprovecha el alto extra de las cards
+   con 2 filas, y la foto queda cerca de 2:3 en vez de muy alargada. */
+body.is-touch .card { --card-band: 2.9rem; }
+body.is-touch .card-media { bottom: var(--card-band); height: auto; }
+body.is-touch .card-tag {
+  top: auto;
+  height: var(--card-band);
+  display: flex;
+  align-items: center;
+  padding: 0 .55rem;
+  font-family: var(--font-ui);
+  font-size: .78rem;
+  line-height: 1.15;
+  background: var(--aw-tinta);
+  text-shadow: none;
+  opacity: 1;
+}
+body.is-touch .card-tag-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
 /* Número de producto: esquina superior izquierda, chico y semitransparente
    para no competir con las etiquetas ni el nombre. Misma sombra que el
    nombre para que se lea sobre portadas claras. */

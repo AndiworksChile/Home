@@ -118,6 +118,9 @@ function computeGrid() {
   let cardH = cardW / ratio;
 
   let rows = Math.max(1, Math.min(6, Math.round((H + CARD_GAP) / (cardH + CARD_GAP))));
+  /* Teléfono (2 columnas): máximo 2 filas → 4 cards por página. Con 3 filas
+     (6 cards) todo quedaba muy apretado; mejor cards más grandes y deslizar. */
+  if (cols === 2 && W < 600) rows = Math.min(rows, 2);
 
   let guard = 0;
   while (cardH > H && cols < 10 && guard < 6) {
@@ -286,7 +289,12 @@ function buildCard(product, indexInPage, pageIndex) {
 
   const tag = document.createElement('span');
   tag.className = 'card-tag';
-  tag.textContent = product.name;
+  /* Span interno: en táctil la franja centra el texto (flex) y el span lo
+     corta en 2 líneas (line-clamp no funciona directo sobre un flex). */
+  const tagText = document.createElement('span');
+  tagText.className = 'card-tag-text';
+  tagText.textContent = product.name;
+  tag.appendChild(tagText);
   card.appendChild(tag);
 
   return card;
