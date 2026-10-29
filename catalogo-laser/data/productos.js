@@ -755,4 +755,23 @@ window.PRODUCTS = [
     badges: ['new'],
     links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
   },
+    {
+    id: '45-porta-qr-la-ronda',
+    name: 'Porta QR La Ronda',
+    year: '2026',
+    description: 'Porta QR de acrílico transparente pintado blanco, con código QR, letras Sii, y letras al interior del acrílico. Base de acrílico negro de 6mm de espesor.',
+    dimensions: ['5 cm', '7 cm', '10 cm'],
+    media: [
+      { type: 'video', src: 'assets/products/45-porta-qr-la-ronda/45-porta-qr-la-ronda_video1.mp4', poster: 'assets/products/45-porta-qr-la-ronda/45-porta-qr-la-ronda_imagen2.webp' },
+      { type: 'image', src: 'assets/products/45-porta-qr-la-ronda/45-porta-qr-la-ronda_imagen2.webp' },
+      { type: 'image', src: 'assets/products/45-porta-qr-la-ronda/45-porta-qr-la-ronda_imagen3.webp' },
+      { type: 'image', src: 'assets/products/45-porta-qr-la-ronda/45-porta-qr-la-ronda_imagen4.webp' },
+      { type: 'image', src: 'assets/products/45-porta-qr-la-ronda/45-porta-qr-la-ronda_imagen5.webp' },
+      { type: 'image', src: 'assets/products/45-porta-qr-la-ronda/45-porta-qr-la-ronda_imagen6.webp' },
+    ],
+    model3d: null,
+    coverType: 'media',
+    badges: ['new'],
+    links: { whatsapp: 'https://wa.me/56953706307', instagram: 'https://www.instagram.com/andiworks.cl/' },
+  },
 ];

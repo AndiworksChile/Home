@@ -119,8 +119,15 @@ function computeGrid() {
 
   let rows = Math.max(1, Math.min(6, Math.round((H + CARD_GAP) / (cardH + CARD_GAP))));
   /* Teléfono (2 columnas): máximo 2 filas → 4 cards por página. Con 3 filas
-     (6 cards) todo quedaba muy apretado; mejor cards más grandes y deslizar. */
-  if (cols === 2 && W < 600) rows = Math.min(rows, 2);
+     (6 cards) todo quedaba muy apretado; mejor cards más grandes y deslizar.
+     Aquí las cards NO se estiran: quedan 3:4 al máximo tamaño que cabe y
+     centradas, con el mismo espacio arriba y abajo (o a los lados). */
+  if (cols === 2 && W < 600) {
+    rows = Math.min(rows, 2);
+    const gap = parseFloat(getComputedStyle(track).columnGap) || CARD_GAP;
+    const cellH = Math.floor(Math.min((W - gap) / 2 / ratio, (H - gap * (rows - 1)) / rows));
+    return { cols, rows, cellW: Math.floor(cellH * ratio), cellH };
+  }
 
   let guard = 0;
   while (cardH > H && cols < 10 && guard < 6) {
@@ -134,9 +141,17 @@ function computeGrid() {
 }
 
 function applyGrid() {
-  const { cols, rows } = computeGrid();
-  document.documentElement.style.setProperty('--cols', cols);
-  document.documentElement.style.setProperty('--rows', rows);
+  const { cols, rows, cellW, cellH } = computeGrid();
+  const rootStyle = document.documentElement.style;
+  rootStyle.setProperty('--cols', cols);
+  rootStyle.setProperty('--rows', rows);
+  if (cellW) {
+    rootStyle.setProperty('--cell-w', `${cellW}px`);
+    rootStyle.setProperty('--cell-h', `${cellH}px`);
+  } else {
+    rootStyle.removeProperty('--cell-w');
+    rootStyle.removeProperty('--cell-h');
+  }
   perPage = cols * rows;
 }
 
@@ -289,12 +304,7 @@ function buildCard(product, indexInPage, pageIndex) {
 
   const tag = document.createElement('span');
   tag.className = 'card-tag';
-  /* Span interno: en táctil la franja centra el texto (flex) y el span lo
-     corta en 2 líneas (line-clamp no funciona directo sobre un flex). */
-  const tagText = document.createElement('span');
-  tagText.className = 'card-tag-text';
-  tagText.textContent = product.name;
-  tag.appendChild(tagText);
+  tag.textContent = product.name;
   card.appendChild(tag);
 
   return card;
@@ -388,7 +398,7 @@ function renderMosaic() {
 
 function updateNav() {
   const total = pageCount();
-  if (!IS_TOUCH) track.style.transform = `translateX(${-page * 100}%)`;
+  if (!IS_TOUCH) track.style.transform = `translateX(calc(${-page} * (100% + var(--card-gap))))`;
   const pad = (n) => String(n).padStart(2, '0');
   countEl.textContent = `${pad(page + 1)} / ${pad(total)}`;
   prevBtn.disabled = page <= 0;
@@ -437,7 +447,8 @@ if (IS_TOUCH) {
   viewport.addEventListener('scroll', () => {
     clearTimeout(scrollTimer);
     scrollTimer = setTimeout(() => {
-      const idx = Math.round(viewport.scrollLeft / (viewport.clientWidth || 1));
+      const step = track.children[1] ? track.children[1].offsetLeft : viewport.clientWidth;   // ancho de página + espacio entre páginas
+      const idx = Math.round(viewport.scrollLeft / (step || 1));
       const clamped = Math.max(0, Math.min(idx, pageCount() - 1));
       if (clamped !== page) { page = clamped; updateNav(); }
     }, 100);
